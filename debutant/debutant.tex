@@ -1,0 +1,85 @@
+\documentclass{beamer}
+
+% Paquets utilisés
+\usepackage{animate} % pour faire des animations
+\usepackage{listings} % pour insérer des lignes de codes avec de la coloratio syntaxique
+\usepackage[audience=french]{beameraudience}  % pour écrire la présentation en 2 langues
+\usepackage{textpos} % pour positionner des figure où l'on veut
+
+% Thème et options générales de mise en forme
+\usetheme{Singapore}
+\usecolortheme{rose}
+\setbeamertemplate{page number in head/foot}[totalframenumber] % pour ajouter les numéros des pages
+\makeatletter % pour avoir des puces de progression
+\setbeamersize{
+  text margin left = 0.2cm, % modification des marges (normalement c'est 1 cm)
+  text margin right = 0.2cm
+}
+
+% Ajout de la description du language Gibiane (pour le paquet "listings")
+\input{description_gibiane}
+
+% Infos générales : titre / sous titre / date / auteur / organisme ...
+\justfor{french}{
+  \title{Débuter avec Cast3M}
+  \subtitle{calculs thermo mécaniques}
+  \date{Mars 2024}
+}
+\justfor{english}{
+  \title{Starting with Cast3M}
+  \subtitle{thermomechanical calculations}
+  \date{March, 2024}
+}
+\author{François Di Paola}
+\institute{CEA Saclay,\\
+\url{http://www-cast3m.cea.fr}}
+
+% Quelques raccourcis perso
+\newcommand{\fe}[2]{\justfor{french}{#1}\justfor{english}{#2}}
+\newcommand{\g}[1]{\textbf{#1}}
+\newcommand{\kw}[1]{\texttt{#1}}
+\newcommand{\kwr}[1]{\textcolor{red}{\texttt{#1}}}
+\newcommand{\kwg}[1]{\textcolor{green}{\texttt{#1}}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\orange}[1]{\textcolor{orange}{#1}}
+\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\violet}[1]{\textcolor{violet}{#1}}
+\newcommand{\gray}[1]{\textcolor{gray}{#1}}
+
+
+\begin{document}
+
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{\fe{Sommaire}{Summary}}
+  \begin{itemize}
+    \item \fe{Présentation de Cast3M}{Introduction to Cast3M}
+    \item \fe{Le langage Gibiane}{Gibiane language}
+    \item \fe{Travaux dirigés}{Tutorial class}\\
+          \begin{center}
+          \emph{\fe{Thermo-mécanique d'une structure avec un trou}
+                   {Thermo-mechanical behavior of a structure with a hole}}\\
+          \includegraphics[height=0.22\textheight]{images/1.2_maillage_hexa.4} \hspace{2mm}
+          \includegraphics[height=0.25\textheight]{images/2.1_temperatures.3} \hspace{2mm}
+          \includegraphics[height=0.25\textheight]{images/8_contraintes}
+          \end{center}
+    \item \fe{Compléments}{Complements}
+    \item \fe{Description des objets Gibiane}{Objects in Gibiane}
+  \end{itemize}
+\end{frame}
+
+\input{debutant_presentation}
+%\input{debutant_gibiane}
+%\input{debutant_maillage}
+%\input{debutant_thermique}
+%\input{debutant_mecanique}
+%\input{debutant_complements}
+
+
+
+\end{document}
+

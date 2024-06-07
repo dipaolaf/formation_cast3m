@@ -1,0 +1,26 @@
+OPTI 'DIME' 3 'ELEM' 'SEG2' ;
+
+p1 = 0. 0.  0. ; p2 = 0. 3.  0. ; p3 = 0. 1.5 3. ;
+p123 = p1 ET p2 ET p3 ;
+mail = QUEL 'SEG2' p1 p2 p3 p1 ;
+REPE bou 6 ;
+  p4 p5 p6 = p1 p2 p3 PLUS (3. 0. 0.) ;
+  mail = mail ET (QUEL 'SEG2' p1 p4 p5 p2 p4 p6 p5 p3 p6 p1) ;
+  p1 = p4 ; p2 = p5 ; p3 = p6 ;
+FIN bou ;
+
+mo = MODE mail 'MECANIQUE' 'BARR' ;
+ma = MATE mo 'YOUN' 210.E9 'NU' 0.3 'SECT' 2.E-3 ;
+ri = RIGI mo ma ;
+
+bl = BLOQ 'DEPL' p123 ;
+f = FORC (0. 0. -1.E4) (p4 ET p5) ;
+vf = VECT f 'FORC' 'ROUG' 1.E-3 ;
+TRAC (ri ET bl) vf ;
+
+u = RESO (ri ET bl) f ;
+def1 = DEFO mail u 300. ;
+sig = SIGM mo ma u ;
+TRAC sig mo def1 ;
+
+FIN ;

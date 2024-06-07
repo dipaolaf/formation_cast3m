@@ -1,0 +1,32 @@
+************************************************************************
+*       Petit exemple d'illustration des points support dans les       *
+*                      objets CHPOINTs et MCHAMLs                      *
+*     ainsi que des CHANgements de points support et aussi d'objet     *
+************************************************************************
+
+
+** Options générales
+OPTI 'DIME' 2 'ELEM' 'QUA4' 'TRAC' 'PSC' 'EPTR' 5 ;
+
+** Maillage et modèle
+mail = (DROI 2 (0. 0.) (2. 0.)) TRAN 1 (0. 1.) ;
+mo   = MODE mail 'MECANIQUE' ;
+
+** On créé un champ par élémnts (MCHAML) aux noeuds manuelement
+chm1 = (MANU 'CHAM' mo 'POSI' 'STRESSES' 'SCAL' 1 1 1.) + (MANU 'CHAM' mo 'POSI' 'STRESSES' 'SCAL' 1 2 2.)
+     + (MANU 'CHAM' mo 'POSI' 'STRESSES' 'SCAL' 1 3 3.) + (MANU 'CHAM' mo 'POSI' 'STRESSES' 'SCAL' 1 4 4.)
+     + (MANU 'CHAM' mo 'POSI' 'STRESSES' 'SCAL' 2 1 5.) + (MANU 'CHAM' mo 'POSI' 'STRESSES' 'SCAL' 2 2 6.)
+     + (MANU 'CHAM' mo 'POSI' 'STRESSES' 'SCAL' 2 3 7.) + (MANU 'CHAM' mo 'POSI' 'STRESSES' 'SCAL' 2 4 8.) ;
+LIST chm1 ;
+TRAC chm1 mo 'TITR' 'Champ par elements - interpolation dans l''element' ;
+chm2 = CHAN 'CHPO' mo chm1 'SUPP' ;
+mpg2 = EXTR chm2 'MAIL' ;
+TRAC chm2 mpg2 mail 'TITR' 'Champ par elements - valeurs aux points support' ;
+
+** Passage en CHPOINT
+chp1 = CHAN 'CHPO' mo chm1 ;
+LIST chp1 ;
+TRAC chp1 mail 'TITR' 'Champ par points - interpolation dans l''element' ;
+TRAC chp1 'TITR' 'Champ par points - valeurs aux noeuds' ;
+
+FIN ;

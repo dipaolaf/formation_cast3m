@@ -1,0 +1,130 @@
+%%%%%%%%%%%%%%%%%%%%%%
+\section{Présentation}
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{\fe{Cast3M, quid ?}{What is Cast3M?}}
+  \fe{Logiciel de simulation utilisant la \g{méthode des éléments finis} en \g{mécanique/thermique} des \g{structures} et des \g{fluides}}
+     {A simulation software using the \g{finite element method} in \g{thermal and mechanical} analysis of \g{structures} and \g{fluids}}\pause
+  \begin{itemize}
+    \item \fe{Résolution d'\g{équations aux dérivées partielles}}
+             {\g{Partial differential equations} solver}\pause
+    \item \fe{\g{Système complet} : solveur, pré/post-processeur, visualisation, import/export des données\dots}
+             {\g{Complete software}: solver, pre-processing and post-processing, visualization, reading/writing data\dots}\\
+            ~\\
+            \begin{center}
+            \includegraphics[height=0.25\textheight]{images/plaque.1} \:
+            \includegraphics[height=0.25\textheight]{images/plaque.2} \:
+            \includegraphics[height=0.25\textheight]{images/plaque.3}
+            \end{center}\pause
+    \item \fe{Basé sur un langage de commande : \g{Gibiane} (orienté objet)}
+             {Based on a programming language: \g{Gibiane} (objet-oriented)}\\
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Nombreux domaines d'application}{Wide range of applications}}
+  \small{
+  \begin{itemize}
+    \item<1->\fe{Mécanique des structures}{Structural mechanics}\\
+    \footnotesize{
+      \fe{\red{Quasi-statique} (non linéarités matériau, géométrie, conditions limites)}
+         {\red{Quasi-static} (non linear behavior, geometry, boundary conditions)}\\
+      \onslide<1>{
+        \begin{textblock*}{5cm}(2cm,0.3cm)
+          \includegraphics[height=0.4\textheight]{images/polycristal}
+        \end{textblock*}
+        \begin{textblock*}{5cm}(5cm,1.2cm)
+          \includegraphics[height=0.4\textheight]{images/ressort}
+        \end{textblock*}
+        \begin{textblock*}{5cm}(8cm,2.1cm)
+          \includegraphics[height=0.4\textheight]{images/galatee}
+        \end{textblock*}
+        \begin{textblock*}{5cm}(9.5cm,5.6cm)
+          \tiny{\emph{S. Durand}}
+        \end{textblock*}}
+      \onslide<2->\fe{\orange{Contact/frottement}, \green{Flambage}}
+                     {\orange{Contact/friction}, \green{Buckling}}\\
+      \onslide<2>{
+        \begin{textblock*}{5cm}(1cm,0.3cm)
+          \includegraphics[height=0.25\textheight]{images/sac_a_dos.15}
+        \end{textblock*}
+        \begin{textblock*}{5cm}(4.8cm,0.3cm)
+          \includegraphics[height=0.25\textheight]{images/sac_a_dos.32}
+        \end{textblock*}
+        \begin{textblock*}{5cm}(8.5cm,0.3cm)
+          \includegraphics[height=0.25\textheight]{images/sac_a_dos.41}
+        \end{textblock*}}
+      \onslide<3->\fe{\blue{Dynamique} (temporelle, modale, interaction fluide structure)}
+                     {\blue{Dynamic} (temporal, modal, fluid structure interaction)}\\
+      \onslide<3>{
+        \begin{textblock*}{5cm}(1cm,0.3cm)
+          \includegraphics[height=0.2\textheight]{images/cymbale_mode_1}
+        \end{textblock*}
+        \begin{textblock*}{5cm}(4.8cm,0.3cm)
+          \includegraphics[height=0.2\textheight]{images/cymbale_mode_2}
+        \end{textblock*}
+        \begin{textblock*}{5cm}(8.5cm,0.3cm)
+          \includegraphics[height=0.2\textheight]{images/cymbale_mode_4}
+        \end{textblock*}}
+      \onslide<4->\fe{\violet{Rupture} (XFEM, propagation dynamique, zones cohésives)}
+                     {\violet{Fracture} (XFEM, dynamic propagation, cohesive zones models)}\\
+      \onslide<4>{
+        \begin{textblock*}{12cm}(1.5cm,0.3cm)
+          \includegraphics[height=0.25\textheight]{images/rousselier_03}
+          \includegraphics[height=0.25\textheight]{images/rousselier_04}
+          \includegraphics[height=0.25\textheight]{images/rousselier_05}
+          \includegraphics[height=0.25\textheight]{images/rousselier_06}
+          \includegraphics[height=0.25\textheight]{images/rousselier_07}
+          \includegraphics[height=0.25\textheight]{images/rousselier_08}
+        \end{textblock*}
+        \begin{textblock*}{5cm}(8cm,4.7cm)
+          \tiny{\emph{S. Kebiri}}
+        \end{textblock*}}
+    }
+    \item<5->\fe{Thermique}{Thermal analysis}\\
+    \footnotesize{
+      \fe{Conduction, convection, rayonnement, changement de phase}
+         {Conduction, convection, radiation, phase transition}
+%       té
+    }
+    \item<6->\fe{Mécanique des fluides}{Fluid mechanics}
+    \item<6->\fe{Magnétostatique}{Magneto-statics}
+    \item<6->\fe{Diffusion multi espèces (loi de Fick)}{Multi species diffusion (Fick’s law)}
+    \item<6->\fe{Métallurgie}{Metallurgy}
+%    clément
+    \item<6->\fe{Couplage thermo-hygro-mécanique}{Thermo-hygro-mechanics coupling}
+  \end{itemize}
+  }
+\end{frame}
+
+\begin{frame}{\fe{Comment obtenir Cast3M ?}{How to get Cast3M}}
+  \begin{itemize}
+    \item \fe{Multi plateformes}{Cross platform}\\
+    \small \blue{Windows}, \red{Linux}, \green{macOS} \normalsize
+    \item \fe{Où télécharger Cast3M ?}{Where can I download Cast3M?}\\
+    \small \url{http://www-cast3m.cea.fr/index.php?page=dlcastem} \normalsize
+    \item \fe{Accès au code source}{Access to the source code}\\
+    \small
+    \fe{Développement communautaire}{Open collaboration}\\
+    \fe{Compilateur / éditeur de liens fournis}{Compiler / Linker are provided}
+    \normalsize
+    \item \fe{Prix}{Price}\\
+    \small
+      \fe{\green{Gratuit} pour la recherche et l’enseignement\\
+          \red{Payant} pour une utilisation commerciale}
+         {Free license, for education and research use\\
+          Paid license, for enterprise use}
+    \normalsize
+    \item \fe{Quelques utilisateurs/clients}{Some users/customers}\\
+    \small
+    \fe{Universités, écoles d’ingénieurs\\
+        IRSN, EDF, SNCF, CNRS, Framatome, Air Liquide, CERN, \dots\\
+        \scriptsize
+        Outil de référence IRSN pour les analyse de sureté des installations nucléaires françaises\\
+        Outil de référence Framatome pour l’analyse en mécanique de la rupture}
+       {Universities, engineering schools\\
+        IRSN, EDF, SNCF, CNRS, Framatome, Air Liquide, CERN, \dots\\
+        \scriptsize
+        Reference FEM tool for IRSN for safety analysis of French nuclear installations\\
+        Reference tool for Framatome for fracture mechanics}
+        \normalsize
+    \end{itemize}
+\end{frame}

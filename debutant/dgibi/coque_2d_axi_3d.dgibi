@@ -1,0 +1,35 @@
+** Options generales
+OPTI 'DIME' 2 'MODE' 'AXIS' 'ELEM' 'SEG2' ;
+p1 = 4. 0. ;
+lig1 = DROI 20 p1 (4. 10.) ;
+
+mo = MODE lig1 'MECANIQUE' 'COQ2' ;
+ma = MATE mo 'YOUN' 210.E9 'NU' 0.3 'EPAI' 0.3 ;
+rig = RIGI mo ma ;
+
+bl1 = BLOQ 'UR' 'UZ' 'RT' p1 ;
+f1  = PRES 'COQU' mo -42.E5 'NORM' ;
+
+u = RESO (rig ET bl1) f1 ;
+def1 = DEFO lig1 u ;
+TRAC def1 ;
+
+
+OPTI 'DIME' 3 'ELEM' 'QUA4' ;
+p1 = 4. 0. 0. ;
+lig1 = CERC 45 'ROTA' 360. p1 (0. 0. 0.) (0. 0. 1.) ;
+ELIM lig1 1.E-2 ;
+sur1 = lig1 TRAN 20 (0. 0. 10.) ;
+
+mo = MODE sur1 'MECANIQUE' 'COQ4' ;
+ma = MATE mo 'YOUN' 210.E9 'NU' 0.3 'EPAI' 0.3 ;
+rig = RIGI mo ma ;
+
+bl1 = BLOQ 'UX' 'UY' 'UZ' 'RX' 'RY' 'RZ' lig1 ;
+f1  = PRES 'COQU' mo 42.E5 'NORM' ;
+
+u = RESO (rig ET bl1) f1 ;
+def1 = DEFO sur1 u ;
+TRAC 'CACH' def1 ;
+
+FIN ;
