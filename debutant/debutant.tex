@@ -23,12 +23,12 @@
 \justfor{french}{
   \title{Débuter avec Cast3M}
   \subtitle{calculs thermo mécaniques}
-  \date{Mars 2024}
+  \date{Été 2024}
 }
 \justfor{english}{
   \title{Starting with Cast3M}
   \subtitle{thermomechanical calculations}
-  \date{March, 2024}
+  \date{Summer 2024}
 }
 \author{François Di Paola}
 \institute{CEA Saclay,\\
@@ -37,15 +37,16 @@
 % Quelques raccourcis perso
 \newcommand{\fe}[2]{\justfor{french}{#1}\justfor{english}{#2}}
 \newcommand{\g}[1]{\textbf{#1}}
-\newcommand{\kw}[1]{\texttt{#1}}
-\newcommand{\kwr}[1]{\textcolor{red}{\texttt{#1}}}
-\newcommand{\kwg}[1]{\textcolor{green}{\texttt{#1}}}
+\newcommand{\kw}[1]{\mbox{\texttt{#1}}}
+\newcommand{\kwr}[1]{\textcolor{red}{\kw{#1}}}
+\newcommand{\kwg}[1]{\textcolor{green}{\kw{#1}}}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 \newcommand{\orange}[1]{\textcolor{orange}{#1}}
 \newcommand{\green}[1]{\textcolor{green}{#1}}
 \newcommand{\blue}[1]{\textcolor{blue}{#1}}
 \newcommand{\violet}[1]{\textcolor{violet}{#1}}
 \newcommand{\gray}[1]{\textcolor{gray}{#1}}
+\newcommand{\white}[1]{\textcolor{white}{#1}}
 
 
 \begin{document}
@@ -57,23 +58,23 @@
 
 \begin{frame}{\fe{Sommaire}{Summary}}
   \begin{itemize}
-    \item \fe{Présentation de Cast3M}{Introduction to Cast3M}
-    \item \fe{Le langage Gibiane}{Gibiane language}
+    \item \hyperlink{presentation}{\fe{Présentation de Cast3M}{Introduction to Cast3M}}
+    \item \hyperlink{gibiane}{\fe{Le langage Gibiane}{Gibiane language}}
     \item \fe{Travaux dirigés}{Tutorial class}\\
           \begin{center}
-          \emph{\fe{Thermo-mécanique d'une structure avec un trou}
-                   {Thermo-mechanical behavior of a structure with a hole}}\\
-          \includegraphics[height=0.22\textheight]{images/1.2_maillage_hexa.4} \hspace{2mm}
-          \includegraphics[height=0.25\textheight]{images/2.1_temperatures.3} \hspace{2mm}
-          \includegraphics[height=0.25\textheight]{images/8_contraintes}
+            \fe{\hyperlink{thermique}{\emph{Thermo}} \hyperlink{mecanique}{\emph{mécanique}} \emph{d'une structure avec un trou}}
+               {\hyperlink{thermique}{\emph{Thermo}} \hyperlink{mecanique}{\emph{mechanical}} \emph{behavior of a structure with a hole}}\\
+          \includegraphics[height=0.22\textheight]{images/exo/1.2_maillage_hexa.4} \hspace{2mm}
+          \includegraphics[height=0.25\textheight]{images/exo/2.1_temperatures.3} \hspace{2mm}
+          \includegraphics[height=0.25\textheight]{images/exo/8_contraintes}
           \end{center}
-    \item \fe{Compléments}{Complements}
-    \item \fe{Description des objets Gibiane}{Objects in Gibiane}
+    \item \hyperlink{complements}{\fe{Compléments}{Complements}}
   \end{itemize}
 \end{frame}
 
+%\input{en_cours}
 \input{debutant_presentation}
-%\input{debutant_gibiane}
+\input{debutant_gibiane}
 %\input{debutant_maillage}
 %\input{debutant_thermique}
 %\input{debutant_mecanique}
@@ -82,4 +83,3 @@
 
 
 \end{document}
-

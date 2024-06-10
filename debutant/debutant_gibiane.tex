@@ -1,0 +1,74 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fe{\section{Langage Gibiane}}{\section{Gibiane Language}}
+\label{gibiane}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{\fe{Le langage Gibiane}{The Gibiane language}}
+  \begin{itemize}
+    \item \fe{\red{Langage de programmation} destiné au calcul EF}
+             {\red{Programming language} dedicated to FE calculation}\\
+    \footnotesize
+    \begin{textblock*}{5cm}(7cm,0.5cm)
+      \includegraphics[width=3cm]{images/gibi_genie}
+    \end{textblock*}
+    \fe{Objets classiques (entiers, flottants, chaines, logiques, tables)\\
+        Instructions conditionnelles\\
+        Boucles itératives\\
+        Sous structuration\\
+        Récursivité}
+       {Classical objects (integer, floating-point, string, logical , tables)\\
+       Flow control statements\\
+       Loops and iterations\\
+       Subroutines\\
+       Recursion}
+    \normalsize
+    \item \fe{Langage \red{interprété}}{\red{Interpreted} language}\\
+    \footnotesize
+    \fe{Le programme peut être exécuté dès que le script est modifié\\
+        Le programme peut être exécuté en mode interactif}
+       {You can run the program as soon as you make changes to the file\\
+       You can run it in a interactive mode}
+    \normalsize
+    \item \fe{Langage \red{orienté objet}}{\red{Object-oriented} language}\\
+    \footnotesize
+    \fe{Tout est traité comme un objet\\
+        Pas besoin de déclarer les variables ou de spécifier leur type}
+       {Everything in the program is treated as an object\\
+       No need to declare variables or to specify the type of a variable}
+    \normalsize
+    \item \fe{Mots clefs en français}{French key words}
+    \item \fe{Programmation facile et rapide}{Easy to learn, easy to read}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : règles de syntaxe}{Gibiane: syntax rules}}
+  \begin{itemize}
+    \item \fe{Ligne(s) de commande}{Statements lines}\\
+    \footnotesize
+    \fe{\red{500 caractères max} par instruction\\
+        Une instruction peut être écrite sur plusieurs lignes\\
+        Se \red{termine par un point virgule \kw{;}}\\
+        Le \red{symbole d'affectation} est le signe égal \kwr{=}}
+       {\red{500 characters max} per statement\\
+        A statement can be written on several lines\\
+        \red{End with a semicolon \kw{;}}\\
+        The \red{assignment operator} is the equals sign \kwr{=}}
+    \normalsize
+    \item \fe{Insensibilité à la casse}{Case insensitive}\\
+    \footnotesize
+    \kw{TOTO = 3.14 ;}\\
+    \kw{A~~~ = 2.~*~tOTo ;}
+    \fe{la variable \kw{A} vaut bien 6.28}{variable \kw{A} has the value of 6.28}\\
+    \normalsize
+    \item \fe{Fin du fichier de données}{Program ends}\\
+    \footnotesize
+    \fe{commande \kwr{FIN ;} $\Rightarrow$ arrêt de Cast3M}
+       {statement \kwr{FIN ;} $\Rightarrow$ Cast3M stop}\\
+    \fe{ligne vide ou un EOF $\Rightarrow$ mode interactif}
+       {empty line or EOF    $\Rightarrow$ interactive mode}\\
+    \normalsize
+    \item \fe{Ligne de \red{commentaire} : commence par \kwr{*}}
+             {\red{Comment} line: starts with a \kwr{*}}
+    \item \fe{Lignes vides autorisées}{Empty lines accepted}
+  \end{itemize}
+\end{frame}

@@ -28,12 +28,12 @@ Ce qui créera plein d'images .pdf dans le répertoire /images
 Cette étape peu prendre du temps...
 
 ### Compilation LaTeX
-Afin d'avoir un bon référencements des sections, il faut compiler deux fois avec pdflatex:
+Afin d'avoir un bon référencements des sections, il faut compiler deux fois avec pdflatex :
 ```bash
 pdflatex debutant
 pdflatex debutant
 ```
-Ce qui peut être suivi par un ménage:
+Ce qui peut être suivi par un ménage :
 ```bash
 rm *.aux *.log *.nav *.out *.snm *.toc
 ```
