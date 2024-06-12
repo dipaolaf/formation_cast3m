@@ -57,18 +57,291 @@
     \item \fe{Insensibilité à la casse}{Case insensitive}\\
     \footnotesize
     \kw{TOTO = 3.14 ;}\\
-    \kw{A~~~ = 2.~*~tOTo ;}
+    \kw{A~~~ = 2.~}\kwr{*}\kw{~tOTo ;}
     \fe{la variable \kw{A} vaut bien 6.28}{variable \kw{A} has the value of 6.28}\\
     \normalsize
     \item \fe{Fin du fichier de données}{Program ends}\\
     \footnotesize
-    \fe{commande \kwr{FIN ;} $\Rightarrow$ arrêt de Cast3M}
-       {statement \kwr{FIN ;} $\Rightarrow$ Cast3M stop}\\
-    \fe{ligne vide ou un EOF $\Rightarrow$ mode interactif}
-       {empty line or EOF    $\Rightarrow$ interactive mode}\\
+    \fe{Commande \kwr{FIN ;} $\Rightarrow$ arrêt de Cast3M}
+       {Statement \kwr{FIN ;} $\Rightarrow$ Cast3M stop}\\
+    \fe{Ligne vide ou un EOF $\Rightarrow$ mode interactif}
+       {Empty line or EOF    $\Rightarrow$ interactive mode}\\
     \normalsize
     \item \fe{Ligne de \red{commentaire} : commence par \kwr{*}}
              {\red{Comment} line: starts with a \kwr{*}}
     \item \fe{Lignes vides autorisées}{Empty lines accepted}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : règles de syntaxe}{Gibiane: syntax rules}}
+  \begin{itemize}
+    \item \fe{\red{Pas de priorité des opérations (lecture de gauche à droite)}}
+             {\red{No precedence in operators (from left to rigth)}}\\
+    \footnotesize
+    \kw{1}\kwr{+}\kw{2}\kwr{*}\kw{3~~~= 9}\\
+    \kw{1}\kwr{+}\kw{(2}\kwr{*}\kw{3) = 7}
+    \normalsize
+    \item \fe{Quelques \red{interdictions} :}{\red{Prohibitions}:}\\
+    \footnotesize
+    \fe{Pas de \red{tabulations} $\Rightarrow$ messages d'erreur incompréhensibles}
+       {No \red{tab key} $\Rightarrow$ incomprehensible error message}\\
+    \fe{Pas de \red{double quotes} \kw{"}}{No \red{double quote} \kw{"}}
+    \normalsize
+    \item \fe{Quelques (fortes !) \green{recommandations} :}{\green{Guidelines}:}\\
+    \footnotesize
+    \fe{Pas de \green{caractères spéciaux (é, ç, œ, \dots)}}{No special characters (é, ç, œ, \dots)}\\
+    \fe{Utiliser une \green{indentation} (avec des espace)}
+       {Use line indentation (with spaces)}\\
+    \fe{Régler son éditeur de texte : coloration syntaxique, remplacement des tabulations par des espaces}
+       {Adjust the text editor: syntax highlighting, switch tabulations by spaces}
+    \normalsize
+    \item \fe{Quelques \blue{erreurs} classiques :}{Common \blue{errors}:}\\
+    \footnotesize
+    \fe{Point virgule \kw{;} oublié en fin de ligne $\Rightarrow$ la lecture de l'instruction continue !}
+       {Semicolon \kw{;} forgotten at the end of the statement $\Rightarrow$ the statement is not ended}\\
+    \fe{Apostrophe \kw{'} oubliée à la fin d’une chaine $\Rightarrow$ la définition de la chaine continue !}
+       {Single quote \kw{'} forgotten at the end of a string $\Rightarrow$ the string is not ended}
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : les objets}{Gibiane: objects}}
+  \begin{itemize}
+    \item \fe{Définition}{Definition}\\
+    \footnotesize
+    \fe{Désigne toute \g{structure de données/résultats} munie d'un \red{type}\\
+        (éventuellement d’un sous-type) et d'un \red{nom}}
+       {Any data/result with a defined \red{type}\\
+        (possibly a sub-type) and \red{name}}
+    \normalsize
+    \item \fe{Noms des objets}{Objects Names}\\
+    \footnotesize
+    \fe{Donné par l'utilisateur}{User Defined}\\
+    \fe{\red{Limité à 24 caractères} parmi :}{\red{Limited to 24 characters} chosen in:} a...z A...Z 0...9 \_\\
+    \fe{\red{Pièges classiques} :}{\red{Classic traps}:}\\
+    \fe{~~~~plus de 24 caractères : les surnuméraires sont ignorés}{more than 24 characters: additional characters ignored}\\
+    \fe{~~~~utilisation du tiret – $\Rightarrow$ interdit !}{dash sign – $\Rightarrow$ not allowed}\\
+    \fe{~~~~caractères accentués é, è $\Rightarrow$ interdit !}{letters with accents: é, è $\Rightarrow$ not allowed}
+    \normalsize
+    \item \fe{Type des objets}{Objects types}\\
+    \footnotesize
+    \fe{Il existe plus de 40 types d'objets différents}{There are more than 40 types of objects}
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : les objets}{Gibiane: objects}}
+  \begin{itemize}
+    \item \fe{Exemple}{Example}\\
+    \lstinputlisting[language=gibiane, firstline=1, lastline=9]{dgibi/exemples.dgibi}
+    \lstinputlisting[firstline=10, lastline=16]{dgibi/exemples.dgibi}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : les opérateurs}{Gibiane: operators}}
+  \begin{itemize}
+    \item \fe{Définition}{Definition}\\
+    \footnotesize
+    \fe{Désigne tout \g{traitement} muni d'un \red{nom} (instruction Gibiane) qui
+        construit un ou plusieurs \g{objets nouveaux} à partir d'un ou plusieurs
+        objets existants}
+       {Any \g{processing} with a \red{name} (Gibiane instruction) that creates
+        \red{new object(s)} from pre-existing object(s)}
+    \normalsize
+    \item \fe{Noms des opérateurs}{Operators Names}\\
+    \footnotesize
+    \fe{Imposés à l’utilisateur}{Pre-defined}\\
+    \fe{Ce sont des instructions Gibiane}{These are Gibiane instructions}\\
+    \fe{Insensibles à la casse}{Case insensitive}\\
+    \fe{Cast3M ne lit que les \red{4 premiers} caractères :}
+       {Only the \red{4 first} characters are necessary and taken into account:}
+    \kwr{DROITE} $\Leftrightarrow$ \kwr{DROI}\\
+    \fe{Quelques exceptions : forme abrégée}{Excepted abbreviations}\\
+    ~~~~\kwr{DROI} $\Leftrightarrow$ \kwr{D}\\
+    ~~~~\kwr{CERC} $\Leftrightarrow$ \kwr{C}\\
+    ~~~~\kw{poin2 =~}\kwr{POIN}\kw{ 28.~3.~;} $\Leftrightarrow$ \kw{poin2 = 28.~3.~;}\\
+    ~~~~\kw{obj3~ =~}\kwr{MOT}\kw{~'Hello' ;} $\Leftrightarrow$ \kw{obj3~ = 'Hello' ;}
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : les opérateurs}{Gibiane: operators}}
+  \begin{itemize}
+    \item \fe{Exemples d'appel à un opérateur (invocation)}
+             {Examples of operator call}\\
+    \footnotesize
+    \fe{Cas courants (1 objet à gauche du =)}
+       {Common cases (single object on the left of =)}\\
+    ~~~~\kw{obj1 = }\kwr{OPER}\kw{ obj2 ;}\\
+    ~~~~\kw{obj3 = }\kwr{OPER}\kw{ obj4 obj5 ;}\\
+    ~~~~\kw{obj6 = obj7 }\kwr{OPER}\kw{ obj8 obj9 ;}\\~\\
+    \fe{Cas exceptionnels (plusieurs objets à gauche du =)}
+       {Unusual cases (multiple objects on the left of =)}\\
+    ~~~~\kw{obj1 obj2 obj3 = }\kwr{OPER}\kw{ obj4 obj5 ;}
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : les opérateurs}{Gibiane: operators}}
+  \begin{itemize}
+    \item \fe{L'ordre des opérandes}
+             {Arguments order}\\
+    \footnotesize
+    \fe{Est \green{indifférent} si les opérandes sont de \green{type différents}
+        (sauf exception dans la documentation)\\
+        Est \red{important} si plusieurs opérandes du \red{même type}}
+       {\green{Do not matters} if arguments have \green{different types}
+        (with a few exceptions pointed in the manual)\\
+        \red{Matters} if \red{same type} arguments}
+    \normalsize
+    \item \fe{Surcharge d'un objet}
+             {Overwriting an object}\\
+    \footnotesize
+    \fe{Toujours possible, l'ancien objet disparait}
+       {Always possible, the overwritten object does not exists any longer}\\
+       ~~~~\kw{A = 'Hello' ;} \fe{\kw{A} est du type MOT}{\kw{A} has type MOT}\\
+       ~~~~\kw{B = 28 ;}\\
+       ~~~~\kw{C = 3 ;}\\
+       ~~~~\kw{A = B}\kwr{**}\kw{C ;}
+           \fe{\kw{A} est du type ENTIER et vaut 21952}
+              {\kw{A} has type ENTIER, its value is 21952}
+    \normalsize
+    \item \fe{Pièges classiques}{Classic traps}\\
+    \footnotesize
+    \fe{Nom d'objet = nom d'opérateur $\Rightarrow$ appel à l'opérateur impossible !\\
+        sauf si on l'appelle entre quotes et en capitales}
+       {Object name = operator name $\Rightarrow$ operator cannot be called!\\
+        excepted if you call it with quotes in upper case}\\
+    \kw{A = 'OPER' B C ;}\\
+    \fe{Objet nommé \kw{C} ou \kw{D}}{Objet name \kw{C} ou \kw{D}}
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : les directives}{Gibiane: directives}}
+  \begin{itemize}
+    \item \fe{Définition}{Definition}\\
+    \footnotesize
+    \fe{Commande sans symbole d'affectation =\\
+        Ne crée pas de nouvel objet}
+       {Statement without assignment operator =\\
+       Does not create a new object}
+    \normalsize
+    \item \fe{Exemples}{Examples}\\
+    \lstinputlisting[language=gibiane, firstline=18, lastline=21]{dgibi/exemples.dgibi}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : les procédures}{Gibiane: procedures}}
+  \begin{itemize}
+    \item \fe{Définition}{Definition}\\
+    \footnotesize
+    \fe{Ensemble nommé de \g{commandes Gibiane} muni d'une liste d'opérandes d'entrée et de sortie\\
+        Analogue à une subroutine Fortran ou à une fonction C}
+       {Set of \g{Gibiane statements} having a name with input and output arguments\\
+        Similar to Fortran subroutine or a C function}
+    \normalsize
+    \item \fe{Nom des procédures}{Procedures names}\\
+    \footnotesize
+    \fe{Comme un objet ordinaire (une procédure est un objet de type PROCEDUR)}
+       {As other objects (a procedure is an object with PROCEDUR type)}
+    \normalsize
+    \item \fe{Déclaration}{Declaration}\\
+    \lstinputlisting[language=gibiane, firstline=23, lastline=27]{dgibi/exemples.dgibi}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : les procédures}{Gibiane: procedures}}
+  \begin{itemize}
+    \item \fe{Invocation}{Calling}\\
+    \footnotesize
+    \fe{Comme un opérateur ou une directive ordinaire}
+       {As an operator or directive}\\
+    \kw{obj1~obj2~...~objm~=~}\kwr{MA\_PROC}\kw{~ent1~flot2~...~champn~;}
+    \normalsize
+    \item \fe{Il existe des procédures pré-cablées dans Cast3M}
+             {Pre-existing procedures in Cast3M}\\
+    \footnotesize
+    \kwr{PASAPAS}  \fe{calculs non linéaires}{non-linear calculations}\\
+    \kwr{FLAMBAGE} \fe{calculs de flambage}{buckling calculations}\\
+    \kwr{DYNAMIC}  \fe{calculs dynamiques}{dynamics calculations}\\
+    \kwr{THERMIC}  \fe{calculs thermiques}{thermal calculations}\\
+    \kwr{G\_THETA} \fe{calcul d’intégrales J et FIC (rupture)}{J integrals and SIF computation (fracture)}\\
+    \dots\\~\\
+    \fe{Consultez la documentation :}{Read the doc:}\\
+    \url{http://www-cast3m.cea.fr/index.php?page=notices}
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : les procédures}{Gibiane: procedures}}
+  \begin{itemize}
+    \item \fe{Pièges classiques}{Classic traps}\\
+    \footnotesize
+    \fe{\kwr{FINP} \red{manquant}\\
+        ~~~~$\Rightarrow$ arrêt de Cast3M + message d'erreur parfois difficile à interpréter}
+       {\kwr{FINP} \red{missing}\\
+        ~~~~$\Rightarrow$ Cast3M stops, error message that can be misunderstood}\\~\\
+    \fe{\kwr{FINP} présent mais \kwr{;} manquant\\
+        ~~~~$\Rightarrow$ arrêt de Cast3M + message d'erreur parfois difficile à interpréter}
+       {\kwr{FINP} existinf but missing \kwr{;}\\
+        ~~~~$\Rightarrow$ Cast3M stops, error message that can be misunderstood}\\~\\
+    \fe{\red{Invocation} d'une procédure \red{avant} qu'elle ne soit \red{déclarée}\\
+        ~~~~$\Rightarrow$ arrêt de Cast3M + message de l'opérateur =}
+       {Procedure \red{called before} it is \red{declared}\\
+        ~~~~$\Rightarrow$ Cast3M stops, error message in the = operator}\\
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Gibiane : quelques instructions utiles}{Gibiane: some useful statements}}
+  \begin{itemize}
+    \item \fe{Débogage}{Debugging}\\
+    \footnotesize
+    \fe{~}{\kwr{OPTI}\kwg{ 'LANG' 'ANGL'}\kw{ ;}}\\
+    \kwr{INFO}\kw{ OPER ;}\\
+    ~~~~$\Rightarrow$\fe{affiche la notice d'un opérateur/directive/procédure}
+                        {print the manual page of a operator/directive/procedure}\\
+    \kwr{OPTI}\kwg{ 'DONN'}\kw{ 5 ;}\\
+    ~~~~$\Rightarrow$\fe{arrêt de la lecture du fichier .dgibi, passage en \green{mode interactif}}
+                        {stop to run the file .dgibi switch to \green{interactive prompt}}\\
+    \kwr{OPTI}\kwg{ 'DONN'}\kw{ 3 ;}\\
+    ~~~~$\Rightarrow$\fe{reprise de la lecture du fichier .dgibi}
+                        {return to run the file .dgibi}\\
+    \kwr{LIST}\kw{ obj1 ;}\\
+    ~~~~$\Rightarrow$\fe{affiche le contenu de l'objet}
+                        {print object contents}\\
+    \kwr{LIST}\kwg{ 'RESU'}\kw{ obj1 ;}\\
+    ~~~~$\Rightarrow$\fe{affiche un \green{résumé} du contenu de l'objet}
+                        {print a \green{summary} of the object}\\
+    \kwr{OPTI}\kwg{ 'DEBU'}\kw{ 1 ;}\\
+    ~~~~$\Rightarrow$\fe{accès aux variables locales des procédures}
+                        {acces to procedure local variables}\\
+    \kwr{TRAC}\kw{ obj1 ;}\\
+    ~~~~$\Rightarrow$\fe{affiche l'objet}{plot the object}\\
+    \kwr{MESS}\kwg{ 'Hello'}\kw{ ;}\\
+    ~~~~$\Rightarrow$\fe{écrit un message}{print a message}\\
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Documentation}
+  \begin{itemize}
+    \item \fe{Notices des opérateurs/directives/procédures}{Manual pages of operators/directives/procedures}\\
+    \begin{enumerate}
+      \item \fe{Utiliser la \green{directive INFO} :}{Use the \green{INFO directive}:}
+            \kwr{INFO}\kwg{ 'DROI'}\kw{ ;}\\~
+      \item \fe{Consulter la \green{page html locale}}{Read the \green{local html page}}\\
+            \fe{située dans le répertoire d'installation}{located in the installation directory}\\
+            \fe{sur Linux :}{on Linux:}~~~~ \kw{/home/user/CAST3M\_2024/doc/index.html}\\
+            \fe{sur Windows :}{on Windows:} \kw{C:\textbackslash{}Cast3M\textbackslash{}PCW\_24\textbackslash{}doc\textbackslash{}index.html}\\~
+      \item \fe{Consulter le \green{site web}}{Read the \green{web site}}
+            \url{http://www-cast3m.cea.fr/index.php?page=notices}\\
+            \fe{\red{attention, il s'agit de la version du jour !}}{\red{dedicated to the up to date version!}}
+    \end{enumerate}
+    \item \fe{Manuels utilisateurs}{Users manual}\\
+    \footnotesize
+    \fe{sur le site web, à l'onglet "Documentation"}{On the web site, see the "Documentation" tab}
+    \normalsize
   \end{itemize}
 \end{frame}

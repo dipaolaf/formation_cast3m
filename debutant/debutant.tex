@@ -1,4 +1,4 @@
-\documentclass{beamer}
+\documentclass[xcolor={dvipsnames}]{beamer}
 
 % Paquets utilisés
 \usepackage{animate} % pour faire des animations
@@ -13,8 +13,15 @@
 \makeatletter % pour avoir des puces de progression
 \setbeamersize{
   text margin left = 0.2cm, % modification des marges (normalement c'est 1 cm)
-  text margin right = 0.2cm
-}
+  text margin right = 0.2cm}
+\setbeamertemplate{block begin}{  % pour ajuster la taille des block
+  \begin{minipage}{.87\textwidth}%
+    \begin{beamerboxesrounded}[upper=block title,lower=block body,shadow=true]{
+    \raggedright\usebeamerfont*{block title}\insertblocktitle}
+    \raggedright
+    \usebeamerfont{block body}}
+  \setbeamertemplate{block end}
+{\end{beamerboxesrounded}\end{minipage}\vskip\smallskipamount}
 
 % Ajout de la description du language Gibiane (pour le paquet "listings")
 \input{description_gibiane}
@@ -39,10 +46,10 @@
 \newcommand{\g}[1]{\textbf{#1}}
 \newcommand{\kw}[1]{\mbox{\texttt{#1}}}
 \newcommand{\kwr}[1]{\textcolor{red}{\kw{#1}}}
-\newcommand{\kwg}[1]{\textcolor{green}{\kw{#1}}}
+\newcommand{\kwg}[1]{\textcolor{Green}{\kw{#1}}}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 \newcommand{\orange}[1]{\textcolor{orange}{#1}}
-\newcommand{\green}[1]{\textcolor{green}{#1}}
+\newcommand{\green}[1]{\textcolor{Green}{#1}}
 \newcommand{\blue}[1]{\textcolor{blue}{#1}}
 \newcommand{\violet}[1]{\textcolor{violet}{#1}}
 \newcommand{\gray}[1]{\textcolor{gray}{#1}}
@@ -79,7 +86,6 @@
 %\input{debutant_thermique}
 %\input{debutant_mecanique}
 %\input{debutant_complements}
-
 
 
 \end{document}
