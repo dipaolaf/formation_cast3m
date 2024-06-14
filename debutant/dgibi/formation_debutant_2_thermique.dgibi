@@ -92,11 +92,11 @@ SI itrac ;
   SI ipsc ;
     OPTI 'FTRA' '2.1_cl_flux.ps' ;
   FINSI ;
-  TRAC (are1 ET (sut1 COUL 'ROUG')) 'TITR' '[2.1] Surface de flux impose' ;
+  TRAC 'FACE' (sut1 COUL 'ROUG') are1 'TITR' '[2.1] Surface de flux impose' ;
   SI ipsc ;
     OPTI 'FTRA' '2.1_cl_temperature.ps' ;
   FINSI ;
-  TRAC (are1 ET (sint COUL 'BLEU')) 'TITR' '[2.1] Surface de temperature imposee' ;
+  TRAC 'FACE' (sint COUL 'BLEU') are1 'TITR' '[2.1] Surface de temperature imposee' ;
 FINSI ;
 
 ** Matrice de blocage / Boundary condition matrix
@@ -148,7 +148,7 @@ SI ipsc ;
   OPTI 'FTRA' '2.2_cl_source.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC (are1 ET (elso COUL 'VERT')) 'TITR' '[2.2] Elements avec source' ;
+  TRAC 'FACE' (elso COUL 'VERT') are1 'TITR' '[2.2] Elements avec source' ;
 FINSI ;
 
 ** Source de chaleur
@@ -162,7 +162,7 @@ SI ipsc ;
   OPTI 'FTRA' '2.2_cl_convection.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC (are1 ET (sucon COUL 'TURQ')) 'TITR' '[2.2] Surface avec convection' ;
+  TRAC 'FACE' (sucon COUL 'TURQ') are1 'TITR' '[2.2] Surface avec convection' ;
 FINSI ;
 
 ** Modèle de convection / Convection model
@@ -334,7 +334,7 @@ SI ipsc ;
   OPTI 'FTRA' '5_cl_rayonnement.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC (are1 ET (sur2 COUL 'ROSE')) 'TITR' '[5] Surface avec rayonnement' ;
+  TRAC 'FACE' (sur2 COUL 'ROSE') are1 'TITR' '[5] Surface avec rayonnement' ;
 FINSI ;
 
 ** Modèle de rayonnement / Radiation model

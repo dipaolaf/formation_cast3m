@@ -1,6 +1,7 @@
 # Formations au logiciel Cast3M
 
 Ce dépôt contient les sources de documents de formation à Cast3M
+
 Les présentations sont construites avec LaTeX grâce à la classe Beamer
 
 ## Construction des présentations
@@ -25,6 +26,7 @@ cd ../
 ./images.sh
 ```
 Ce qui créera plein d'images .pdf dans le répertoire /images
+
 Cette étape peu prendre du temps...
 
 ### Compilation LaTeX

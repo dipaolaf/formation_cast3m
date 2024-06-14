@@ -3,14 +3,14 @@
 *----------------------------------------------------------------------*
 *      FORMATION DEBUTER AVEC CAST3M - CALCULS THERMO-MECANIQUES       *
 *                                                                      *
-* Modelisation du comportement thermo-mecanique d'une pièce trouée     *
+* Modelisation du comportement thermo-mecanique d'une piece trouee     *
 *                                                                      *
 * Ce fichier est la partie 1 sur 3 de la formation debutant a Cast3M   *
 *                                                                      *
 * Partie 1 : maillage                                                  *
-*            création de points, lignes, surfaces, volumes             *
-*            maillage libre puis réglé                                 *
-*            récupération des zones maillées                           *
+*            creation de points, lignes, surfaces, volumes             *
+*            maillage libre puis regle                                 *
+*            recuperation des zones maillees                           *
 *            sauvegarde des objets                                     *
 *                                                                      *
 *----------------------------------------------------------------------*
@@ -25,13 +25,15 @@
 *              C A L C U L A T I O N   P A R M E T E R S               *
 *----------------------------------------------------------------------*
 
-** Options générales / general options
-OPTI 'DIME' 3 ;
-itrac = vrai ;
-OPTI 'TRAC' 'PSC' ;
+** Options de trace / Plotting options
+itrac = faux ;
+***OPTI 'TRAC' 'PSC' ;
 ipsc = EGA (VALE 'TRAC') 'PSC' ;
 
-** Paramètres géométriques / geometrical parameters
+** Options generales / general options
+OPTI 'DIME' 3 ;
+
+** Parametres geometriques / geometrical parameters
 l = 0.3 ;
 h = 0.1 ;
 r = 0.035 ;
@@ -44,7 +46,7 @@ e = 0.02 ;
 *----------------------------------------------------------------------*
 *                           M A I L L A G E                            *
 *         Maillage libre (surface par remplissage du contour)          *
-*                     avec éléments tétraédriques                      *
+*                     avec elements tetraedriques                      *
 *                                                                      *
 *                               M E S H                                *
 *           Free mesh (filling the surface from the contour)           *
@@ -66,14 +68,14 @@ p8  = p6 PLUS (0. 0. r ) ;
 p9  = p6 MOIN (r  0. 0.) ;
 p10 = p6 MOIN (0. 0. r ) ;
 
-** Option générale pour mailler en éléments TE10 /
+** Option generale pour mailler en elements TE10 /
 *  General option for meshing with TE10 elements
 OPTI 'ELEM' 'TE10' ;
 SI ipsc ;
   OPTI 'FTRA' '1.1_maillage_tetra.ps' ;
 FINSI ;
 
-** Maillage du contour / Meshing the contour
+** Maillage du contour / Contour mesh
 l12  = DROI p1 p2 ;
 c23  = CERC p2 p6 p3 ;
 c34  = CERC p3 p6 p4 ;
@@ -81,47 +83,49 @@ l45  = DROI p4 p5 ;
 l51  = DROI p5 p1 ;
 cex  = l12 ET c23 ET c34 ET l45 ET l51 ;
 SI itrac ;
-  TRAC cex ;
+TRAC cex ;
 FINSI ;
 p11  = p6 PLUS (0. -1. 0.) ;
 cin  = CERC 'ROTA' 360. p7 p6 p11 'ELIM' ;
 SI itrac ;
-  TRAC (cex ET cin) ;
+TRAC (cex ET cin) ;
 FINSI ;
 ** Maillage surfacique / Surface mesh
 sur1 = SURF (cex ET cin) 'PLAN' ;
 SI itrac ;
-  TRAC sur1 ;
+TRAC sur1 ;
 FINSI ;
 cin  = INVE cin ;
 sur1 = SURF (cex ET cin) 'PLAN' ;
 SI itrac ;
-  TRAC sur1 ;
+TRAC sur1 ;
 FINSI ;
 ** Maillage volumique / Volume mesh
 vol1 = sur1 VOLU 'TRAN' (0. e 0.) ;
 SI itrac ;
-  TRAC vol1 ;
-  TRAC 'CACH' vol1 'TITR' '[1.1] Volume avec elements PR15 :-(' ;
+TRAC vol1 ;
+TRAC 'CACH' vol1 ;
 FINSI ;
-** Récupération de faces et remaillage / Face recovery and remeshing
+** Recuperation de faces / Face recovery
 sur2 = vol1 FACE 2 ;
 sur3 = vol1 FACE 3 ;
 SI itrac ;
-  TRAC sur3 'TITR' '[1.1] Extraction de la FACE 3' ;
+TRAC sur3 ;
 FINSI ;
+** Changement du type d'element /
+*  Change element type
 sur3 = CHAN 'TRI6' sur3 ;
 SI itrac ;
-  TRAC sur3 'TITR' '[1.1] Changement en elements triangles' ;
+TRAC sur3 ;
 FINSI ;
-* Surface enveloppe
+** Maillage volumique / Volume mesh
 env1 = sur1 ET sur2 ET sur3 ;
 vol1 = VOLU env1 ;
 SI itrac ;
-  TRAC 'CACH' vol1 'TITR' '[1.1] Volume avec elements TE10 :-)' ;
-  TRAC vol1 'TITR' '[1.1] Volume avec elements TE10 :-)' ;
+TRAC 'CACH' vol1 ;
+TRAC vol1 ;
 FINSI ;
-* Arètes / Edges
+* Aretes / Edges
 are1 = ARET vol1 ;
 
 
@@ -130,61 +134,75 @@ are1 = ARET vol1 ;
 * Chapitre / Chapter    1.2                                            *
 *----------------------------------------------------------------------*
 *                           M A I L L A G E                            *
-*              Maillage réglé avec éléments hexaèdriques               *
+*              Maillage regle avec elements hexaedriques               *
 *                                                                      *
 *                               M E S H                                *
 *                 Ruled mesh with hexahedrons elements                 *
 *----------------------------------------------------------------------*
 
-** Option générale pour mailler en éléments CU20 /
+** Option generale pour mailler en elements CU20 /
 *  General option for meshing with CU20 elements
 OPTI 'ELEM' 'CU20' ;
 SI ipsc ;
   OPTI 'FTRA' '1.2_maillage_hexa.ps' ;
 FINSI ;
 
-** Nombre d'éléments / number of elements
+** Nombre d'elements / number of elements
 n15   = 10 ;
 n12   = 20 ;
 
-** Maillage du rectangle / Meshing the rectangle
+** Maillage du rectangle /
+*  Meshing the rectangle
 l15   = DROI n15 p1 p5 ;
 x13   = l - (h / 2.) ;
 sr1   = l15 TRAN n12 (x13 0. 0.) ;
 SI itrac ;
-  TRAC sr1 'TITR' '[1.2] Partie rectangulaire' ;
+TRAC sr1 ;
 FINSI ;
-** Récupération de lignes et points / Edges and points recovery
+** Recuperation de lignes et points /
+*  Edges and points recovery
 l1213 = sr1 COTE 3 ;
 p12   = l1213 POIN 'INITIAL' ;
 p13   = l1213 POIN 'PROCHE' (x13 0. 0.) ;
-** Contour extérieur du trou / External contour of the hole
-l1312 = DROI (n15 / 2) p13 p2 CERC n15 p6 p3 CERC n15 p6 p4 DROI (n15 / 2) p12 ;
+** Contour exterieur du trou /
+*  External contour of the hole
+l1312 = DROI (n15 / 2) p13 p2 CERC n15 p6 p3
+        CERC n15 p6 p4 DROI (n15 / 2) p12 ;
 lig1  = l1213 ET l1312 ;
-** Projection sur le cercle intérieur / Projection on the inner circle
+** Projection sur le cercle interieur /
+*  Projection on the inner circle
 cin   = lig1 PROJ 'CONI' p6 'SPHE' p6 p7 ;
 SI itrac ;
-  TRAC (lig1 ET cin) 'TITR' '[1.2] Contour du trou' ;
+TRAC (lig1 ET cin) ;
 FINSI ;
-** Surface réglée du trou / ruled surface of the hole
+** Surface reglee du trou /
+*  Ruled surface of the hole
 sh1   = cin REGL 3 lig1 ;
 ** Maillage surfacique / Surface mesh
 sur1  = sr1 ET sh1 ;
 SI itrac ;
-  TRAC sur1 'TITR' '[1.2] Surface avec elements QUA8' ;
+TRAC sur1 ;
 FINSI ;
 ** Maillage volumique / Volume mesh
 vol1  = sur1 VOLU 2 'TRAN' (0. e 0.) ;
 SI itrac ;
-  TRAC 'CACH' vol1 'TITR' '[1.2] Volume avec elements CU20' ;
+TRAC 'CACH' vol1 ;
 FINSI ;
-** Récupération de faces et remaillage / Face recovery and remeshing
+** Recuperation de faces / Face recovery
 sur2  = vol1 FACE 2 ;
 sur3  = vol1 FACE 3 ;
 * Surface enveloppe
 env1  = ENVE vol1 ;
-* Arètes / Edges
+* Aretes / Edges
 are1  = ARET vol1 ;
+
+** Traces supplementaires
+SI ipsc ;
+  OPTI 'FTRA' '1.2_geometrie.ps' ;
+FINSI ;
+SI itrac ;
+  TRAC 'FACE' (vol1 COUL 'GRIS') are1 ;
+FINSI ;
 
 
 

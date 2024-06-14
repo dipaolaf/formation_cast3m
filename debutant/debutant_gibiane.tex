@@ -153,8 +153,8 @@
     \fe{Imposés à l’utilisateur}{Pre-defined}\\
     \fe{Ce sont des instructions Gibiane}{These are Gibiane instructions}\\
     \fe{Insensibles à la casse}{Case insensitive}\\
-    \fe{Cast3M ne lit que les \red{4 premiers} caractères :}
-       {Only the \red{4 first} characters are necessary and taken into account:}
+    \fe{Cast3M ne lit que les \red{4 premiers caractères} :}
+       {Only the \red{4 first characters} are necessary and taken into account:}
     \kwr{DROITE} $\Leftrightarrow$ \kwr{DROI}\\
     \fe{Quelques exceptions : forme abrégée}{Excepted abbreviations}\\
     ~~~~\kwr{DROI} $\Leftrightarrow$ \kwr{D}\\
@@ -170,13 +170,13 @@
     \item \fe{Exemples d'appel à un opérateur (invocation)}
              {Examples of operator call}\\
     \footnotesize
-    \fe{Cas courants (1 objet à gauche du =)}
-       {Common cases (single object on the left of =)}\\
+    \fe{Cas courants : 1 objet à gauche du =}
+       {Common cases: single object on the left of =}\\
     ~~~~\kw{obj1 = }\kwr{OPER}\kw{ obj2 ;}\\
     ~~~~\kw{obj3 = }\kwr{OPER}\kw{ obj4 obj5 ;}\\
     ~~~~\kw{obj6 = obj7 }\kwr{OPER}\kw{ obj8 obj9 ;}\\~\\
-    \fe{Cas exceptionnels (plusieurs objets à gauche du =)}
-       {Unusual cases (multiple objects on the left of =)}\\
+    \fe{Cas exceptionnels : plusieurs objets à gauche du =}
+       {Unusual cases: multiple objects on the left of =}\\
     ~~~~\kw{obj1 obj2 obj3 = }\kwr{OPER}\kw{ obj4 obj5 ;}
     \normalsize
   \end{itemize}
@@ -187,10 +187,10 @@
     \item \fe{L'ordre des opérandes}
              {Arguments order}\\
     \footnotesize
-    \fe{Est \green{indifférent} si les opérandes sont de \green{type différents}
+    \fe{Est \green{indifférent} si les opérandes sont de \green{type différents}\\
         (sauf exception dans la documentation)\\
         Est \red{important} si plusieurs opérandes du \red{même type}}
-       {\green{Do not matters} if arguments have \green{different types}
+       {\green{Do not matters} if arguments have \green{different types}\\
         (with a few exceptions pointed in the manual)\\
         \red{Matters} if \red{same type} arguments}
     \normalsize
@@ -257,7 +257,7 @@
     \footnotesize
     \fe{Comme un opérateur ou une directive ordinaire}
        {As an operator or directive}\\
-    \kw{obj1~obj2~...~objm~=~}\kwr{MA\_PROC}\kw{~ent1~flot2~...~champn~;}
+    \kw{a~b~c~=~}\kwr{MATHS}\kw{~21~11.0~;}
     \normalsize
     \item \fe{Il existe des procédures pré-cablées dans Cast3M}
              {Pre-existing procedures in Cast3M}\\
@@ -344,4 +344,48 @@
     \fe{sur le site web, à l'onglet "Documentation"}{On the web site, see the "Documentation" tab}
     \normalsize
   \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Organisation d’un calcul élément-finis (4 grandes étapes)}
+                 {Method to perform finite element calculations (4 main steps)}}
+  \begin{enumerate}
+  \footnotesize
+  \item \fe{Choix de la géométrie et du maillage}
+           {Geometry description and meshing}
+    \begin{enumerate} \scriptsize
+    \item \fe{Définition des points lignes, surfaces, volumes}
+             {Description of points, lines, surfaces, volumes}
+    \item \fe{Discrétisation}{Discretization}
+    \end{enumerate}
+  \item \fe{Définition du modèle mathématique}{Mathematical model definition}
+    \begin{enumerate} \scriptsize
+    \item \fe{Modèle (type d’analyse, formulation, comportement matériau, type d’élément)}
+             {Model (type of analyze, formulation, material behavior, types of elements)}
+    \item \fe{Propriétés matérielles (module d'Young, masse volumique, …)}
+             {Material properties (Young’s modulus, density, …)}
+    \item \fe{Propriétés géométriques (épaisseur, moments quadratiques, …)}
+             {Geometrical properties (thickness, quadratic moments of area, …)}
+    \item \fe{Conditions aux limites/chargements}
+             {Boundary conditions and loadings}
+    \item \fe{Conditions initiales}
+             {Initial values}
+    \end{enumerate}
+  \item \fe{Résolution du problème discrétisé}{Solving the discretized model}
+    \begin{enumerate} \scriptsize
+    \item \fe{Calcul des matrices de rigidité/masse élémentaires}
+             {Elementary stiffness/mass matrix calculation}
+    \item \fe{Assemblage des matrices}{Global matrix calculation}
+    \item \fe{Application des conditions limites/chargements}
+             {Introduction of the loadings and boundary conditions}
+    \item \fe{Résolution du système d’équations}{Solving the system of equations}
+    \end{enumerate}
+  \item \fe{Analyse et post-traitement des résultats}{Analysis et post-processing}
+  \begin{enumerate} \scriptsize
+    \item \fe{Calcul de quantités locales (déplacement, contraintes, déformation, …)}
+             {Local quantities (strains, stresses, displacements, …)}
+    \item \fe{Calcul de quantités globales (déformation maximale, charge limite, …)}
+             {Global quantities (maximal strains, strain energy, …)}
+    \end{enumerate}
+  \end{enumerate}
+  \normalsize
 \end{frame}

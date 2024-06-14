@@ -5,6 +5,8 @@
 \usepackage{listings} % pour insérer des lignes de codes avec de la coloratio syntaxique
 \usepackage[audience=french]{beameraudience}  % pour écrire la présentation en 2 langues
 \usepackage{textpos} % pour positionner des figure où l'on veut
+\usepackage{tikz} % pour faire de jolies figures
+\usepackage{pifont} % pour avoir des symboles sympa
 
 % Thème et options générales de mise en forme
 \usetheme{Singapore}
@@ -22,6 +24,7 @@
     \usebeamerfont{block body}}
   \setbeamertemplate{block end}
 {\end{beamerboxesrounded}\end{minipage}\vskip\smallskipamount}
+\setlength{\unitlength}{1cm}
 
 % Ajout de la description du language Gibiane (pour le paquet "listings")
 \input{description_gibiane}
@@ -54,6 +57,10 @@
 \newcommand{\violet}[1]{\textcolor{violet}{#1}}
 \newcommand{\gray}[1]{\textcolor{gray}{#1}}
 \newcommand{\white}[1]{\textcolor{white}{#1}}
+\newcommand{\grille}{\draw[help lines,xstep=.1,ystep=.1] (0,0) grid (1,1);
+                     \foreach \x in {0,1,...,9} { \node [anchor=north] at (\x/10,0) {0.\x}; }
+                     \foreach \y in {0,1,...,9} { \node [anchor=east] at (0,\y/10) {0.\y}; }}
+\newcommand{\avous}[1]{\gray{\ding{43}{\emph{#1}}}}
 
 
 \begin{document}
@@ -67,7 +74,7 @@
   \begin{itemize}
     \item \hyperlink{presentation}{\fe{Présentation de Cast3M}{Introduction to Cast3M}}
     \item \hyperlink{gibiane}{\fe{Le langage Gibiane}{Gibiane language}}
-    \item \fe{Travaux dirigés}{Tutorial class}\\
+    \item \hyperlink{maillage}{\fe{Travaux dirigés}{Tutorial class}}\\
           \begin{center}
             \fe{\hyperlink{thermique}{\emph{Thermo}} \hyperlink{mecanique}{\emph{mécanique}} \emph{d'une structure avec un trou}}
                {\hyperlink{thermique}{\emph{Thermo}} \hyperlink{mecanique}{\emph{mechanical}} \emph{behavior of a structure with a hole}}\\
@@ -80,10 +87,10 @@
 \end{frame}
 
 %\input{en_cours}
-\input{debutant_presentation}
-\input{debutant_gibiane}
+%\input{debutant_presentation}
+%\input{debutant_gibiane}
 %\input{debutant_maillage}
-%\input{debutant_thermique}
+\input{debutant_thermique}
 %\input{debutant_mecanique}
 %\input{debutant_complements}
 
