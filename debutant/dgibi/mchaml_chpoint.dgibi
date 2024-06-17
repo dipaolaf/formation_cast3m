@@ -6,10 +6,11 @@
 
 
 ** Options générales
-OPTI 'DIME' 2 'ELEM' 'QUA4' 'TRAC' 'PSC' 'EPTR' 5 ;
+OPTI 'DIME' 2 'ELEM' 'QUA4' ;
+OPTI 'TRAC' 'PSC' 'EPTR' 10 ;
 
 ** Maillage et modèle
-mail = (DROI 2 (0. 0.) (2. 0.)) TRAN 1 (0. 1.) ;
+mail = (DROI 2 (0. 0.) (2. 0.)) TRAN 1 (0. 1.6) ;
 mo   = MODE mail 'MECANIQUE' ;
 
 ** On créé un champ par élémnts (MCHAML) aux noeuds manuelement

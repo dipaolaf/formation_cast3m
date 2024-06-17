@@ -3,36 +3,472 @@
 \label{thermique}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{On teste des trucs}
+\begin{frame}{\fe{Thermique}{Thermal analysis}}{\fe{Rappels}{Reminders}}
   \begin{itemize}
-    \item<1->Hello
-    \item<2->Comment
-    \onslide<2>{\hfill\raisebox{-2cm}[0pt][0pt]{\makebox[0pt][r]{\includegraphics[height=0.5\textheight]{images/exo/4_flux}}}}
-    \item<3->Ça
-    \item<4->Va ?
+    \item \fe{Équation de la chaleur}{Heat equation}
+    \begin{block}{\fe{Forme locale}{Local form}}
+      \begin{equation*}
+        \rho c_p \frac{\partial T}{\partial t}+\tx{div}\underbrace{\left(-\lambda\ve{\tx{grad}}(T)\right)}_{\ve{\phi}}=q\quad\fe{\tx{sur }V}{\tx{on }V}
+      \end{equation*}
+    \end{block}
+    \footnotesize
+    \fe{avec :}{with:}
+    \begin{itemize}
+      \begin{columns}
+        \begin{column}{.4\textwidth}
+          \item[] $T$ \fe{température}{temperature}
+          \item[] $\ve{\phi}$ \fe{densité de flux de chaleur}{heat flow density}
+          \item[] $q$ \fe{source de chaleur volumique}{volumic heat source}
+        \end{column}
+        \begin{column}{.42\textwidth}
+          \item[] $\lambda$ \fe{conductivité thermique}{thermal conductivity}
+          \item[] $\rho$ \fe{masse volumique}{mass density}
+          \item[] $c_p$ \fe{capacité thermique massique}{Massic heat capacity}
+          \item[] $t$ \fe{temps}{time}
+        \end{column}
+      \end{columns}
+    \end{itemize}
+    \normalsize
+    \item \fe{Conditions aux limites}{Boundary conditions}\\
+    \footnotesize
+    \fe{Températures imposées}{Imposed temperatures}
+    $T=T_{\tx{imp}}$ \fe{sur $\partial V_T$}{on $\partial V_T$}\\
+    \fe{Flux imposés}{Imposed heat flow}
+    $\ve{\phi}.\ve{n}=\phi_{\tx{imp}}+\underbrace{h(T_f-T)}_{\tx{convection}}+\underbrace{\varepsilon \sigma(T_\infty^4-T^4)}_{\tx{\fe{rayonnement}{radiation}}}$
+    \fe{sur $\partial V_{\phi}$}{on $\partial V_{\phi}$}
+    \normalsize
   \end{itemize}
 \end{frame}
 
-\begin{frame}{\fe{Problème étudié}{Problem description and boundary conditions}}
+\begin{frame}{\fe{Thermique}{Thermal analysis}}{\fe{Rappels}{Reminders}}
   \begin{itemize}
+    \item \fe{Éléments finis :}{Finite elements:}
     \footnotesize
-    \item \fe{Température imposée \hspace{2cm} Flux de chaleur imposé}
-             {Imposed temperature}
-    \tiny
+    \begin{center}
+      $T(x)=[N(x)]\{T\}$ \qquad $\ve{\tx{grad}}(T)=[B(x)]\{T\}$
+    \end{center}
+    \normalsize
+    \begin{block}{\fe{Formulation faible et discrétisée :}
+                     {Weak and discrete formulation:}}
+      \begin{equation*}
+        [C]\{\dot{T}\}+[K]\{T\}=\{P\}
+      \end{equation*}
+    \end{block}~\\
+    \footnotesize
+    \fe{avec les matrices :}{with the matrices:}
+    \begin{tabular}{ll}~\\
+      $[C]=\int_V\rho c_p [N]^T[N]dV$ & \fe{matrice de capacité}{capacity matrix}\\
+      $[K]=\int_V[B]^T[\lambda][B]dV+\int_{\partial V_{\phi}}h[N]^T[N]dS$ & \fe{matrice de conductivité}{conductivity matrix}
+     \end{tabular}~\\~\\
+    \fe{et le vecteur chargement nodal équivalent :}{and the equivalent nodal load vector:}
+    \begin{itemize}
+      \item[] $\{P\}=\int_V[N]^TqdV+\int_{\partial V_{\phi}}[N]^T(\phi_{\tx{imp}}+hT_f+\varepsilon\sigma(T_\infty^4-T^4))dS$
+    \end{itemize}
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{2.1 Problème étudié}{2.1 Problem description}}
+  \begin{itemize}
+    \item \fe{Conduction, régime stationaire}{Conduction, stationary state}
+    \begin{center}
+    \footnotesize
     \begin{tikzpicture}
       \node[anchor=south west,inner sep=0] (image) at (0,0)
-      {\includegraphics[width=3cm]{images/exo/2.1_cl_temperature}};
+      {\includegraphics[width=4cm]{images/exo/1.2_geometrie}};
       \begin{scope}[x={(image.south east)},y={(image.north west)}]
-        \draw (1,0.3) node[anchor=north west] {\blue{$T$~=~250~°C}};
-      \end{scope}
-    \end{tikzpicture}
-    \begin{tikzpicture}
-      \node[anchor=south west,inner sep=0] (image) at (0,0)
-      {\includegraphics[width=3cm]{images/exo/2.1_cl_flux}};
-      \begin{scope}[x={(image.south east)},y={(image.north west)}]
-        \draw (-0.6,0.8) node[anchor=north west] {\red{$\phi$~=~-40~kW.m$^{-2}$}};
+        \draw (1,0.9) node[anchor=west] {$\lambda$~=~50~W.m$^{-1}$.K$^{-1}$};
+        \draw (1,0.7) node[anchor=west] {$c_p$~=~420~J.K$^{-1}$.kg$^{-1}$};
+        \draw (1,0.5) node[anchor=west] {$\rho$~=~7800~kg.m$^{-3}$};
+        \draw (1,0.2) node[anchor=west] {$T_{t=0}$~=~0~°C};
       \end{scope}
     \end{tikzpicture}
     \normalsize
+    \end{center}
+    \begin{columns}
+      \begin{column}{.4\textwidth}
+        \item \fe{Température imposée}{Imposed temperature}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/2.1_cl_temperature}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=blue]
+            \draw (0.8,0.66) node[anchor=north west] {$T$~=~250~°C};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+      \begin{column}{.4\textwidth}
+        \item \fe{Flux de chaleur imposé}{Imposed heat flow}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/2.1_cl_flux}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=red]
+            \draw (-0.25,0.5) node[anchor=north west,fill=white] {$\phi$~=~-40~kW.m$^{-2}$};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+    \end{columns}
   \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{2.1 Thermique linéaire}{2.1 Linear thermal analysis}}
+             {\fe{Stationnaire, conduction}{Steady state, conduction}}
+  \begin{itemize}
+    \item \fe{Objectif : calcul thermique stationnaire\\
+              en températures et flux imposés}
+            {Objective: steady state thermal calculation\\
+             with fixed temperatures and heat flow}
+    \begin{center}
+      $\gray{[C]\{\dot{T}\}}+[K]\{T\}=\{P\}$ \qquad $\Rightarrow$ \fe{Système linéaire}{Linear system}
+    \end{center}
+    \item \fe{Méthode :}{Method:}\\
+    \begin{tabular}{ll}
+      \fe{calcul de la matrice de conductivité}{conductivity matrix calculation} & $[K]$\\
+      \fe{calcul des chargement nodaux équivalents}{fixed nodal heat loads calculation} & $\{P\}$\\
+      \fe{résolution avec \kwr{RESO}}{sovling with \kwr{RESO}} & $\{T\}$
+    \end{tabular}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{2.1 Thermique linéaire}{2.1 Linear thermal analysis}}
+             {\fe{Stationnaire, conduction}{Steady state, conduction}}
+  \begin{itemize}
+    \item \fe{Restitution des objets (maillage, paramètres, …)}
+             {Input data from previous computation (mesh, parameters, …)}
+    \lstinputlisting[language=gibiane, firstline=30, lastline=31]{dgibi/formation_debutant_2_thermique.dgibi}
+    \avous{\fe{Tous les objets sauvegardés sont chargés en mémoire\\
+               \quad~Ils sont alors accessibles de suite}
+              {All of the objects are loaded into memory\\
+               \quad~~~They can be called now}}
+    \item \fe{Noveaux paramètres}{New parameters}
+    \lstinputlisting[language=gibiane, firstline=44, lastline=47]{dgibi/formation_debutant_2_thermique.dgibi}
+    \lstinputlisting[language=gibiane, firstline=49, lastline=53]{dgibi/formation_debutant_2_thermique.dgibi}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{2.1 Thermique linéaire}{2.1 Linear thermal analysis}}
+             {\fe{Stationnaire, conduction}{Steady state, conduction}}
+  \begin{itemize}
+    \item \fe{Formulation mathématique (conduction)}{Mathematical formulation (conduction)}
+    \lstinputlisting[language=gibiane, firstline=79, lastline=81]{dgibi/formation_debutant_2_thermique.dgibi}
+    \item<2->\fe{Matrice de conductivité}{Conductivity matrix}
+    \onslide<2->{
+      \lstinputlisting[language=gibiane, firstline=83, lastline=84]{dgibi/formation_debutant_2_thermique.dgibi}
+      \begin{flushright}
+        \footnotesize
+        $[K]=\int_V[B]^T[\lambda][B]dV+\gray{\int_{\partial V_{\phi}}h[N]^T[N]dS}$
+        \normalsize
+      \end{flushright}
+      \vspace{2cm}}
+    \item[]<2->\violet{\emph{\fe{Nouveaux objets :}{New objects:} MMODEL, MCHAML, RIGIDITE}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{2.1 Thermique linéaire}{2.1 Linear thermal analysis}}
+             {\fe{Stationnaire, conduction}{Steady state, conduction}}
+  \begin{itemize}
+    \item \fe{Conditions aux limites}{Boundary conditions}
+    \lstinputlisting[language=gibiane, firstline=86, lastline=91]{dgibi/formation_debutant_2_thermique.dgibi}
+    \lstinputlisting[language=gibiane, firstline=96, lastline=96]{dgibi/formation_debutant_2_thermique.dgibi}
+    \begin{textblock*}{5cm}(8.6cm,-2.6cm)
+      \includegraphics[width=3.5cm]{images/exo/2.1_cl_temperature}
+    \end{textblock*}
+    \onslide<2->{
+      \lstinputlisting[language=gibiane, firstline=103, lastline=108]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \onslide<3->{
+      \lstinputlisting[language=gibiane, firstline=110, lastline=112]{dgibi/formation_debutant_2_thermique.dgibi}
+      \begin{flushright}
+        \footnotesize
+        $\{P\}=\gray{\int_V[N]^TqdV}+\int_{\partial V_{\phi}}[N]^T(\phi_{\tx{imp}}\gray{+hT_f+\varepsilon\sigma(T_\infty^4-T^4)})dS$
+        \normalsize
+      \end{flushright}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{2.1 Thermique linéaire}{2.1 Linear thermal analysis}}
+             {\fe{Stationnaire, conduction}{Steady state, conduction}}
+  \begin{itemize}
+    \item \fe{Résolution et affichage des résultats}{Solving and plotting results}
+    \lstinputlisting[language=gibiane, firstline=114, lastline=115]{dgibi/formation_debutant_2_thermique.dgibi}
+    \onslide<2->{\lstinputlisting[language=gibiane, firstline=122, lastline=122]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \onslide<3->{\lstinputlisting[language=gibiane, firstline=123, lastline=123]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \onslide<4->{\lstinputlisting[language=gibiane, firstline=125, lastline=125]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \onslide<4->{\lstinputlisting[language=gibiane, firstline=127, lastline=127]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \vspace{3cm}
+    \onslide<2>{
+      \begin{textblock*}{6cm}(6cm,-4cm)
+        \includegraphics[height=0.5\textheight]{images/exo/2.1_temperatures.1}
+      \end{textblock*}}
+    \onslide<3>{
+      \begin{textblock*}{5cm}(6cm,-4cm)
+        \includegraphics[height=0.5\textheight]{images/exo/2.1_temperatures.2}
+      \end{textblock*}}
+    \onslide<4>{
+      \begin{textblock*}{5cm}(6cm,-4cm)
+        \includegraphics[height=0.5\textheight]{images/exo/2.1_temperatures.3}
+      \end{textblock*}}
+    \item[]<4> \violet{\emph{\fe{Nouvel objet :}{New object:} LISTREEL}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{2.2 Problème étudié}{2.2 Problem description}}
+  \begin{itemize}
+    \item \gray{\fe{Conduction, régime stationaire (identique)}{Conduction, stationary state (same)}}
+    \begin{columns}
+      \begin{column}{.4\textwidth}
+        \item \gray{\fe{Température imposée}{Imposed temperature}}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0,opacity=0.3] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/2.1_cl_temperature}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=blue,opacity=0.3]
+            \draw (0.8,0.66) node[anchor=north west] {$T$~=~250~°C};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+      \begin{column}{.4\textwidth}
+        \item \gray{\fe{Flux de chaleur imposé}{Imposed heat flow}}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0, opacity=0.3] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/2.1_cl_flux}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=red,opacity=0.3]
+            \draw (-0.25,0.5) node[anchor=north west,fill=white] {$\phi$~=~-40~kW.m$^{-2}$};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+    \end{columns}
+    \begin{columns}
+      \begin{column}{.4\textwidth}
+        \item Convection
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/2.2_cl_convection}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=Aquamarine]
+            \draw (-0.1,0.17) node[anchor=north west] {$T_f$~=~-80~°C};
+            \draw (-0.1,0.07) node[anchor=north west] {$h$~=~240~W.m$^{-2}$.K$^{-1}$};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+      \begin{column}{.4\textwidth}
+        \item \fe{Source volumique}{Volume source}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/2.2_cl_source}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=green]
+            \draw (0.5,0.7) node[anchor=south west] {$q$~=~2600~kW.m$^{-3}$};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+    \end{columns}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{2.2 Thermique linéaire stationnaire}{2.2 Stationary linear thermal analysis}}
+             {\fe{Stationnaire, conduction, convection, source}{Steady state, conduction, convection, source}}
+  \begin{itemize}
+    \item \fe{Nouveaux paramètres}{New parameters}
+    \lstinputlisting[language=gibiane, firstline=54, lastline=56]{dgibi/formation_debutant_2_thermique.dgibi}
+    \item<2->\fe{Récupération de sous zones}{Subzone recovery}
+    \onslide<2->{
+      \lstinputlisting[language=gibiane, firstline=161, lastline=165]{dgibi/formation_debutant_2_thermique.dgibi}
+      \lstinputlisting[language=gibiane, firstline=170, lastline=170]{dgibi/formation_debutant_2_thermique.dgibi}
+      \begin{textblock*}{5cm}(8.6cm,-2.6cm)
+        \includegraphics[width=3.5cm]{images/exo/2.2_cl_convection}
+      \end{textblock*}}
+    \onslide<3->{
+      \lstinputlisting[language=gibiane, firstline=146, lastline=150]{dgibi/formation_debutant_2_thermique.dgibi}
+      \lstinputlisting[language=gibiane, firstline=155, lastline=155]{dgibi/formation_debutant_2_thermique.dgibi}
+      \begin{textblock*}{5cm}(8.6cm,-2.6cm)
+        \includegraphics[width=3.5cm]{images/exo/2.2_cl_source}
+      \end{textblock*}}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{2.2 Thermique linéaire stationnaire}{2.2 Stationary linear thermal analysis}}
+             {\fe{Stationnaire, conduction, convection, source}{Steady state, conduction, convection, source}}
+  \begin{itemize}
+    \item \fe{Formulation mathématique (convection)}{Mathematical formulation (convection)}
+    \lstinputlisting[language=gibiane, firstline=173, lastline=175]{dgibi/formation_debutant_2_thermique.dgibi}
+    \item<2->\fe{Matrice de conductivité (mais pour la convection !)}
+                {Conductivity matrix (but for convection!)}
+    \onslide<2->{
+      \lstinputlisting[language=gibiane, firstline=177, lastline=179]{dgibi/formation_debutant_2_thermique.dgibi}
+      \begin{flushright}
+        \footnotesize
+        $[K]=\gray{\int_V[B]^T[\lambda][B]dV+}\int_{\partial V_{\phi}}h[N]^T[N]dS$
+        \normalsize
+      \end{flushright}}
+    \item<3->\fe{Chargement nodal équivalent (convection)}
+                {Equivalent nodal load (convection)}
+    \onslide<3->{
+      \lstinputlisting[language=gibiane, firstline=181, lastline=184]{dgibi/formation_debutant_2_thermique.dgibi}
+      \begin{flushright}
+        \footnotesize
+        $\{P\}=\gray{\int_V[N]^TqdV}+\int_{\partial V_{\phi}}[N]^T(\gray{\phi_{\tx{imp}}}+hT_f\gray{+\varepsilon\sigma(T_\infty^4-T^4)})dS$
+        \normalsize
+      \end{flushright}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{2.2 Thermique linéaire stationnaire}{2.2 Stationary linear thermal analysis}}
+             {\fe{Stationnaire, conduction, convection, source}{Steady state, conduction, convection, source}}
+  \begin{itemize}
+    \item \fe{Chargement nodal équivalent}{Equivalent nodal load}
+    \lstinputlisting[language=gibiane, firstline=158, lastline=159]{dgibi/formation_debutant_2_thermique.dgibi}
+    \begin{flushright}
+      \footnotesize
+      $\{P\}=\int_V[N]^TqdV\gray{+\int_{\partial V_{\phi}}[N]^T(\gray{\phi_{\tx{imp}}+}hT_f\gray{+\varepsilon\sigma(T_\infty^4-T^4)})dS}$
+      \normalsize
+    \end{flushright}
+    \item<2->\fe{Résolution et affichage des résultats}{Solving and plotting results}
+    \onslide<2->{\lstinputlisting[language=gibiane, firstline=186, lastline=187]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \onslide<2->{\lstinputlisting[language=gibiane, firstline=194, lastline=194]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \vspace{3cm}
+    \onslide<2->{
+      \begin{textblock*}{6cm}(6cm,-3.5cm)
+        \includegraphics[height=0.4\textheight]{images/exo/2.2_temperatures}
+      \end{textblock*}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Remarques : champs par éléments (MCHAML)}
+                 {Note: element fields (MCHAML)}}
+  \begin{itemize}
+    \item \fe{Objet MCHAML}{MCHAML object}\\
+    \footnotesize
+    \fe{Représente un champ de valeurs exprimées \g{dans les ÉLÉMENTS} d'un maillage}
+       {Represents a field of values expressed \g{inside the ELEMENTS} of a mesh}\\
+    \fe{Exemples :}{Examples:}
+    \begin{textblock*}{6cm}(8.5cm,-0.3cm)
+      \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0)
+        {\includegraphics[width=3.8cm]{images/mchaml_chpoint.2}};
+        \tiny
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+          \draw (0.10,0.2) node[anchor=west] {1};
+          \draw (0.32,0.2) node[anchor=east] {2};
+          \draw (0.32,0.7) node[anchor=east] {3};
+          \draw (0.10,0.7) node[anchor=west] {4};
+          \draw (0.50,0.2) node[anchor=west] {5};
+          \draw (0.73,0.2) node[anchor=east] {6};
+          \draw (0.73,0.7) node[anchor=east] {7};
+          \draw (0.50,0.7) node[anchor=west] {8};
+        \end{scope}
+      \end{tikzpicture}
+    \end{textblock*}
+    \begin{itemize}
+      \footnotesize
+      \item \fe{paramètres matériau}{material properties}
+      \item \fe{gradient de températures, déplacements…}{gradient of temperatures, displacements…}
+      \item \fe{contraintes, déformations}{stress, strains fields}
+      \item \fe{variables internes}{internal variables field}
+      \item \fe{et bien d'autres…}{and others…}
+    \end{itemize}
+    \footnotesize
+    \fe{Quelques caractéristiques :}{Some characteristics:}
+    \begin{textblock*}{6cm}(8.5cm,0.3cm)
+      \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0)
+        {\includegraphics[width=3.8cm]{images/mchaml_chpoint.1}};
+        \tiny
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+          \draw (0.10,0.2) node[anchor=west] {1};
+          \draw (0.32,0.2) node[anchor=east] {2};
+          \draw (0.32,0.7) node[anchor=east] {3};
+          \draw (0.10,0.7) node[anchor=west] {4};
+          \draw (0.50,0.2) node[anchor=west] {5};
+          \draw (0.73,0.2) node[anchor=east] {6};
+          \draw (0.73,0.7) node[anchor=east] {7};
+          \draw (0.50,0.7) node[anchor=west] {8};
+        \end{scope}
+      \end{tikzpicture}
+    \end{textblock*}
+    \begin{itemize}
+      \footnotesize
+      \item \fe{plusieurs points support possibles :}{several support points available:}\\
+      \scriptsize
+      ~\fe{points d'intégration des contraintes}{integration points for stresses}\\
+      ~\fe{point d'intégration de la rigidité}{integration points for stiffness}\\
+      ~\fe{points d'intégration de la masse}{integration points for mass}\\
+      ~\fe{centre de gravité}{center of gravity}\\
+      ~\fe{nœuds}{nodes}
+      \footnotesize
+      \item \fe{interpolé par les fonctions $[N(x)]$}{interpolation by $[N(x)]$ functions}
+      \item \fe{non continu d'un élément à l'autre}{non continuous between elements}
+    \end{itemize}
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Remarques : champs par points (CHPOINT)}
+                 {Note: point fields (CHPOINT)}}
+  \begin{itemize}
+  \item \fe{Objet CHPOINT}{CHPOINT object}\\
+    \footnotesize
+    \fe{Représente un champ de valeurs exprimées sur des POINTS (nœuds)}
+       {Respresents a field of values expressed \g{on POINTS (nodes)}}\\
+    \fe{Exemples :}{Examples:}
+    \begin{textblock*}{6cm}(8.5cm,-0.3cm)
+      \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0)
+        {\includegraphics[width=3.8cm]{images/mchaml_chpoint.4}};
+        \tiny
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+          \draw (0,0)   node[anchor=south west] {-0.73};
+          \draw (0.4,0) node[anchor=south west] {2.77};
+          \draw (0.8,0) node[anchor=south east] {6.27};
+          \draw (0,0.9) node[anchor=north west] {5.73};
+          \draw (0.4,0.9) node[anchor=north west] {6.23};
+          \draw (0.8,0.9) node[anchor=north east] {6.73};
+        \end{scope}
+      \end{tikzpicture}
+    \end{textblock*}
+    \begin{itemize}
+      \footnotesize
+      \item \fe{champ scalaire de température}{scalar temperature field}
+      \item \fe{champ vectoriel de déplacement (3 composantes)}
+               {vector displacement field (3 components)}
+      \item \fe{champ vectoriel de coordonnées des nœuds}
+               {vector coordinates fields}
+      \item \fe{chargement nodal équivalent}{equivalent nodal load}
+      \item \fe{et bien d'autres…}{and others…}
+    \end{itemize}
+    \footnotesize
+    \fe{Quelques caractéristiques :}{Some characteristics:}
+    \begin{textblock*}{6cm}(8.5cm,0.3cm)
+      \begin{tikzpicture}
+        \node[anchor=south west,inner sep=0] (image) at (0,0)
+        {\includegraphics[width=3.8cm]{images/mchaml_chpoint.3}};
+        \tiny
+        \begin{scope}[x={(image.south east)},y={(image.north west)}]
+          \draw (0,0)   node[anchor=south west] {-0.73};
+          \draw (0.4,0) node[anchor=south west] {2.77};
+          \draw (0.8,0) node[anchor=south east] {6.27};
+          \draw (0,0.9) node[anchor=north west] {5.73};
+          \draw (0.4,0.9) node[anchor=north west] {6.23};
+          \draw (0.8,0.9) node[anchor=north east] {6.73};
+        \end{scope}
+      \end{tikzpicture}
+    \end{textblock*}
+    \begin{itemize}
+      \footnotesize
+      \item \fe{une seule valeur possible par nœud}{only one value per node}
+      \item \fe{ne dépend pas du maillage,\\seulement des nœuds !}
+               {do not depends on the mesh,\\ only on nodes!}
+      \item \fe{continu sur le maillage}
+               {continuous over the mesh}
+    \end{itemize}
+    \normalsize
+  \end{itemize}
+  \vspace{1.5cm}
 \end{frame}

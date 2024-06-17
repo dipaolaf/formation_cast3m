@@ -3,7 +3,7 @@
 % Paquets utilisés
 \usepackage{animate} % pour faire des animations
 \usepackage{listings} % pour insérer des lignes de codes avec de la coloratio syntaxique
-\usepackage[audience=french]{beameraudience}  % pour écrire la présentation en 2 langues
+\usepackage[audience=english]{beameraudience}  % pour écrire la présentation en 2 langues
 \usepackage{textpos} % pour positionner des figure où l'on veut
 \usepackage{tikz} % pour faire de jolies figures
 \usepackage{pifont} % pour avoir des symboles sympa
@@ -61,6 +61,8 @@
                      \foreach \x in {0,1,...,9} { \node [anchor=north] at (\x/10,0) {0.\x}; }
                      \foreach \y in {0,1,...,9} { \node [anchor=east] at (0,\y/10) {0.\y}; }}
 \newcommand{\avous}[1]{\gray{\ding{43}{\emph{#1}}}}
+\newcommand{\ve}[1]{\overrightarrow{#1}}
+\newcommand{\tx}[1]{\textsf{#1}}
 
 
 \begin{document}

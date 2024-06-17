@@ -3,13 +3,13 @@
 *----------------------------------------------------------------------*
 *      FORMATION DEBUTER AVEC CAST3M - CALCULS THERMO-MECANIQUES       *
 *                                                                      *
-* Modelisation du comportement thermo-mecanique d'une pièce trouée     *
+* Modelisation du comportement thermo-mecanique d'une piece trouee     *
 *                                                                      *
 * Ce fichier est la partie 2 sur 3 de la formation debutant a Cast3M   *
 *                                                                      *
 * Partie 2 : calculs thermiques                                        *
 *            restitution des objets                                    *
-*            récupération des zones maillées                           *
+*            recuperation des zones maillees                           *
 *            conduction, convection, rayonnement                       *
 *            regimes stationnaires et transitoires                     *
 *            creation d'une procedure Gibiane                          *
@@ -41,17 +41,17 @@ ipsc = EGA (VALE 'TRAC') 'PSC' ;
 *              C A L C U L A T I O N   P A R M E T E R S               *
 *----------------------------------------------------------------------*
 
-** Paramètres matériau / material parameters
+** Parametres materiau / material parameters
 lambda = 50. ;
 cp     = 420. ;
 rho    = 7800. ;
 
-** Paramètres des conditions limites et chargement /
+** Parametres des conditions limites et chargement /
 *  Parameters for boundary conditions and loading
 t0     = 0. ;
 timp   = 250. ;
 fimp   = -40000. ;
-simp   = 2600000. ;
+simp   = 2600.E3 ;
 hconv  = 240. ;
 tconv  = -80. ;
 emi    = 0.9 ;
@@ -67,61 +67,64 @@ tfinal = 15000. ;
 *----------------------------------------------------------------------*
 *                   C A L C U L   T H E R M I Q U E                    *
 *                              conduction                              *
-*           température + flux surfacique de chaleur imposés           *
-*              linéaire, stationnaire, matériau homogène               *
+*           temperature + flux surfacique de chaleur imposes           *
+*              lineaire, stationnaire, materiau homogene               *
 *                                                                      *
 *                   T H E R M A L   A N A L Y S I S                    *
 *                              conduction                              *
-*               imposed temperature + surface heat flux                *
+*               imposed temperature + surface heat flow                *
 *              linear, steady state, homogeneous material              *
 *----------------------------------------------------------------------*
 
-** Modèle de conduction / Conduction model
+** Modele de conduction / Conduction model
 mot = MODE vol1 'THERMIQUE' 'CONDUCTION' ;
 mat = MATE mot 'K' lambda 'C' cp 'RHO' rho 'TINI' t0 ;
 
-** Matrice de conductivité / Conductivity matix
+** Matrice de conductivite / Conductivity matix
 con = COND mot mat ;
 
-** Récupération de surfaces / Recovery of some surfaces
+** Recuperation de surfaces /
+*  Recovery of some surfaces
 pt1  = env1 POIN 'PLAN' p1 p5 (0. 1. 0.) ;
 sut1 = env1 ELEM 'APPU' 'STRI' pt1 ;
 pint = env1 POIN 'CYLI' p6 p11 p7 ;
 sint = env1 ELEM 'APPU' 'STRI' pint ;
 SI itrac ;
-  SI ipsc ;
-    OPTI 'FTRA' '2.1_cl_flux.ps' ;
-  FINSI ;
-  TRAC 'FACE' (sut1 COUL 'ROUG') are1 'TITR' '[2.1] Surface de flux impose' ;
-  SI ipsc ;
-    OPTI 'FTRA' '2.1_cl_temperature.ps' ;
-  FINSI ;
-  TRAC 'FACE' (sint COUL 'BLEU') are1 'TITR' '[2.1] Surface de temperature imposee' ;
+SI ipsc ;
+OPTI 'FTRA' '2.1_cl_flux.ps' ;
+FINSI ;
+TRAC 'FACE' (sut1 COUL 'ROUG') are1 ;
+SI ipsc ;
+OPTI 'FTRA' '2.1_cl_temperature.ps' ;
+FINSI ;
+TRAC 'FACE' (sint COUL 'BLEU') are1 ;
 FINSI ;
 
 ** Matrice de blocage / Boundary condition matrix
 blt = BLOQ 'T' sint ;
 
-** Vecteur flux associé au blocage / Flux vector associeted to the bc matrix
-flt1 = DEPI blt timp ;
+** Vecteur flux associe au blocage /
+*  Flow vector associeted to the bc matrix
+pt1 = DEPI blt timp ;
 
-** Vecteur flux imposé à gauche / Flux vector imposed on the left
-flt2 = FLUX mot sut1 fimp ;
+** Vecteur flux impose a gauche /
+*  Flow vector imposed on the left
+pt2 = FLUX mot sut1 fimp ;
 
-** Résolution / Solving
-t21  = RESO (con ET blt) (flt1 ET flt2) ;
+** Resolution / Solving
+t21 = RESO (con ET blt) (pt1 ET pt2) ;
 
-** Affichage de la température / Display of the temperature
+** Affichage de la temperature / Display of the temperature
 SI ipsc ;
-  OPTI 'FTRA' '2.1_temperatures.ps' ;
+OPTI 'FTRA' '2.1_temperatures.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC t21 vol1 'TITR' '[2.1] Temperature' ;
-  TRAC t21 vol1 are1 'TITR' '[2.1] Temperature' ;
+TRAC t21 vol1 ;
+TRAC t21 vol1 are1 ;
 FINSI ;
 liso1 = PROG 0. 'PAS' (timp / 15.) timp ;
 SI itrac ;
-  TRAC t21 vol1 are1 liso1 'TITR' '[2.1] Temperature' ;
+TRAC t21 vol1 are1 liso1 ;
 FINSI ;
 
 
@@ -131,61 +134,64 @@ FINSI ;
 *----------------------------------------------------------------------*
 *                   C A L C U L   T H E R M I Q U E                    *
 *                       conduction + convection                        *
-*   température + flux surfacique + flux volumique de chaleur imposé   *
-*              linéaire, stationnaire, matériau homogène               *
+*   temperature + flux surfacique + flux volumique de chaleur impose   *
+*              lineaire, stationnaire, materiau homogene               *
 *                                                                      *
 *                   T H E R M A L   A N A L Y S I S                    *
 *                       conduction + convection                        *
-*           imposed temperature + surface + volume heat flux           *
+*           imposed temperature + surface + volume heat flow           *
 *              linear, steady state, homogeneous material              *
 *----------------------------------------------------------------------*
 
-** Récupération de volumes / Recovery of some volumes
-x = COOR 1 vol1 ;
+** Recuperation de volumes /
+*  Recovery of some volumes
+x    = COOR 1 vol1 ;
 ptso = x POIN 'COMPRIS' (l / 3.) (l / 2.) ;
 elso = vol1 ELEM 'APPU' 'STRI' ptso ;
 SI ipsc ;
-  OPTI 'FTRA' '2.2_cl_source.ps' ;
+OPTI 'FTRA' '2.2_cl_source.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC 'FACE' (elso COUL 'VERT') are1 'TITR' '[2.2] Elements avec source' ;
+TRAC 'FACE' (elso COUL 'VERT') are1 ;
 FINSI ;
 
 ** Source de chaleur
 fls  = SOUR (REDU mot elso) simp elso ;
 
-** Récupération de surfaces / Recovery of some surfaces
-z = COOR 3 env1 ;
+** Recuperation de surfaces /
+*  Recovery of some surfaces
+z     = COOR 3 env1 ;
 ptcon = z POIN 'EGAL' 0. ;
 sucon = env1 ELEM 'APPU' 'STRI' ptcon ;
 SI ipsc ;
-  OPTI 'FTRA' '2.2_cl_convection.ps' ;
+OPTI 'FTRA' '2.2_cl_convection.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC 'FACE' (sucon COUL 'TURQ') are1 'TITR' '[2.2] Surface avec convection' ;
+TRAC 'FACE' (sucon COUL 'TURQ') are1 ;
 FINSI ;
 
-** Modèle de convection / Convection model
+** Modele de convection / Convection model
 moc = MODE sucon 'THERMIQUE' 'CONVECTION' ;
 mac = MATE moc 'H' hconv ;
 
-** Matrice de conductivité pour la convection /
+** Matrice de conductivite pour la convection /
 *  Conductivity matrix for convection
 conh = COND moc mac ;
 
-** Vecteur flux pour la convection / Flux vector for convection
+** Vecteur flux pour la convection /
+*  Flow vector for convection
 chtc = MANU 'CHPO' sucon 'T' tconv ;
-flh  = CONV moc mac chtc ;
+ph   = CONV moc mac chtc ;
 
-** Résolution / Solving
-t22  = RESO (con ET conh ET blt) (flt1 ET flt2 ET fls ET flh) ;
+** Resolution / Solving
+t22  = RESO (con ET conh ET blt) (pt1 ET pt2 ET fls ET ph) ;
 
-** Affichage de la température / Display of the temperature
+** Affichage de la temperature / Display of the temperature
 SI ipsc ;
   OPTI 'FTRA' '2.2_temperatures.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC t22 vol1 are1 'TITR' '[2.2] Temperature' ;
+TRAC t22 vol1 are1 ;
 FINSI ;
 
 
@@ -195,32 +201,32 @@ FINSI ;
 *----------------------------------------------------------------------*
 *                   C A L C U L   T H E R M I Q U E                    *
 *                   conduction + convection                            *
-*   température + flux surfacique + flux volumique de chaleur imposé   *
-*               linéaire, transitoire, matériau homogène               *
+*   temperature + flux surfacique + flux volumique de chaleur impose   *
+*               lineaire, transitoire, materiau homogene               *
 *                                                                      *
 *                   T H E R M A L   A N A L Y S I S                    *
 *                       conduction + convection                        *
-*           imposed temperature + surface + volume heat flux           *
+*           imposed temperature + surface + volume heat flow           *
 *               linear, transient, homogeneous material                *
 *----------------------------------------------------------------------*
 
 ** Descriptions temporelles des chargements / Time descriptions of the loads
-*  1) Température imposée / Imposed temperature
+*  1) Temperature imposee / Imposed temperature
 list1   = PROG 0. (0.1 * tfinal) tfinal ;
 list2   = PROG (t0 / timp) 1. 1. ;
 evt1    = EVOL 'MANU' list1 list2 ;
-chatimp = CHAR 'TIMP' flt1 evt1 ;
-* 2) Flux surfacique imposé / Imposed surface flux
+chatimp = CHAR 'TIMP' pt1 evt1 ;
+* 2) Flux surfacique impose / Imposed surface flow
 list3   = PROG 0. (0.3 * tfinal) (0.5 * tfinal) tfinal ;
 list4   = PROG 0. 0.             1.             1. ;
 evt2    = EVOL 'MANU' list3 list4 ;
-chafimp = CHAR 'Q' flt2 evt2 ;
+chafimp = CHAR 'Q' pt2 evt2 ;
 * 3) Source volumique / Volume source
 chasour = CHAR 'Q' fls evt2 ;
 * 4) Convection
 chaconv = CHAR 'TECO' chtc ;
 
-** Résolution avec la procédure PASAPAS / Solving with the PASAPAS procedure
+** Resolution avec la procedure PASAPAS / Solving with the PASAPAS procedure
 tab1                         = TABL ;
 tab1 . 'MODELE'              = mot ET moc ;
 tab1 . 'CARACTERISTIQUES'    = mat ET mac ;
@@ -230,7 +236,7 @@ tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' (tfinal / 100.) tfinal ;
 PASAPAS tab1 ;
 
 ** Post traitement / Post processing
-* 1) Évolution temporelle de la température en 4 noeuds /
+* 1) evolution temporelle de la temperature en 4 noeuds /
 *    Time evolution of temperature on 4 nodes
 pa  = vol1 POIN 'PROC' (0.             (e / 2.) 0.) ;
 pb  = vol1 POIN 'PROC' ((0.45 * l)     (e / 2.) h ) ;
@@ -253,7 +259,7 @@ SI itrac ;
   DESS (eva ET evb ET evc ET evd) 'TITR' '[3] Temperature vs Temps' ;
 FINSI ;
 
-* 2) Boucle : tracé des température à chaque instant
+* 2) Boucle : trace des temperature a chaque instant
 *    Loop:    plotting temperature for each time step
 SI ipsc ;
   OPTI 'FTRA' '3_temperatures.ps' ;
@@ -277,15 +283,15 @@ FIN b1 ;
 *                          P R O C E D U R E                           *
 *                 affichage du vecteur flux de chaleur                 *
 *                                                                      *
-*                   displaying the heat flux vector                    *
+*                   displaying the heat flow vector                    *
 *----------------------------------------------------------------------*
 
 DEBP VECFLU  chpo1*'CHPOINT'  model1*'MMODEL'  mater1*'MCHAML' ;
-* Gradient de température / Gradient of temperature
+* Gradient de temperature / Gradient of temperature
   grad1 = GRAD chpo1 model1 ;
 * Changement du type / Type change
   grad2 = CHAN 'TYPE' grad1 'CARACTERISTIQUES' ;
-* Multiplication par la conductivité / Multiplication by the conductivity
+* Multiplication par la conductivite / Multiplication by the conductivity
   q     = mater1 * grad2 (MOTS 'K' 'K' 'K') (MOTS 'T,X' 'T,Y' 'T,Y') (MOTS 'QX' 'QY' 'QZ') ;
   q     = -1. * q ;
 * Objet vecteur / Vector object
@@ -294,7 +300,7 @@ DEBP VECFLU  chpo1*'CHPOINT'  model1*'MMODEL'  mater1*'MCHAML' ;
   vec1  = @VECOUL q 2.E-7 (MOTS 'QX' 'QY' 'QZ') ;
 FINP vec1 ;
 
-** Utilisation de cette procédure / Using this procedure
+** Utilisation de cette procedure / Using this procedure
 tn1 = tab1 . 'TEMPERATURES' . (n1 - 1) ;
 vf1 = VECFLU tn1 mot mat ;
 SI ipsc ;
@@ -304,7 +310,7 @@ SI itrac ;
   TRAC vf1 are1 'TITR' '[4] Flux de chaleur' ;
 FINSI ;
 
-** Tracé avec lignes d'isovaleurs / Plotting with iso-value lines
+** Trace avec lignes d'isovaleurs / Plotting with iso-value lines
 SI ipsc ;
   OPTI 'FTRA' '4_temperatures.ps' ;
 FINSI ;
@@ -321,12 +327,12 @@ FINSI ;
 *----------------------------------------------------------------------*
 *                   C A L C U L   T H E R M I Q U E                    *
 *                conduction + convection + rayonnement                 *
-*   température + flux surfacique + flux volumique de chaleur imposé   *
-*             non linéaire, transitoire, matériau homogène             *
+*   temperature + flux surfacique + flux volumique de chaleur impose   *
+*             non lineaire, transitoire, materiau homogene             *
 *                                                                      *
 *                   T H E R M A L   A N A L Y S I S                    *
 *                 conduction + convection + radiation                  *
-*           imposed temperature + surface + volume heat flux           *
+*           imposed temperature + surface + volume heat flow           *
 *             non linear, transient, homogeneous material              *
 *----------------------------------------------------------------------*
 
@@ -337,7 +343,7 @@ SI itrac ;
   TRAC 'FACE' (sur2 COUL 'ROSE') are1 'TITR' '[5] Surface avec rayonnement' ;
 FINSI ;
 
-** Modèle de rayonnement / Radiation model
+** Modele de rayonnement / Radiation model
 mor = MODE sur2 'THERMIQUE' 'RAYONNEMENT' 'INFINI' ;
 mar = MATE mor 'EMIS' emi ;
 
@@ -345,7 +351,7 @@ mar = MATE mor 'EMIS' emi ;
 chtr   = MANU 'CHPO' sur2 'T' trayo ;
 charay = CHAR 'TERA' chtr ;
 
-** Résolution avec la procédure PASAPAS / Solving with the PASAPAS procedure
+** Resolution avec la procedure PASAPAS / Solving with the PASAPAS procedure
 tab1                         = TABL ;
 tab1 . 'MODELE'              = mot ET moc ET mor ;
 tab1 . 'CARACTERISTIQUES'    = mat ET mac ET mar ;
@@ -356,7 +362,7 @@ tab1 . 'CELSIUS'             = VRAI ;
 PASAPAS tab1 ;
 
 ** Post traitement / Post processing
-* 1) Évolution temporelle de la température en 4 noeuds /
+* 1) evolution temporelle de la temperature en 4 noeuds /
 *    Time evolution of temperature on 4 nodes
 evar = EVOL 'BLEU' 'TEMP' tab1 'TEMPERATURES' 'T' pa ;
 evbr = EVOL 'VERT' 'TEMP' tab1 'TEMPERATURES' 'T' pb ;
@@ -384,7 +390,7 @@ SI itrac ;
        'LEGE' tleg 'TITR' '[5] Temperature vs Temps' ;
 FINSI ;
 
-* 2) Boucle : tracé des température à chaque instant /
+* 2) Boucle : trace des temperature a chaque instant /
 *    Loop:    plotting temperature for each time step
 SI ipsc ;
   OPTI 'FTRA' '5_temperatures.ps' ;
@@ -400,8 +406,8 @@ REPE b1 n1 ;
   FINSI ;
 FIN b1 ;
 
-* 3) Boucle : tracé du vecteur flux de chaleur à chaque instant /
-*    Loop:    plotting the heat flux vector at each time step
+* 3) Boucle : trace du vecteur flux de chaleur a chaque instant /
+*    Loop:    plotting the heat flow vector at each time step
 SI ipsc ;
   OPTI 'FTRA' '5_flux.ps' ;
 FINSI ;
