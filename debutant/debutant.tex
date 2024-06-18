@@ -3,7 +3,7 @@
 % Paquets utilisés
 \usepackage{animate} % pour faire des animations
 \usepackage{listings} % pour insérer des lignes de codes avec de la coloratio syntaxique
-\usepackage[audience=english]{beameraudience}  % pour écrire la présentation en 2 langues
+\usepackage[audience=french]{beameraudience}  % pour écrire la présentation en 2 langues
 \usepackage{textpos} % pour positionner des figure où l'on veut
 \usepackage{tikz} % pour faire de jolies figures
 \usepackage{pifont} % pour avoir des symboles sympa
@@ -12,6 +12,7 @@
 \usetheme{Singapore}
 \usecolortheme{rose}
 \setbeamertemplate{page number in head/foot}[totalframenumber] % pour ajouter les numéros des pages
+\setbeamertemplate{navigation symbols}{} % pour virer les symboles "page suivantes" ...
 \makeatletter % pour avoir des puces de progression
 \setbeamersize{
   text margin left = 0.2cm, % modification des marges (normalement c'est 1 cm)
@@ -47,9 +48,12 @@
 % Quelques raccourcis perso
 \newcommand{\fe}[2]{\justfor{french}{#1}\justfor{english}{#2}}
 \newcommand{\g}[1]{\textbf{#1}}
+\newcommand{\ul}[1]{\underline{#1}}
 \newcommand{\kw}[1]{\mbox{\texttt{#1}}}
 \newcommand{\kwr}[1]{\textcolor{red}{\kw{#1}}}
 \newcommand{\kwg}[1]{\textcolor{Green}{\kw{#1}}}
+\newcommand{\kwo}[1]{\textcolor{orange}{\kw{#1}}}
+\newcommand{\kwb}[1]{\textcolor{blue}{\kw{#1}}}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 \newcommand{\orange}[1]{\textcolor{orange}{#1}}
 \newcommand{\green}[1]{\textcolor{Green}{#1}}
@@ -60,7 +64,7 @@
 \newcommand{\grille}{\draw[help lines,xstep=.1,ystep=.1] (0,0) grid (1,1);
                      \foreach \x in {0,1,...,9} { \node [anchor=north] at (\x/10,0) {0.\x}; }
                      \foreach \y in {0,1,...,9} { \node [anchor=east] at (0,\y/10) {0.\y}; }}
-\newcommand{\avous}[1]{\gray{\ding{43}{\emph{#1}}}}
+\newcommand{\avous}[1]{\orange{\ding{43}\emph{#1}}}
 \newcommand{\ve}[1]{\overrightarrow{#1}}
 \newcommand{\tx}[1]{\textsf{#1}}
 
@@ -88,11 +92,11 @@
   \end{itemize}
 \end{frame}
 
-%\input{en_cours}
 %\input{debutant_presentation}
 %\input{debutant_gibiane}
 %\input{debutant_maillage}
-\input{debutant_thermique}
+%\input{debutant_thermique}
+\input{en_cours}
 %\input{debutant_mecanique}
 %\input{debutant_complements}
 

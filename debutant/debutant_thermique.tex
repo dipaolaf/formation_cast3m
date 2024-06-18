@@ -70,7 +70,7 @@
 
 \begin{frame}{\fe{2.1 Problème étudié}{2.1 Problem description}}
   \begin{itemize}
-    \item \fe{Conduction, régime stationaire}{Conduction, stationary state}
+    \item \fe{Conduction, régime stationaire}{Conduction, steady state}
     \begin{center}
     \footnotesize
     \begin{tikzpicture}
@@ -216,7 +216,7 @@
 
 \begin{frame}{\fe{2.2 Problème étudié}{2.2 Problem description}}
   \begin{itemize}
-    \item \gray{\fe{Conduction, régime stationaire (identique)}{Conduction, stationary state (same)}}
+    \item \gray{\fe{Conduction, régime stationaire}{Conduction, steady state}}
     \begin{columns}
       \begin{column}{.4\textwidth}
         \item \gray{\fe{Température imposée}{Imposed temperature}}
@@ -245,7 +245,7 @@
     \end{columns}
     \begin{columns}
       \begin{column}{.4\textwidth}
-        \item Convection
+        \item \fe{\ul{Convection}}{\ul{Convection}}
         \footnotesize
         \begin{tikzpicture}
           \node[anchor=south west,inner sep=0] (image) at (0,0)
@@ -258,7 +258,7 @@
         \normalsize
       \end{column}
       \begin{column}{.4\textwidth}
-        \item \fe{Source volumique}{Volume source}
+        \item \fe{\ul{Source volumique}}{\ul{Volume source}}
         \footnotesize
         \begin{tikzpicture}
           \node[anchor=south west,inner sep=0] (image) at (0,0)
@@ -273,7 +273,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{\fe{2.2 Thermique linéaire stationnaire}{2.2 Stationary linear thermal analysis}}
+\begin{frame}{\fe{2.2 Thermique linéaire}{2.2 Linear thermal analysis}}
              {\fe{Stationnaire, conduction, convection, source}{Steady state, conduction, convection, source}}
   \begin{itemize}
     \item \fe{Nouveaux paramètres}{New parameters}
@@ -294,7 +294,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{\fe{2.2 Thermique linéaire stationnaire}{2.2 Stationary linear thermal analysis}}
+\begin{frame}{\fe{2.2 Thermique linéaire}{2.2 Linear thermal analysis}}
              {\fe{Stationnaire, conduction, convection, source}{Steady state, conduction, convection, source}}
   \begin{itemize}
     \item \fe{Formulation mathématique (convection)}{Mathematical formulation (convection)}
@@ -320,10 +320,10 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{\fe{2.2 Thermique linéaire stationnaire}{2.2 Stationary linear thermal analysis}}
+\begin{frame}{\fe{2.2 Thermique linéaire}{2.2 Linear thermal analysis}}
              {\fe{Stationnaire, conduction, convection, source}{Steady state, conduction, convection, source}}
   \begin{itemize}
-    \item \fe{Chargement nodal équivalent}{Equivalent nodal load}
+    \item \fe{Chargement nodal équivalent (source)}{Equivalent nodal load (source)}
     \lstinputlisting[language=gibiane, firstline=158, lastline=159]{dgibi/formation_debutant_2_thermique.dgibi}
     \begin{flushright}
       \footnotesize
@@ -471,4 +471,314 @@
     \normalsize
   \end{itemize}
   \vspace{1.5cm}
+\end{frame}
+
+\begin{frame}{\fe{3 Problème étudié}{3 Problem description}}
+  \begin{itemize}
+    \item \fe{Conduction, \ul{régime transitoire}}{Conduction, \ul{transient}}
+    \begin{columns}
+      \begin{column}{.4\textwidth}
+        \item \gray{\fe{Température imposée}{Imposed temperature}}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0,opacity=0.3] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/2.1_cl_temperature}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=blue,opacity=0.3]
+            \draw (0.8,0.66) node[anchor=north west] {$T$~=~250~°C};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+      \begin{column}{.4\textwidth}
+        \item \gray{\fe{Flux de chaleur imposé}{Imposed heat flow}}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0, opacity=0.3] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/2.1_cl_flux}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=red,opacity=0.3]
+            \draw (-0.25,0.5) node[anchor=north west,fill=white] {$\phi$~=~-40~kW.m$^{-2}$};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+    \end{columns}
+    \begin{columns}
+      \begin{column}{.4\textwidth}
+        \item \gray{Convection}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0, opacity=0.3] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/2.2_cl_convection}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=Aquamarine,opacity=0.3]
+            \draw (-0.1,0.17) node[anchor=north west] {$T_f$~=~-80~°C};
+            \draw (-0.1,0.07) node[anchor=north west] {$h$~=~240~W.m$^{-2}$.K$^{-1}$};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+      \begin{column}{.4\textwidth}
+        \item \gray{\fe{Source volumique}{Volume source}}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0, opacity=0.3] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/2.2_cl_source}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=green,opacity=0.3]
+            \draw (0.5,0.7) node[anchor=south west] {$q$~=~2600~kW.m$^{-3}$};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+    \end{columns}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{3 Thermique linéaire}{3 Linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source}{Transient, conduction, convection, source}}
+  \begin{itemize}
+    \item \fe{Objectif : calcul thermique transitoire}{Objective: transient thermal calculation}
+    \begin{center}
+      $[C]\{\dot{T}\}+[K]\{T\}=\{P\}$
+    \end{center}
+    \item \fe{Méthode :}{Method:}\\
+    \begin{tabular}{ll}
+      \fe{description temporelle des chargements}{time description of loads}\\
+      \fe{conditions initiales}{initial conditions}\\
+      \fe{résolution avec la procédure \kwo{PASAPAS}}{using the \kwo{PASAPAS} solving procedure}\\
+    \end{tabular}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{3 Thermique linéaire}{3 Linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source}{Transient, conduction, convection, source}}
+  \begin{itemize}
+    \item \fe{Intervalle de temps}{Time interval }
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=60, lastline=61]{dgibi/formation_debutant_2_thermique.dgibi}
+    \item<2->\fe{Chargements : description temporelle}{Loads: time description}
+    \onslide<2->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=213, lastline=219]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \onslide<3->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=220, lastline=224]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \onslide<4->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=225, lastline=226]{dgibi/formation_debutant_2_thermique.dgibi}
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=227, lastline=228]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \item[]<2-> \violet{\emph{\fe{Nouveaux objets :}{New objects:} EVOLUTIOn, CHARGEMEnt}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{3 Thermique linéaire}{3 Linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source}{Transient, conduction, convection, source}}
+  \begin{itemize}
+    \item \fe{Construction d'une table pour \kwo{PASAPAS}}{Construction of a table for \kwo{PASAPAS}}
+    \lstinputlisting[language=gibiane, firstline=230, lastline=239]{dgibi/formation_debutant_2_thermique.dgibi}
+    \item<2->\fe{Résolution avec \kwo{PASAPAS}}{Solving with \kwo{PASAPAS}}
+    \onslide<2->{
+      \lstinputlisting[language=gibiane, firstline=240, lastline=240]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \item[]<1-> \violet{\emph{\fe{Nouvel objet :}{New object:} TABLE}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{3 Thermique linéaire}{3 Linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source}{Transient, conduction, convection, source}}
+  \begin{itemize}
+    \item \fe{Post traitement : évolutions temporelles}{Post processing: time curves}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=242, lastline=248]{dgibi/formation_debutant_2_thermique.dgibi}
+    \onslide<2->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=253, lastline=253]{dgibi/formation_debutant_2_thermique.dgibi}
+      \begin{textblock*}{6cm}(8cm,-2.8cm)
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=4.2cm]{images/exo/3_points}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)}]
+            \tiny
+            \draw (0.02,0.51) node[anchor=west] {\kwb{pa}};
+            \draw (0.4,0.75) node[anchor=west] {\kwg{pb}};
+            \draw (0.67,0.36) node[anchor=east] {\kwo{pc}};
+            \draw (0.99,0.18) node[anchor=west] {\kwr{pd}};
+          \end{scope}
+        \end{tikzpicture}
+      \end{textblock*}}
+    \onslide<3->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=255, lastline=258]{dgibi/formation_debutant_2_thermique.dgibi}
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=263, lastline=263]{dgibi/formation_debutant_2_thermique.dgibi}
+      \begin{textblock*}{6cm}(6.5cm,-0.3cm)
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=4.8cm]{images/exo/3_evol_temperatures}};
+        \end{tikzpicture}
+      \end{textblock*}}
+    \end{itemize}
+    \vspace{3cm}
+\end{frame}
+
+\begin{frame}{\fe{3 Thermique linéaire}{3 Linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source}{Transient, conduction, convection, source}}
+  \begin{itemize}
+    \item \fe{Post traitement : boucle de tracés}{Post processing: loop for plot}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=266, lastline=267]{dgibi/formation_debutant_2_thermique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=271, lastline=276]{dgibi/formation_debutant_2_thermique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=278, lastline=278]{dgibi/formation_debutant_2_thermique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=280, lastline=280]{dgibi/formation_debutant_2_thermique.dgibi}
+    \begin{textblock*}{5cm}(6.2cm,-1.4cm)
+      \animategraphics[controls,loop,poster=last,width=6cm]{10}{images/exo/3_temperatures.}{001}{101}
+    \end{textblock*}
+    \end{itemize}
+    \vspace{3cm}
+\end{frame}
+
+\begin{frame}{\fe{4 Thermique linéaire}{4 Linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source}{Transient, conduction, convection, source}}
+  \begin{itemize}
+    \item \fe{Post traitement : vecteurs flux de chaleur}
+             {Post processing: vectors for heat flow}
+    $\ve{\phi}=-\lambda\ve{\tx{grad}}(T)$
+    \item<2->\fe{Définition d'une \g{procédure}}{Definition of a \g{procedure}}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=293, lastline=302]{dgibi/formation_debutant_2_thermique.dgibi}
+    \onslide<1>{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=303, lastline=303]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \onslide<2>{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=304, lastline=305]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=306, lastline=306]{dgibi/formation_debutant_2_thermique.dgibi}
+    \item[]<2-> \violet{\emph{\fe{Nouveaux objets :}{New objects:} PROCEDURe, VECTEUR}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{4 Thermique linéaire}{4 Linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source}{Transient, conduction, convection, source}}
+  \begin{itemize}
+    \item \fe{Post traitement : vecteurs flux de chaleur}
+             {Post processing: vectors for heat flow}
+    $\ve{\phi}=-\lambda\ve{\tx{grad}}(T)$
+    \lstinputlisting[language=gibiane, firstline=308, lastline=310]{dgibi/formation_debutant_2_thermique.dgibi}
+    \lstinputlisting[language=gibiane, firstline=315, lastline=315]{dgibi/formation_debutant_2_thermique.dgibi}
+    \begin{textblock*}{6cm}(6.7cm,-0.9cm)
+        \includegraphics[width=4.7cm]{images/exo/4_flux}
+    \end{textblock*}
+    \item<2->\fe{Tracé de lignes d'iso valeurs}{Plotting iso vlaues lines}
+    \onslide<2->{
+      \lstinputlisting[language=gibiane, firstline=324, lastline=325]{dgibi/formation_debutant_2_thermique.dgibi}
+      \begin{textblock*}{6cm}(6.7cm,0.1cm)
+        \includegraphics[width=4.7cm]{images/exo/4_temperatures}
+      \end{textblock*}}
+    \item<3->\fe{Retour au mode de tracé par défaut}{Back to default plot mode}
+    \onslide<3->{
+      \lstinputlisting[language=gibiane, firstline=326, lastline=326]{dgibi/formation_debutant_2_thermique.dgibi}}
+  \end{itemize}
+  \vspace{2cm}
+\end{frame}
+
+\begin{frame}{\fe{5 Problème étudié}{5 Problem description}}
+  \begin{itemize}
+    \item \gray{\fe{Conduction, régime transitoire}{Conduction, transient}}
+    \begin{columns}
+      \begin{column}{.4\textwidth}
+        \item \gray{\fe{Température imposée}{Imposed temperature}}
+      \end{column}
+      \begin{column}{.4\textwidth}
+        \item \gray{\fe{Flux de chaleur imposé}{Imposed heat flow}}
+      \end{column}
+    \end{columns}
+    \begin{columns}
+      \begin{column}{.4\textwidth}
+        \item \gray{\fe{Convection}{Convection}}
+      \end{column}
+      \begin{column}{.4\textwidth}
+        \item \gray{\fe{Source volumique}{Volume source}}
+      \end{column}
+    \end{columns}
+    ~\\
+    \item \fe{\ul{Rayonnement}}{\ul{Radiation}}\\
+    \begin{center}
+    \footnotesize
+    \begin{tikzpicture}
+      \node[anchor=south west,inner sep=0] (image) at (0,0)
+      {\includegraphics[width=3.5cm]{images/exo/5_cl_rayonnement}};
+      \begin{scope}[x={(image.south east)},y={(image.north west)},color=magenta]
+        \draw (0.7,0.9) node[anchor=north west] {$T_\infty$~=~-140~°C};
+        \draw (0.7,0.75) node[anchor=north west] {$\varepsilon$~=~0.9};
+      \end{scope}
+    \end{tikzpicture}
+    \normalsize
+  \end{center}
+  \end{itemize}
+  \vspace{2cm}
+\end{frame}
+
+\begin{frame}{\fe{5 Thermique non linéaire}{5 Non linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source, rayonnement}
+                 {Transient, conduction, convection, source, radiation}}
+\begin{itemize}
+    \item \fe{Objectif : calcul thermique transitoire non linéaire}
+             {Objective: non linear transient thermal calculation}
+    \begin{center}
+      $[C]\{\dot{T}\}+[K]\{T\}=\{P(T)\}$
+    \end{center}
+    \item \fe{Méthode :}{Method:}\\
+    \begin{tabular}{ll}
+      \fe{ajout d'un modèle de rayonnement}{adding a radiation model}\\
+      \fe{ajout d'un chargement de rayonnement}{adding a radiation load}
+    \end{tabular}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{5 Thermique non linéaire}{5 Non linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source, rayonnement}
+                 {Transient, conduction, convection, source, radiation}}
+  \begin{itemize}
+    \item \fe{Nouveaux paramètres}{New parameters}
+    \lstinputlisting[language=gibiane, firstline=57, lastline=58]{dgibi/formation_debutant_2_thermique.dgibi}
+    \item \fe{Formulation mathématique (rayonnement)}{Mathematical formulation (radiation)}
+    \lstinputlisting[language=gibiane, firstline=352, lastline=354]{dgibi/formation_debutant_2_thermique.dgibi}
+    \item<2->\fe{Chargement température de rayonnement + description temporelle}
+                {Load for radiation temperature + time description}
+    \onslide<2->{
+      \lstinputlisting[language=gibiane, firstline=356, lastline=358]{dgibi/formation_debutant_2_thermique.dgibi}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{5 Thermique non linéaire}{5 Non linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source, rayonnement}
+                 {Transient, conduction, convection, source, radiation}}
+  \begin{itemize}
+    \item \fe{Résolution avec \kwo{PASAPAS}}{Solving with \kwo{PASAPAS}}\\
+    \avous{\fe{Remplir la table pour \kw{PASAPAS} et résoudre}{Fill in the table for \kw{PASAPAS} and solve}}
+    \onslide<2->{
+      \lstinputlisting[language=gibiane, firstline=360, lastline=370]{dgibi/formation_debutant_2_thermique.dgibi}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{5 Thermique non linéaire}{5 Non linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source, rayonnement}
+                 {Transient, conduction, convection, source, radiation}}
+  \begin{itemize}
+    \item \fe{Post traitement : coubres d'évolution temporelles}{Post processing: time curve}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=375, lastline=378]{dgibi/formation_debutant_2_thermique.dgibi}
+    \item<2->\fe{Tracé avec légende}{Plotting with a legend}
+    \onslide<2->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=379, lastline=392]{dgibi/formation_debutant_2_thermique.dgibi}}
+    \onslide<3->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=397, lastline=398]{dgibi/formation_debutant_2_thermique.dgibi}
+      \begin{textblock*}{6cm}(6.3cm,-4.7cm)
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=6cm]{images/exo/5_evol_temperatures}};
+        \end{tikzpicture}
+      \end{textblock*}}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{5 Thermique non linéaire}{5 Non linear thermal analysis}}
+             {\fe{Transitoire, conduction, convection, source, rayonnement}
+                 {Transient, conduction, convection, source, radiation}}
+  \begin{itemize}
+    \item \fe{Post traitement : boucle de tracés}{Post processing: loop for plot}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=406, lastline=411]{dgibi/formation_debutant_2_thermique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=413, lastline=413]{dgibi/formation_debutant_2_thermique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=415, lastline=415]{dgibi/formation_debutant_2_thermique.dgibi}
+    \begin{textblock*}{5cm}(6.2cm,-1.3cm)
+      \animategraphics[controls,loop,poster=last,width=6cm]{10}{images/exo/5_temperatures.}{001}{101}
+    \end{textblock*}
+    \vspace{1cm}
+    \item<2->\fe{Sauvegarde des données}{Saving data}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=441, lastline=444]{dgibi/formation_debutant_2_thermique.dgibi}
+  \end{itemize}
 \end{frame}

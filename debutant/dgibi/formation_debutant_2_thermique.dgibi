@@ -29,8 +29,8 @@
 
 OPTI 'REST' 'formation_debutant_1_maillage.sauv' ;
 REST ;
-itrac = vrai ;
-OPTI 'TRAC' 'PSC' ;
+itrac = faux ;
+***OPTI 'TRAC' 'PSC' ;
 ipsc = EGA (VALE 'TRAC') 'PSC' ;
 
 
@@ -103,16 +103,16 @@ FINSI ;
 ** Matrice de blocage / Boundary condition matrix
 blt = BLOQ 'T' sint ;
 
-** Vecteur flux associe au blocage /
-*  Flow vector associeted to the bc matrix
-pt1 = DEPI blt timp ;
+** Vecteur associe au blocage /
+*  Vector associeted to the bc matrix
+pti = DEPI blt timp ;
 
 ** Vecteur flux impose a gauche /
 *  Flow vector imposed on the left
-pt2 = FLUX mot sut1 fimp ;
+pfi = FLUX mot sut1 fimp ;
 
 ** Resolution / Solving
-t21 = RESO (con ET blt) (pt1 ET pt2) ;
+t21 = RESO (con ET blt) (pti ET pfi) ;
 
 ** Affichage de la temperature / Display of the temperature
 SI ipsc ;
@@ -156,7 +156,7 @@ TRAC 'FACE' (elso COUL 'VERT') are1 ;
 FINSI ;
 
 ** Source de chaleur
-fls  = SOUR (REDU mot elso) simp elso ;
+psi = SOUR (REDU mot elso) simp elso ;
 
 ** Recuperation de surfaces /
 *  Recovery of some surfaces
@@ -184,7 +184,7 @@ chtc = MANU 'CHPO' sucon 'T' tconv ;
 ph   = CONV moc mac chtc ;
 
 ** Resolution / Solving
-t22  = RESO (con ET conh ET blt) (pt1 ET pt2 ET fls ET ph) ;
+t22  = RESO (con ET conh ET blt) (pti ET pfi ET psi ET ph) ;
 
 ** Affichage de la temperature / Display of the temperature
 SI ipsc ;
@@ -210,33 +210,37 @@ FINSI ;
 *               linear, transient, homogeneous material                *
 *----------------------------------------------------------------------*
 
-** Descriptions temporelles des chargements / Time descriptions of the loads
+** Descriptions temporelles des chargements /
+*  Time descriptions of the loads
 *  1) Temperature imposee / Imposed temperature
 list1   = PROG 0. (0.1 * tfinal) tfinal ;
 list2   = PROG (t0 / timp) 1. 1. ;
 evt1    = EVOL 'MANU' list1 list2 ;
-chatimp = CHAR 'TIMP' pt1 evt1 ;
+chatimp = CHAR 'TIMP' pti evt1 ;
 * 2) Flux surfacique impose / Imposed surface flow
 list3   = PROG 0. (0.3 * tfinal) (0.5 * tfinal) tfinal ;
 list4   = PROG 0. 0.             1.             1. ;
 evt2    = EVOL 'MANU' list3 list4 ;
-chafimp = CHAR 'Q' pt2 evt2 ;
+chafimp = CHAR 'Q' pfi evt2 ;
 * 3) Source volumique / Volume source
-chasour = CHAR 'Q' fls evt2 ;
+chasour = CHAR 'Q' psi evt2 ;
 * 4) Convection
 chaconv = CHAR 'TECO' chtc ;
 
-** Resolution avec la procedure PASAPAS / Solving with the PASAPAS procedure
+** Resolution avec la procedure PASAPAS /
+*  Solving with the PASAPAS procedure
+delta_t                      = tfinal / 100. ;
 tab1                         = TABL ;
 tab1 . 'MODELE'              = mot ET moc ;
 tab1 . 'CARACTERISTIQUES'    = mat ET mac ;
 tab1 . 'BLOCAGES_THERMIQUES' = blt ;
-tab1 . 'CHARGEMENT'          = chatimp ET chafimp ET chasour ET chaconv ;
-tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' (tfinal / 100.) tfinal ;
+tab1 . 'CHARGEMENT'          = chatimp ET chafimp ET
+                               chasour ET chaconv ;
+tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' delta_t tfinal ;
 PASAPAS tab1 ;
 
 ** Post traitement / Post processing
-* 1) evolution temporelle de la temperature en 4 noeuds /
+* 1) Evolution temporelle temperature en 4 noeuds /
 *    Time evolution of temperature on 4 nodes
 pa  = vol1 POIN 'PROC' (0.             (e / 2.) 0.) ;
 pb  = vol1 POIN 'PROC' ((0.45 * l)     (e / 2.) h ) ;
@@ -246,7 +250,7 @@ SI ipsc ;
   OPTI 'FTRA' '3_points.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC (are1 ET (pa ET pb ET pc ET pd)) 'TITR' '[3] Points de mesure' ;
+TRAC (are1 ET (pa ET pb ET pc ET pd)) ;
 FINSI ;
 eva = EVOL 'BLEU' 'TEMP' tab1 'TEMPERATURES' 'T' pa ;
 evb = EVOL 'VERT' 'TEMP' tab1 'TEMPERATURES' 'T' pb ;
@@ -256,7 +260,7 @@ SI ipsc ;
   OPTI 'FTRA' '3_evol_temperatures.ps' ;
 FINSI ;
 SI itrac ;
-  DESS (eva ET evb ET evc ET evd) 'TITR' '[3] Temperature vs Temps' ;
+DESS (eva ET evb ET evc ET evd) ;
 FINSI ;
 
 * 2) Boucle : trace des temperature a chaque instant
@@ -271,7 +275,7 @@ REPE b1 n1 ;
   prc   = ENTI (100. * tpsi / tfinal) ;
   titi  = CHAI '[3] Temperature au temps' ' ' tpsi '  (' prc ' %)' ;
   SI itrac ;
-    TRAC ti vol1 are1 liso1 'TITR' titi ;
+  TRAC ti vol1 are1 liso1 'TITR' titi ;
   FINSI ;
 FIN b1 ;
 
@@ -292,10 +296,11 @@ DEBP VECFLU  chpo1*'CHPOINT'  model1*'MMODEL'  mater1*'MCHAML' ;
 * Changement du type / Type change
   grad2 = CHAN 'TYPE' grad1 'CARACTERISTIQUES' ;
 * Multiplication par la conductivite / Multiplication by the conductivity
-  q     = mater1 * grad2 (MOTS 'K' 'K' 'K') (MOTS 'T,X' 'T,Y' 'T,Y') (MOTS 'QX' 'QY' 'QZ') ;
+  q     = mater1 * grad2 (MOTS 'K ' 'K ' 'K ') (MOTS 'T,X' 'T,Y' 'T,Y')
+                         (MOTS 'QX' 'QY' 'QZ') ;
   q     = -1. * q ;
 * Objet vecteur / Vector object
-***  vec1  = VECT q model1 (MOTS 'QX' 'QY' 'QZ') 2.E-6 ;
+  vec1  = VECT q model1 (MOTS 'QX' 'QY' 'QZ') 2.E-7 ;
   q     = CHAN 'CHPO' q model1 ;
   vec1  = @VECOUL q 2.E-7 (MOTS 'QX' 'QY' 'QZ') ;
 FINP vec1 ;
@@ -307,17 +312,18 @@ SI ipsc ;
   OPTI 'FTRA' '4_flux.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC vf1 are1 'TITR' '[4] Flux de chaleur' ;
+TRAC vf1 are1 ;
 FINSI ;
 
-** Trace avec lignes d'isovaleurs / Plotting with iso-value lines
+** Trace avec lignes d'isovaleurs /
+*  Plotting with iso-value lines
 SI ipsc ;
   OPTI 'FTRA' '4_temperatures.ps' ;
 FINSI ;
 SI itrac ;
-  OPTI 'ISOV' 'LIGN' ;
-  TRAC tn1 vol1 are1 10 'TITR' '[4] Iso surfaces de temperature' ;
-  OPTI 'ISOV' 'SURF' ;
+OPTI 'ISOV' 'LIGN' ;
+TRAC tn1 vol1 are1 10 ;
+OPTI 'ISOV' 'SURF' ;
 FINSI ;
 
 
@@ -351,13 +357,15 @@ mar = MATE mor 'EMIS' emi ;
 chtr   = MANU 'CHPO' sur2 'T' trayo ;
 charay = CHAR 'TERA' chtr ;
 
-** Resolution avec la procedure PASAPAS / Solving with the PASAPAS procedure
+** Resolution avec la procedure PASAPAS /
+*  Solving with the PASAPAS procedure
 tab1                         = TABL ;
 tab1 . 'MODELE'              = mot ET moc ET mor ;
 tab1 . 'CARACTERISTIQUES'    = mat ET mac ET mar ;
 tab1 . 'BLOCAGES_THERMIQUES' = blt ;
-tab1 . 'CHARGEMENT'          = chatimp ET chafimp ET chasour ET chaconv ET charay ;
-tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' (tfinal / 100.) tfinal ;
+tab1 . 'CHARGEMENT'          = chatimp ET chafimp ET
+                               chasour ET chaconv ET charay ;
+tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' delta_t tfinal ;
 tab1 . 'CELSIUS'             = VRAI ;
 PASAPAS tab1 ;
 
@@ -374,20 +382,20 @@ tleg . 2   = 'TIRR' ;
 tleg . 3   = 'TIRR' ;
 tleg . 4   = 'TIRR' ;
 tleg . 'TITRE' = TABL ;
-tleg . 'TITRE' . 1 = 'PA conduction seule' ;
-tleg . 'TITRE' . 2 = 'PB conduction seule' ;
-tleg . 'TITRE' . 3 = 'PC conduction seule' ;
-tleg . 'TITRE' . 4 = 'PD conduction seule' ;
-tleg . 'TITRE' . 5 = 'PA conduction + rayonnement' ;
-tleg . 'TITRE' . 6 = 'PB conduction + rayonnement' ;
-tleg . 'TITRE' . 7 = 'PC conduction + rayonnement' ;
-tleg . 'TITRE' . 8 = 'PD conduction + rayonnement' ;
+tleg . 'TITRE' . 1 = 'PA cond.' ;
+tleg . 'TITRE' . 2 = 'PB cond.' ;
+tleg . 'TITRE' . 3 = 'PC cond.' ;
+tleg . 'TITRE' . 4 = 'PD cond.' ;
+tleg . 'TITRE' . 5 = 'PA cond. + ray.' ;
+tleg . 'TITRE' . 6 = 'PB cond. + ray.' ;
+tleg . 'TITRE' . 7 = 'PC cond. + ray.' ;
+tleg . 'TITRE' . 8 = 'PD cond. + ray.' ;
 SI ipsc ;
   OPTI 'FTRA' '5_evol_temperatures.ps' ;
 FINSI ;
 SI itrac ;
-  DESS (eva ET evb ET evc ET evd ET evar ET evbr ET evcr ET evdr)
-       'LEGE' tleg 'TITR' '[5] Temperature vs Temps' ;
+DESS (eva  ET evb  ET evc  ET evd ET
+      evar ET evbr ET evcr ET evdr) 'LEGE' tleg ;
 FINSI ;
 
 * 2) Boucle : trace des temperature a chaque instant /
@@ -402,7 +410,7 @@ REPE b1 n1 ;
   prc   = ENTI (100. * tpsi / tfinal) ;
   titi  = CHAI '[5] Temperature au temps' ' ' tpsi '  (' prc ' %)' ;
   SI itrac ;
-    TRAC ti vol1 are1 liso1 'TITR' titi ;
+  TRAC ti vol1 are1 liso1 'TITR' titi ;
   FINSI ;
 FIN b1 ;
 
@@ -418,7 +426,7 @@ REPE b1 n1 ;
   prc   = ENTI (100. * tpsi / tfinal) ;
   titi  = CHAI '[5] Flux au temps' ' ' tpsi '  (' prc ' %)' ;
   SI itrac ;
-    TRAC vfi are1 'TITR' titi ;
+  TRAC vfi are1 'TITR' titi ;
   FINSI ;
 FIN b1 ;
 
@@ -432,7 +440,5 @@ FIN b1 ;
 
 OPTI 'SAUV' 'formation_debutant_2_thermique.sauv' ;
 SAUV ;
-
-
 
 FIN ;

@@ -75,7 +75,10 @@
       \begin{textblock*}{5cm}(8.1cm,-2.6cm)
         \includegraphics[width=4cm]{images/exo/1.1_maillage_tetra.01}
       \end{textblock*}}
-    \onslide<3>{\footnotesize \avous{\fe{Maillage du cercle de centre p6}{Meshing the circle with center p6}} \normalsize}
+    \onslide<3->{
+      \footnotesize
+      \avous{\fe{Maillage du cercle de centre p6}{Meshing the circle with center p6}}
+      \normalsize}
     \onslide<4->{
       \lstinputlisting[language=gibiane, firstline=88, lastline=89]{dgibi/formation_debutant_1_maillage.dgibi}
       \lstinputlisting[language=gibiane, firstline=91, lastline=91]{dgibi/formation_debutant_1_maillage.dgibi}
@@ -93,7 +96,7 @@
     \lstinputlisting[language=gibiane, firstline=93, lastline=94]{dgibi/formation_debutant_1_maillage.dgibi}
     \onslide<2->{
       \lstinputlisting[language=gibiane, firstline=96, lastline=96]{dgibi/formation_debutant_1_maillage.dgibi}}
-    \onslide<2>{
+    \onslide<2-3>{
       \begin{textblock*}{5cm}(8.1cm,-1.cm)
         \includegraphics[width=4cm]{images/exo/1.1_maillage_tetra.03}
       \end{textblock*}}
@@ -105,7 +108,8 @@
         \includegraphics[width=4cm]{images/exo/1.1_maillage_tetra.04}
       \end{textblock*}}
     \item<5->\fe{Maillage du volume}{Meshing the volume}\\
-    \onslide<5>{\footnotesize
+    \onslide<5->{
+      \footnotesize
       \avous{\fe{Mailler le volume par translation (voir : VOLU)}{Mesh the volume by translation (see: VOLU)}}
       \normalsize}
     \onslide<6->{
@@ -140,14 +144,15 @@
       \begin{textblock*}{5cm}(8.1cm,-2.4cm)
         \includegraphics[width=4cm]{images/exo/1.1_maillage_tetra.08}
       \end{textblock*}}
-    \onslide<4>{\footnotesize
+    \onslide<4->{
+      \footnotesize
       \avous{\fe{Mailler le volume dans la surface enveloppe (voir : VOLU)}
                 {Mesh the volume inside the enveloppe (see: VOLU)}}
       \normalsize}
     \onslide<5->{
       \lstinputlisting[language=gibiane, firstline=121, lastline=123]{dgibi/formation_debutant_1_maillage.dgibi}
       \lstinputlisting[language=gibiane, firstline=125, lastline=125]{dgibi/formation_debutant_1_maillage.dgibi}
-      \begin{textblock*}{5cm}(8.1cm,-2.4cm)
+      \begin{textblock*}{5cm}(8.1cm,-1.8cm)
         \includegraphics[width=4cm]{images/exo/1.1_maillage_tetra.09}
       \end{textblock*}}
   \end{itemize}
@@ -195,7 +200,8 @@
     \lstinputlisting[language=gibiane, firstline=162, lastline=166]{dgibi/formation_debutant_1_maillage.dgibi}
     \item<2->\fe{Maillage de la surface autour du trou}{Surface mesh around the hole}
     \lstinputlisting[language=gibiane, firstline=167, lastline=171]{dgibi/formation_debutant_1_maillage.dgibi}
-    \onslide<3>{\footnotesize
+    \onslide<3->{
+      \footnotesize
       \avous{\fe{Mailler le cercle du trou par PROJection de \kw{lig1}}
                 {Mesh the circle of the hole by PROJection of \kw{lig1}}}
       \normalsize}
@@ -203,20 +209,48 @@
     \lstinputlisting[language=gibiane, firstline=172, lastline=174]{dgibi/formation_debutant_1_maillage.dgibi}
     \lstinputlisting[language=gibiane, firstline=176, lastline=176]{dgibi/formation_debutant_1_maillage.dgibi}
       \begin{textblock*}{5cm}(9cm,-4.1cm)
-        \includegraphics[width=3cm]{images/exo/1.2_maillage_hexa.2}
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=3cm]{images/exo/1.2_maillage_hexa.2}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)}]
+            \tiny
+            \draw (0.02,0.2) node[anchor=west] {\kw{lig1}};
+            \draw (0.3,0.3) node[anchor=west] {\kw{cin}};
+          \end{scope}
+        \end{tikzpicture}
       \end{textblock*}}
   \end{itemize}
 \end{frame}
 
 \begin{frame}{\fe{1.2 Maillage structuré}{1.2 Structured mesh}}
   \begin{itemize}
-    \item \fe{Maillage de la surface réglée}{Meshing the ruled surface}
-    \lstinputlisting[language=gibiane, firstline=178, lastline=182]{dgibi/formation_debutant_1_maillage.dgibi}
-    \lstinputlisting[language=gibiane, firstline=184, lastline=184]{dgibi/formation_debutant_1_maillage.dgibi}
-    \begin{textblock*}{5cm}(8.1cm,-2cm)
-      \includegraphics[width=4cm]{images/exo/1.2_maillage_hexa.3}
-    \end{textblock*}
-    \item<2->\fe{Maillage du volume par translation}{Meshing the volume by translation}
+    \item \fe{Maillage de la surface réglée}{Meshing the ruled surface}\\
+    \footnotesize
+    \avous{\fe{Mailler la surface réglée entre \kw{cin} et \kw{lig1}\\
+         \quad avec 3 éléments (voir : REGL)}
+              {Mesh the ruled surface between \kw{cin} and \kw{lig1}\\
+        \qquad with 3 elements (see: REGL)}}
+    \normalsize
+    \onslide<1-2>{
+      \begin{textblock*}{5cm}(9cm,-2cm)
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=3cm]{images/exo/1.2_maillage_hexa.2}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)}]
+            \tiny
+            \draw (0.02,0.2) node[anchor=west] {\kw{lig1}};
+            \draw (0.3,0.3) node[anchor=west] {\kw{cin}};
+          \end{scope}
+        \end{tikzpicture}
+      \end{textblock*}}
+      \onslide<2->{
+      \lstinputlisting[language=gibiane, firstline=178, lastline=182]{dgibi/formation_debutant_1_maillage.dgibi}}
+    \onslide<3->{
+      \lstinputlisting[language=gibiane, firstline=184, lastline=184]{dgibi/formation_debutant_1_maillage.dgibi}
+      \begin{textblock*}{5cm}(8.1cm,-2cm)
+        \includegraphics[width=4cm]{images/exo/1.2_maillage_hexa.3}
+      \end{textblock*}}
+    \item<4->\fe{Maillage du volume par translation}{Meshing the volume by translation}
     \lstinputlisting[language=gibiane, firstline=186, lastline=187]{dgibi/formation_debutant_1_maillage.dgibi}
     \lstinputlisting[language=gibiane, firstline=189, lastline=189]{dgibi/formation_debutant_1_maillage.dgibi}
     \begin{textblock*}{5cm}(8.1cm,-2cm)
@@ -230,6 +264,6 @@
     \item \fe{Récupération de sous zones}{Subzone recovery}
     \lstinputlisting[language=gibiane, firstline=191, lastline=197]{dgibi/formation_debutant_1_maillage.dgibi}
     \item<2->\fe{Sauvegarde des données}{Saving data}
-    \lstinputlisting[language=gibiane, firstline=215, lastline=216]{dgibi/formation_debutant_1_maillage.dgibi}
+    \lstinputlisting[language=gibiane, firstline=215, lastline=218]{dgibi/formation_debutant_1_maillage.dgibi}
   \end{itemize}
 \end{frame}

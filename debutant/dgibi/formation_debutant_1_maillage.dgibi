@@ -188,7 +188,7 @@ vol1  = sur1 VOLU 2 'TRAN' (0. e 0.) ;
 SI itrac ;
 TRAC 'CACH' vol1 ;
 FINSI ;
-** Recuperation de faces / Face recovery
+** Recuperation de faces / Faces recovery
 sur2  = vol1 FACE 2 ;
 sur3  = vol1 FACE 3 ;
 * Surface enveloppe
@@ -214,7 +214,5 @@ FINSI ;
 
 OPTI 'SAUV' 'formation_debutant_1_maillage.sauv' ;
 SAUV ;
-
-
 
 FIN ;
