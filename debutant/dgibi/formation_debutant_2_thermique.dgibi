@@ -146,7 +146,7 @@ FINSI ;
 ** Recuperation de volumes /
 *  Recovery of some volumes
 x    = COOR 1 vol1 ;
-ptso = x POIN 'COMPRIS' (l / 3.) (l / 2.) ;
+ptso = x POIN 'COMPRIS' (0.33 * l) (0.51 * l) ;
 elso = vol1 ELEM 'APPU' 'STRI' ptso ;
 SI ipsc ;
 OPTI 'FTRA' '2.2_cl_source.ps' ;

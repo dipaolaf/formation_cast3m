@@ -1,0 +1,54 @@
+OPTI 'TRAC' 'PSC' ;
+
+** Modele 1D axis
+OPTI 'FTRA' 'thermique_1d_axi.ps' ;
+OPTI 'DIME' 1 'MODE' 'UNID' 'AXIS' 'ELEM' 'SEG3' ;
+
+p1  = POIN 10. ;
+p2  = POIN 50. ;
+lig = DROI 10 p1 p2 ;
+
+
+
+
+mo  = MODE lig 'THERMIQUE' ;
+ma  = MATE mo 'K' 42. ;
+con = COND mo ma ;
+
+bl1 = BLOQ 'T' p1 ;
+bl2 = BLOQ 'T' p2 ;
+f1  = DEPI bl1 20. ;
+f2  = DEPI bl2 500. ;
+
+t   = RESO (con ET bl1 ET bl2) (f1 ET f2) ;
+TRAC t lig ;
+evt = EVOL 'CHPO' t 'T' lig ;
+DESS evt ;
+
+
+** Modele 2D axis
+OPTI 'FTRA' 'thermique_2d_axi.ps' ;
+OPTI 'DIME' 2 'MODE' 'AXIS' 'ELEM' 'QUA8' ;
+
+p1  = 10. 0. ;
+p2  = 50. 0. ;
+lig = DROI 10 p1 p2 ;
+sur = lig TRAN 1 (0. 1.) ;
+li1 = sur COTE 4 ;
+li2 = sur COTE 2 ;
+
+mo  = MODE sur 'THERMIQUE' ;
+ma  = MATE mo 'K' 42. ;
+con = COND mo ma ;
+
+bl1 = BLOQ 'T' li1 ;
+bl2 = BLOQ 'T' li2 ;
+f1  = DEPI bl1 20. ;
+f2  = DEPI bl2 500. ;
+
+t   = RESO (con ET bl1 ET bl2) (f1 ET f2) ;
+TRAC t sur ;
+evt = EVOL 'CHPO' t 'T' lig ;
+DESS evt ;
+
+FIN ;

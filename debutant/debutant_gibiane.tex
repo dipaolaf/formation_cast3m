@@ -99,7 +99,7 @@
     \footnotesize
     \fe{Point virgule \kw{;} oublié en fin de ligne $\Rightarrow$ la lecture de l'instruction continue !}
        {Semicolon \kw{;} forgotten at the end of the statement $\Rightarrow$ the statement is not ended}\\
-    \fe{Apostrophe \kw{'} oubliée à la fin d’une chaine $\Rightarrow$ la définition de la chaine continue !}
+    \fe{Apostrophe \kw{'} oubliée à la fin d'une chaine $\Rightarrow$ la définition de la chaine continue !}
        {Single quote \kw{'} forgotten at the end of a string $\Rightarrow$ the string is not ended}
     \normalsize
   \end{itemize}
@@ -110,7 +110,7 @@
     \item \fe{Définition}{Definition}\\
     \footnotesize
     \fe{Désigne toute \g{structure de données/résultats} munie d'un \red{type}\\
-        (éventuellement d’un sous-type) et d'un \red{nom}}
+        (éventuellement d'un sous-type) et d'un \red{nom}}
        {Any data/result with a defined \red{type}\\
         (possibly a sub-type) and \red{name}}
     \normalsize
@@ -150,7 +150,7 @@
     \normalsize
     \item \fe{Noms des opérateurs}{Operators Names}\\
     \footnotesize
-    \fe{Imposés à l’utilisateur}{Pre-defined}\\
+    \fe{Imposés à l'utilisateur}{Pre-defined}\\
     \fe{Ce sont des instructions Gibiane}{These are Gibiane instructions}\\
     \fe{Insensibles à la casse}{Case insensitive}\\
     \fe{Cast3M ne lit que les \red{4 premiers caractères} :}
@@ -266,7 +266,7 @@
     \kwr{FLAMBAGE} \fe{calculs de flambage}{buckling calculations}\\
     \kwr{DYNAMIC}  \fe{calculs dynamiques}{dynamics calculations}\\
     \kwr{THERMIC}  \fe{calculs thermiques}{thermal calculations}\\
-    \kwr{G\_THETA} \fe{calcul d’intégrales J et FIC (rupture)}{J integrals and SIF computation (fracture)}\\
+    \kwr{G\_THETA} \fe{calcul d'intégrales J et FIC (rupture)}{J integrals and SIF computation (fracture)}\\
     \dots\\~\\
     \fe{Consultez la documentation :}{Read the doc:}\\
     \url{http://www-cast3m.cea.fr/index.php?page=notices}
@@ -346,7 +346,7 @@
   \end{itemize}
 \end{frame}
 
-\begin{frame}{\fe{Organisation d’un calcul élément-finis (4 grandes étapes)}
+\begin{frame}{\fe{Organisation d'un calcul élément-finis (4 grandes étapes)}
                  {Method to perform finite element calculations (4 main steps)}}
   \begin{enumerate}
     \footnotesize
@@ -359,10 +359,10 @@
     \end{enumerate}
     \item \fe{Définition du modèle mathématique}{Mathematical model definition}
     \begin{enumerate} \scriptsize
-      \item \fe{Modèle (type d’analyse, formulation, comportement matériau, type d’élément)}
+      \item \fe{Modèle (type d'analyse, formulation, comportement matériau, type d'élément)}
                {Model (type of analyze, formulation, material behavior, types of elements)}
       \item \fe{Propriétés matérielles (module d'Young, masse volumique, …)}
-               {Material properties (Young’s modulus, density, …)}
+               {Material properties (Young's modulus, density, …)}
       \item \fe{Propriétés géométriques (épaisseur, moments quadratiques, …)}
                {Geometrical properties (thickness, quadratic moments of area, …)}
       \item \fe{Conditions aux limites/chargements}
@@ -377,7 +377,7 @@
       \item \fe{Assemblage des matrices}{Global matrix calculation}
       \item \fe{Application des conditions limites/chargements}
               {Introduction of the loadings and boundary conditions}
-      \item \fe{Résolution du système d’équations}{Solving the system of equations}
+      \item \fe{Résolution du système d'équations}{Solving the system of equations}
     \end{enumerate}
     \item \fe{Analyse et post-traitement des résultats}{Analysis et post-processing}
       \begin{enumerate} \scriptsize
