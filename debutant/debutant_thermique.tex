@@ -3,39 +3,45 @@
 \label{thermique}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\fe{\subsection{Thermique stationnaire}}{\subsection{Steady State Thermal Analysis}}
 \begin{frame}{\fe{Thermique}{Thermal analysis}}{\fe{Rappels}{Reminders}}
   \begin{itemize}
     \item \fe{Équation de la chaleur}{Heat equation}
     \begin{block}{\fe{Forme locale}{Local form}}
       \begin{equation*}
-        \rho c_p \frac{\partial T}{\partial t}+\tx{div}\underbrace{\left(-\lambda\ve{\tx{grad}}(T)\right)}_{\ve{\phi}}=q\quad\fe{\tx{sur }V}{\tx{on }V}
+        \rho c_p \frac{\partial T}{\partial t}+\tx{div}\underbrace{\left(-\lambda\tou{\tx{grad}}(T)\right)}_{\tou{\phi}}=q\quad\fe{\tx{sur }V}{\tx{on }V}
       \end{equation*}
-    \end{block}
+    \end{block}~
+    \item \fe{Conditions aux limites}{Boundary conditions}\\
     \footnotesize
-    \fe{avec :}{with:}
+    \setlength\tabcolsep{1.5pt}
+    \fe{\begin{tabular}{lrll}
+          Températures imposées & $T$                  & $=T_{\tx{imp}}$ & sur $\partial V_T$\\
+          Flux imposés          & $\tou{\phi}.\tou{n}$ & $=\phi_{\tx{imp}}+\underbrace{h(T_f-T)}_{\tx{convection}}+\underbrace{\varepsilon \sigma(T_\infty^4-T^4)}_{\tx{\fe{rayonnement}{radiation}}}$ & sur $\partial V_{\phi}$\\
+        \end{tabular}}
+       {\begin{tabular}{lrll}
+          Imposed temperatures  & $T$                  & $=T_{\tx{imp}}$ & on $\partial V_T$\\
+          Imposed heat flow     & $\tou{\phi}.\tou{n}$ & $=\phi_{\tx{imp}}+\underbrace{h(T_f-T)}_{\tx{convection}}+\underbrace{\varepsilon \sigma(T_\infty^4-T^4)}_{\tx{\fe{rayonnement}{radiation}}}$ & on $\partial V_{\phi}$\\
+        \end{tabular}}
+    \normalsize
+    \item \fe{Avec}{With}
+    \footnotesize
     \begin{itemize}
+      \footnotesize
       \begin{columns}
         \begin{column}{.4\textwidth}
           \item[] $T$ \fe{température}{temperature}
-          \item[] $\ve{\phi}$ \fe{densité de flux de chaleur}{heat flow density}
+          \item[] $\tou{\phi}$ \fe{densité de flux de chaleur}{heat flow density}
           \item[] $q$ \fe{source de chaleur volumique}{volumic heat source}
+          \item[] $t$ \fe{temps}{time}
         \end{column}
         \begin{column}{.42\textwidth}
           \item[] $\lambda$ \fe{conductivité thermique}{thermal conductivity}
           \item[] $\rho$ \fe{masse volumique}{mass density}
-          \item[] $c_p$ \fe{capacité thermique massique}{Massic heat capacity}
-          \item[] $t$ \fe{temps}{time}
+          \item[] $c_p$ \fe{capacité thermique massique}{massic heat capacity}
         \end{column}
       \end{columns}
     \end{itemize}
-    \normalsize
-    \item \fe{Conditions aux limites}{Boundary conditions}\\
-    \footnotesize
-    \fe{Températures imposées}{Imposed temperatures}
-    $T=T_{\tx{imp}}$ \fe{sur $\partial V_T$}{on $\partial V_T$}\\
-    \fe{Flux imposés}{Imposed heat flow}
-    $\ve{\phi}.\ve{n}=\phi_{\tx{imp}}+\underbrace{h(T_f-T)}_{\tx{convection}}+\underbrace{\varepsilon \sigma(T_\infty^4-T^4)}_{\tx{\fe{rayonnement}{radiation}}}$
-    \fe{sur $\partial V_{\phi}$}{on $\partial V_{\phi}$}
     \normalsize
   \end{itemize}
 \end{frame}
@@ -45,7 +51,7 @@
     \item \fe{Éléments finis :}{Finite elements:}
     \footnotesize
     \begin{center}
-      $T(x)=[N(x)]\{T\}$ \qquad $\ve{\tx{grad}}(T)=[B(x)]\{T\}$
+      $T(x)=[N(x)]\{T\}$ \qquad $\tou{\tx{grad}}(T)=[B(x)]\{T\}$
     \end{center}
     \normalsize
     \begin{block}{\fe{Formulation faible et discrétisée :}
@@ -128,7 +134,7 @@
     \begin{tabular}{ll}
       \fe{calcul de la matrice de conductivité}{conductivity matrix calculation} & $[K]$\\
       \fe{calcul des chargement nodaux équivalents}{fixed nodal heat loads calculation} & $\{P\}$\\
-      \fe{résolution avec \kwr{RESO}}{sovling with \kwr{RESO}} & $\{T\}$
+      \fe{résolution avec \kwr{RESO}}{sovling with \kwr{RESO}} & $\{T\}=[K]^{-1}\{P\}$
     \end{tabular}
   \end{itemize}
 \end{frame}
@@ -143,7 +149,7 @@
                \quad~Ils sont alors accessibles de suite}
               {All of the objects are loaded into memory\\
                \quad~~~They can be called now}}
-    \item \fe{Noveaux paramètres}{New parameters}
+    \item \fe{Nouveaux paramètres}{New parameters}
     \lstinputlisting[language=gibiane, firstline=44, lastline=47]{dgibi/formation_debutant_2_thermique.dgibi}
     \lstinputlisting[language=gibiane, firstline=49, lastline=53]{dgibi/formation_debutant_2_thermique.dgibi}
   \end{itemize}
@@ -246,7 +252,7 @@
     \end{columns}
     \begin{columns}
       \begin{column}{.4\textwidth}
-        \item \fe{\ul{Convection}}{\ul{Convection}}
+        \item \fe{\tou{Convection}}{\tou{Convection}}
         \footnotesize
         \begin{tikzpicture}
           \node[anchor=south west,inner sep=0] (image) at (0,0)
@@ -259,7 +265,7 @@
         \normalsize
       \end{column}
       \begin{column}{.4\textwidth}
-        \item \fe{\ul{Source volumique}}{\ul{Volume source}}
+        \item \fe{\tou{Source volumique}}{\tou{Volume source}}
         \footnotesize
         \begin{tikzpicture}
           \node[anchor=south west,inner sep=0] (image) at (0,0)
@@ -474,9 +480,10 @@
   \vspace{1.5cm}
 \end{frame}
 
+\fe{\subsection{Thermique transitoire}}{\subsection{Transient Thermal Analysis}}
 \begin{frame}{\fe{3 Problème étudié}{3 Problem description}}
   \begin{itemize}
-    \item \fe{Conduction, \ul{régime transitoire}}{Conduction, \ul{transient}}
+    \item \fe{Conduction, \tou{régime transitoire}}{Conduction, \tou{transient}}
     \begin{columns}
       \begin{column}{.4\textwidth}
         \item \gray{\fe{Température imposée}{Imposed temperature}}
@@ -622,7 +629,7 @@
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=278, lastline=278]{dgibi/formation_debutant_2_thermique.dgibi}
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=280, lastline=280]{dgibi/formation_debutant_2_thermique.dgibi}
     \begin{textblock*}{5cm}(6.2cm,-1.4cm)
-      \animategraphics[controls,loop,poster=last,width=6cm]{10}{images/exo/3_temperatures.}{001}{101}
+      \animategraphics[controls,loop,poster=last,width=5.7cm]{10}{images/exo/3_temperatures.}{001}{101}
     \end{textblock*}
     \end{itemize}
     \vspace{3cm}
@@ -633,7 +640,7 @@
   \begin{itemize}
     \item \fe{Post traitement : vecteurs flux de chaleur}
              {Post processing: vectors for heat flow}
-    $\ve{\phi}=-\lambda\ve{\tx{grad}}(T)$
+    $\tou{\phi}=-\lambda\tou{\tx{grad}}(T)$
     \item<2->\fe{Définition d'une \g{procédure}}{Definition of a \g{procedure}}
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=293, lastline=302]{dgibi/formation_debutant_2_thermique.dgibi}
     \onslide<1>{
@@ -651,7 +658,7 @@
   \begin{itemize}
     \item \fe{Post traitement : vecteurs flux de chaleur}
              {Post processing: vectors for heat flow}
-    $\ve{\phi}=-\lambda\ve{\tx{grad}}(T)$
+    $\tou{\phi}=-\lambda\tou{\tx{grad}}(T)$
     \lstinputlisting[language=gibiane, firstline=308, lastline=310]{dgibi/formation_debutant_2_thermique.dgibi}
     \lstinputlisting[language=gibiane, firstline=315, lastline=315]{dgibi/formation_debutant_2_thermique.dgibi}
     \begin{textblock*}{6cm}(6.7cm,-0.9cm)
@@ -690,7 +697,7 @@
       \end{column}
     \end{columns}
     ~\\
-    \item \fe{\ul{Rayonnement}}{\ul{Radiation}}\\
+    \item \fe{\tou{Rayonnement}}{\tou{Radiation}}\\
     \begin{center}
     \footnotesize
     \begin{tikzpicture}

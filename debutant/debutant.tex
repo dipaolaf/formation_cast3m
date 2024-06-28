@@ -3,7 +3,7 @@
 % Paquets utilisés
 \usepackage{animate} % pour faire des animations
 \usepackage{listings} % pour insérer des lignes de codes avec de la coloratio syntaxique
-\usepackage[audience=english]{beameraudience}  % pour écrire la présentation en 2 langues
+\usepackage[audience=french]{beameraudience}  % pour écrire la présentation en 2 langues
 \usepackage{textpos} % pour positionner des figure où l'on veut
 \usepackage{tikz} % pour faire de jolies figures
 \usepackage{pifont} % pour avoir des symboles sympa
@@ -34,13 +34,11 @@
 \justfor{french}{
   \title{Débuter avec Cast3M}
   \subtitle{calculs thermo mécaniques}
-  \date{Été 2024}
-}
+  \date{Été 2024}}
 \justfor{english}{
   \title{Starting with Cast3M}
   \subtitle{thermomechanical calculations}
-  \date{Summer 2024}
-}
+  \date{Summer 2024}}
 \author{François Di Paola}
 \institute{CEA Saclay,\\
 \url{http://www-cast3m.cea.fr}}
@@ -48,7 +46,8 @@
 % Quelques raccourcis perso
 \newcommand{\fe}[2]{\justfor{french}{#1}\justfor{english}{#2}}
 \newcommand{\g}[1]{\textbf{#1}}
-\newcommand{\ul}[1]{\underline{#1}}
+\newcommand{\tou}[1]{\underline{#1}}
+\newcommand{\tod}[1]{\underline{\underline{#1}}}
 \newcommand{\kw}[1]{\mbox{\texttt{#1}}}
 \newcommand{\kwr}[1]{\textcolor{red}{\kw{#1}}}
 \newcommand{\kwg}[1]{\textcolor{Green}{\kw{#1}}}
@@ -65,7 +64,6 @@
                      \foreach \x in {0,1,...,9} { \node [anchor=north] at (\x/10,0) {0.\x}; }
                      \foreach \y in {0,1,...,9} { \node [anchor=east] at (0,\y/10) {0.\y}; }}
 \newcommand{\avous}[1]{\orange{\ding{43}\emph{#1}}}
-\newcommand{\ve}[1]{\overrightarrow{#1}}
 \newcommand{\tx}[1]{\textsf{#1}}
 
 
@@ -84,21 +82,21 @@
           \begin{center}
             \fe{\hyperlink{thermique}{\emph{Thermo}} \hyperlink{mecanique}{\emph{mécanique}} \emph{d'une structure avec un trou}}
                {\hyperlink{thermique}{\emph{Thermo}} \hyperlink{mecanique}{\emph{mechanical}} \emph{behavior of a structure with a hole}}\\
-          \includegraphics[height=0.22\textheight]{images/exo/1.2_maillage_hexa.4} \hspace{2mm}
-          \includegraphics[height=0.25\textheight]{images/exo/2.1_temperatures.3} \hspace{2mm}
-          \includegraphics[height=0.25\textheight]{images/exo/8_contraintes}
+          \includegraphics[height=0.242\textheight]{images/exo/1.2_maillage_hexa.4} \hspace{2mm}
+          \includegraphics[height=0.275\textheight]{images/exo/2.1_temperatures.3}  \hspace{2mm}
+          \includegraphics[height=0.275\textheight]{images/exo/8_contraintes}
           \end{center}
     \item \hyperlink{complements}{\fe{Compléments}{Complements}}
   \end{itemize}
 \end{frame}
 
-%\input{debutant_presentation}
-%\input{debutant_gibiane}
-%\input{debutant_maillage}
+\input{debutant_presentation}
+\input{debutant_gibiane}
+\input{debutant_maillage}
 \input{debutant_thermique}
+\input{debutant_mecanique}
 %\input{en_cours}
-%\input{debutant_mecanique}
-%\input{debutant_complements}
+\input{debutant_complements}
 
 
 \end{document}

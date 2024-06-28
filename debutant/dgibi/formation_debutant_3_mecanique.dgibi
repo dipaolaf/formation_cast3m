@@ -3,13 +3,13 @@
 *----------------------------------------------------------------------*
 *      FORMATION DEBUTER AVEC CAST3M - CALCULS THERMO-MECANIQUES       *
 *                                                                      *
-* Modelisation du comportement thermo-mecanique d'une pièce trouée     *
+* Modelisation du comportement thermo-mecanique d'une piece trouee     *
 *                                                                      *
 * Ce fichier est la partie 3 sur 3 de la formation debutant a Cast3M   *
 *                                                                      *
 * Partie 3 : calculs mecaniques                                        *
 *            restitution des objets                                    *
-*            récupération des zones maillées                           *
+*            recuperation des zones maillees                           *
 *            elasticite lineaire, plasticite parfaite                  *
 *            chargement thermique                                      *
 *            caracteristiques variables                                *
@@ -39,25 +39,25 @@ ipsc = EGA (VALE 'TRAC') 'PSC' ;
 *              C A L C U L A T I O N   P A R M E T E R S               *
 *----------------------------------------------------------------------*
 
-** Paramètres matériau / material parameters
+** Parametres materiau / material parameters
 you    = 200.E9 ;
 nu     = 0.3 ;
-alpha  = 10.E-6 ;
+alpha  = 1.E-5 ;
 sigy   = 250.E6 ;
 
-** Paramètres des conditions limites et chargement /
+** Parametres des conditions limites et chargement /
 *  Parameters for boundary conditions and loading
 mass1  = 2500. ;
 
 
 
 *----------------------------------------------------------------------*
-* Chapitre / Chapter    6.1                                            *
+* Chapitre / Chapter    6                                              *
 *----------------------------------------------------------------------*
 *                   C A L C U L   M E C A N I Q U E                    *
-*                              élasticité                              *
-*              déplacements + forces surfaciques imposés               *
-*             linéaire, quasi statique, matériau homogène              *
+*                              elasticite                              *
+*              deplacements + forces surfaciques imposes               *
+*             lineaire, quasi statique, materiau homogene              *
 *                                                                      *
 *               M E C H A N I C H A L   A N A L Y S I S                *
 *                              elasticity                              *
@@ -65,29 +65,38 @@ mass1  = 2500. ;
 *              linear, quasi static, homogeneous material              *
 *----------------------------------------------------------------------*
 
-** Modèle mécanique élastique / Elastic mechanichal model
+** Modele mecanique elastique / Elastic mechanichal model
 mom1 = MODE vol1 'MECANIQUE' 'ELASTIQUE' ;
-mam1 = MATE mom1 'YOUN' you 'NU' nu 'RHO' rho 'ALPH' alpha 'TREF' t0 'TALP' t0 ;
+mam1 = MATE mom1 'YOUN' you 'NU' nu
+                 'ALPH' alpha 'TREF' t0 'TALP' t0 ;
 
-** Matrice de rigidité / Stifness matix
+** Matrice de rigidite / Stifness matix
 rig = RIGI mom1 mam1 ;
 
 ** Matrice de blocage / Boundary condition matrix
 blm = BLOQ 'UX' 'UY' 'UZ' sut1 ;
+SI ipsc ;
+  OPTI 'FTRA' '6_cl_deplacement.ps' ;
+FINSI ;
+SI itrac ;
+TRAC 'FACE' (sut1 COUL 'VIOL') are1 ;
+FINSI ;
 
-** Plusieurs manières de représenter la masse suspendue / Several ways to represent the suspended mass
+** Plusieurs manieres de representer la masse suspendue /
+*  Several ways to represent the suspended mass
 *  1) avec une force ponctuelle / with a single point force
 ptmass = sint POIN 'PROCHE' (l (e / 2.) ((h / 2.) - r)) ;
 fmass1 = FORC (0. 0. (mass1 * -9.81)) ptmass ;
 vecf1  = VECT fmass1 'FORC' 'ROUG' 1.E-6 ;
 SI ipsc ;
-  OPTI 'FTRA' '6.1_forces.ps' ;
+  OPTI 'FTRA' '6_forces.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC vecf1 (are1 ET sint) 'TITR' '[6.1] Force ponctuelle' ;
+TRAC vecf1 (are1 ET sint) ;
 FINSI ;
 
-*  2) avec une pression (orthogonale à la surface) / with a pressure (orthogonal to the surface)
+*  2) avec une pression (orthogonale a la surface) /
+*     with a pressure (orthogonal to the surface)
 zsint  = COOR 3 sint ;
 ptmass = zsint POIN 'EGINFE' (h / 2.) ;
 elmass = sint ELEM 'APPU' 'STRI' ptmass ;
@@ -95,129 +104,110 @@ pres1  = mass1 * 9.81 / (MESU elmass) ;
 fmass2 = PRES 'MASS' mom1 pres1 elmass ;
 vecf2  = VECT fmass2 'FORC' 'VERT' 3.E-5 ;
 SI itrac ;
-  TRAC vecf2 (are1 ET sint) 'TITR' '[6.1] Force eq. a une pression' ;
+TRAC vecf2 (are1 ET sint) ;
 FINSI ;
 
-*  3) avec une force surfacique verticale / with a vertical surface force
+*  3) avec une force surfacique verticale /
+*     with a vertical surface force
 fmass3 = FSUR 'MASS' mom1 (0. 0. (-1. * pres1)) elmass ;
 vecf3  = VECT fmass3 'FORC' 'TURQ' 3.E-5 ;
 SI itrac ;
-  TRAC vecf3 (are1 ET sint) 'TITR' '[6.1] Force eq. a une force surfacique' ;
+TRAC vecf3 (are1 ET sint) ;
 FINSI ;
 
-** Résolution des 3 cas de chargement / Solving the 3 load cases
-u611 u612 u613 = RESO (rig ET blm) fmass1 fmass2 fmass3 ;
-
-** Déformées / Deformed shapes
-def611 = DEFO vol1 u611 50. 'ROUG' ;
-def612 = DEFO vol1 u612 50. 'VERT' ;
-def613 = DEFO vol1 u613 50. 'TURQ' ;
 SI ipsc ;
-  OPTI 'FTRA' '6.1_deformees.ps' ;
+  OPTI 'FTRA' '6_cl_force.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC 'CACH' def611 'TITR' '[6.1] Defomee avec force ponctuelle' ;
-  TRAC 'CACH' def612 'TITR' '[6.1] Defomee avec pression' ;
-  TRAC 'CACH' def613 'TITR' '[6.1] Defomee avec force surfacique' ;
-FINSI ;
-def611a = DEFO are1 u611 50. 'ROUG' ;
-def612a = DEFO are1 u612 50. 'VERT' ;
-def613a = DEFO are1 u613 50. 'TURQ' ;
-SI itrac ;
-  TRAC (def611a ET def612a ET def613a) 'TITR' '[6.1] Defomees des aretes' ;
+TRAC 'FACE' (elmass COUL 'ORAN') are1 ;
 FINSI ;
 
+** Resolution des 3 cas de chargement /
+*  Solving the 3 load cases
+u61 u62 u63 = RESO (rig ET blm) fmass1 fmass2 fmass3 ;
 
-
-*----------------------------------------------------------------------*
-* Chapitre / Chapter    6.2                                            *
-*----------------------------------------------------------------------*
-*                   C A L C U L   M E C A N I Q U E                    *
-*                              élasticité                              *
-*        déplacements + forces surfaciques & volumiques imposés        *
-*             linéaire, quasi statique, matériau homogène              *
-*                                                                      *
-*               M E C H A N I C H A L   A N A L Y S I S                *
-*                              elasticity                              *
-*            imposed displacements + surface & body forces             *
-*              linear, quasi static, homogeneous material              *
-*----------------------------------------------------------------------*
-
-** Champ de forces volumiques / Field of body force
-*  f = rho * omega^2 * x
-omega = 2. * pi * 5. ;
-x     = COOR 1 vol1 ;
-fvol  = (NOMC 'FX' (rho * omega * omega * x)) ET
-        (NOMC 'FY' (0. * x))                  ET
-        (NOMC 'FZ' (0. * x)) ;
-fcent = CNEQ mom1 fvol ;
-
-** Résolution / Solving
-u62 = RESO (rig ET blm) (fmass3 ET fcent) ;
-
-** Forces de réactions / Reaction forces
-rea62  = REAC u62 blm ;
-vrea62 = VECT rea62 'FORC' 'LIME' ;
+** Deformees / Deformed shapes
+def61 = DEFO vol1 u61 50. 'ROUG' ;
+def62 = DEFO vol1 u62 50. 'VERT' ;
+def63 = DEFO vol1 u63 50. 'TURQ' ;
 SI ipsc ;
-  OPTI 'FTRA' '6.2_reactions.ps' ;
+  OPTI 'FTRA' '6_deformees.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC vrea62 are1 'TITR' '[6.2] Forces de reaction' ;
+TRAC 'CACH' def61 ;
+TRAC 'CACH' def62 ;
+TRAC 'CACH' def63 ;
+FINSI ;
+def61a = DEFO are1 u61 50. 'ROUG' ;
+def62a = DEFO are1 u62 50. 'VERT' ;
+def63a = DEFO are1 u63 50. 'TURQ' ;
+SI itrac ;
+TRAC (def61a ET def62a ET def63a) ;
 FINSI ;
 
-** Déformations / Strains
-eps62  = EPSI u62 mom1 'LINE' ;
+** Forces de reactions / Reaction forces
+rea63  = REAC u63 blm ;
+vrea63 = VECT rea63 'FORC' 'LIME' ;
+SI ipsc ;
+  OPTI 'FTRA' '6_reactions.ps' ;
+FINSI ;
+SI itrac ;
+TRAC vrea63 are1 ;
+FINSI ;
+
+** Deformations / Strains
+eps63  = EPSI u63 mom1 'LINE' ;
 
 ** Contraintes / Stresses
-sig62  = ELAS mom1 eps62 mam1 ;
+sig63  = ELAS mom1 eps63 mam1 ;
 SI ipsc ;
-  OPTI 'FTRA' '6.2_contraintes.ps' ;
+  OPTI 'FTRA' '6_contraintes.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC sig62 mom1 'TITR' '[6.2] Contraintes' ;
+TRAC sig63 mom1 ;
 FINSI ;
-def62  = DEFO vol1 u62  50. ;
+def63  = DEFO vol1 u63  50. ;
 SI itrac ;
-  TRAC sig62 mom1 def62 are1 'TITR' '[6.2] Contraintes + maillage deforme' ;
+TRAC sig63 mom1 def63 are1 ;
 FINSI ;
 
 ** Contraintes aux points de Gauss / Stresses at Gauss points
-vm62   = VMIS mom1 sig62 ;
-MESS 'Mini et Maxi de von Mises : ' (MINI vm62)  (MAXI vm62) ;
+vm63   = VMIS mom1 sig63 ;
+MESS 'Mini et Maxi de von Mises : ' (MINI vm63)  (MAXI vm63) ;
 SI itrac ;
-  TRAC vm62 mom1 'TITR' '[6.2] Contrainte von Mises' ;
+TRAC vm63 mom1 ;
 FINSI ;
-vm62g  = CHAN 'CHPO' vm62 mom1 'SUPP' ;
+vm63g  = CHAN 'CHPO' vm63 mom1 'SUPP' ;
 SI itrac ;
-  TRAC vm62g 'TITR' '[6.2] Contrainte von Mises pt. Gauss' ;
+TRAC vm63g ;
 FINSI ;
 
-** Valeurs de contrainte le long d'un bord /
-*  Stress values along an edge
-vm62p  = CHAN 'CHPO' vm62 mom1 ;
-evs1   = EVOL 'CHPO' vm62p l15 ;
+** Valeurs le long d'un bord /
+*  Values along an edge
+vm63p  = CHAN 'CHPO' vm63 mom1 ;
+evs1   = EVOL 'CHPO' vm63p l15 ;
 SI ipsc ;
-  OPTI 'FTRA' '6.2_evol_contraintes.ps' ;
+  OPTI 'FTRA' '6_evol_contraintes.ps' ;
 FINSI ;
 SI itrac ;
-  DESS evs1 'TITR' '[6.2] Contrainte von Mises le long de l15' ;
+DESS evs1 ;
 FINSI ;
 
-** Valeurs de contrainte le long d'une ligne quelconque /
-*  Stress values along any line
+** Valeurs le long d'une ligne quelconque /
+*  Values along any line
 lx     = (PROG 0.01 'PAS' 0.01 0.9) * l ;
 nx     = DIME lx ;
 ly     = (PROG nx * 0.) + (e / 2.) ;
 lz     = (0.4 * h * (SIN (lx * 3000.))) + (h / 2.) ;
 lig1   = QUEL 'SEG2' lx ly lz COUL 'ROSE' ;
 SI itrac ;
-  TRAC (are1 ET lig1) 'TITR' '[6.2] Ligne quelconque' ;
+TRAC (are1 ET lig1) ;
 FINSI ;
-vm62n  = CHAN 'NOEUD' mom1 vm62 ;
-vm62l  = PROI vm62n lig1 ;
-evs2   = EVOL 'ROSE' 'CHPO' vm62l lig1 ;
+vm63n  = CHAN 'NOEUD' mom1 vm63 ;
+vm63l  = PROI vm63n lig1 ;
+evs3   = EVOL 'ROSE' 'CHPO' vm63l lig1 ;
 SI itrac ;
-  DESS evs2 'TITR' '[6.2] Contrainte von Mises le long d''une ligne quelconque' ;
+DESS evs3 ;
 FINSI ;
 
 
@@ -226,9 +216,9 @@ FINSI ;
 * Chapitre / Chapter    7.                                             *
 *----------------------------------------------------------------------*
 *                   C A L C U L   M E C A N I Q U E                    *
-*                  élasticité + dilatation thermique                   *
-*       déplacements + forces surfaciques + températures imposés       *
-*             linéaire, quasi statique, matériau homogène              *
+*                  elasticite + dilatation thermique                   *
+*       deplacements + forces surfaciques + temperatures imposes       *
+*             lineaire, quasi statique, materiau homogene              *
 *                                                                      *
 *               M E C H A N I C H A L   A N A L Y S I S                *
 *                    elasticity + thermal expansion                    *
@@ -236,27 +226,29 @@ FINSI ;
 *              linear, quasi static, homogeneous material              *
 *----------------------------------------------------------------------*
 
-** Incrément de déformations thermiques / Thermal strain increment
+** Increment de deformations thermiques /
+*  Thermal strain increment
 temp1 = tab1 . 'TEMPERATURES' . (n1 - 1) ;
 epsth = EPTH temp1 mom1 mam1 ;
 
 ** Pseudo contraintes / Pseudo stresses
 sigth = ELAS mom1 epsth mam1 ;
 
-** Forces nodales eq. dilatation / Eq. nodal forces thermal expansion
+** Forces nodales eq. dilatation /
+*  Eq. nodal forces thermal expansion
 fth   = BSIG mom1 sigth ;
 
-** Résolution / Solving
+** Resolution / Solving
 u7    = RESO (rig ET blm) (fmass3 ET fth) ;
 
-** Déformée / Deformed shape
+** Deformee / Deformed shape
 def7a = DEFO are1 u7 50. 'ORAN' ;
 def0a = DEFO are1 u7 0. 'GRIS' ;
 SI ipsc ;
   OPTI 'FTRA' '7_deformee.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC (def0a ET def7a ET def613a) 'TITR' '[7] Deformees' ;
+TRAC (def0a ET def7a ET def63a) ;
 FINSI ;
 
 ** Contraintes / Stresses
@@ -267,7 +259,7 @@ SI ipsc ;
   OPTI 'FTRA' '7_contraintes.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC sig7 mom1 are1 'TITR' '[7] Contraintes' ;
+TRAC sig7 mom1 are1 ;
 FINSI ;
 
 
@@ -276,9 +268,9 @@ FINSI ;
 * Chapitre / Chapter    8.                                             *
 *----------------------------------------------------------------------*
 *                   C A L C U L   M E C A N I Q U E                    *
-*                  élasticité + dilatation thermique                   *
-*      déplacements + forces surfaciques + températures imposées       *
-*            linéaire, quasi statique, matériau hétérogène             *
+*                  elasticite + dilatation thermique                   *
+*      deplacements + forces surfaciques + temperatures imposees       *
+*            lineaire, quasi statique, materiau heterogene             *
 *                                                                      *
 *               M E C H A N I C H A L   A N A L Y S I S                *
 *                    elasticity + thermal expansion                    *
@@ -291,33 +283,36 @@ x    = COOR 1 vol1 ;
 xmoy = l / 2. ;
 xsig = l / 5. ;
 * Champ par points / Point field
-chpalpha = alpha * (1. + (3. * (EXP (-1. * (((x - xmoy) / xsig) ** 2))))) ;
+chpalpha = alpha * (1. + (3. *
+           (EXP (-1. * (((x - xmoy) / xsig) ** 2))))) ;
 SI ipsc ;
   OPTI 'FTRA' '8_alpha_variable.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC chpalpha vol1 are1 'TITR' '[8] Alpha variable' ;
+TRAC chpalpha vol1 are1 ;
 FINSI ;
-* Champ par éléments / Element field
+* Champ par elements / Element field
 chealpha = CHAN 'CHAM' chpalpha mom1 ;
-* Mise à jour des parmètres matériau / Updating the material parameters
-mam1b    = MATE mom1 'YOUN' you 'NU' nu 'ALPH' chealpha 'TREF' t0 'TALP' T0 ;
+* Mise a jour des parmetres materiau /
+* Updating the material parameters
+mam1b    = MATE mom1 'YOUN' you 'NU' nu
+                     'ALPH' chealpha 'TREF' t0 'TALP' t0 ;
 
-** Mise à jour du chargement thermique / Updating the thermal load
+** Mise a jour du chargement thermique / Updating the thermal load
 epsth = EPTH temp1 mom1 mam1b ;
 sigth = ELAS mom1 epsth mam1b ;
 fth   = BSIG mom1 sigth ;
 
-** Résolution / Solving
+** Resolution / Solving
 u8    = RESO (rig ET blm) (fmass3 ET fth) ;
 
-** Déformée / Deformed shape
+** Deformee / Deformed shape
 def8a = DEFO are1 u8 50. 'ROUG' ;
 SI ipsc ;
   OPTI 'FTRA' '8_deformee.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC (def0a ET def7a ET def8a) 'TITR' '[8] Deformees, alpha unif. (O), alpha var. (R)' ;
+TRAC (def0a ET def7a ET def8a) ;
 FINSI ;
 
 ** Contraintes / Stresses
@@ -328,7 +323,7 @@ SI ipsc ;
   OPTI 'FTRA' '8_contraintes.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC sig8 mom1 are1 'TITR' '[8] Contraintes' ;
+TRAC sig8 mom1 are1 ;
 FINSI ;
 
 
@@ -337,9 +332,9 @@ FINSI ;
 * Chapitre / Chapter    9.1                                            *
 *----------------------------------------------------------------------*
 *                   C A L C U L   M E C A N I Q U E                    *
-*               élasto plasticité + dilatation thermique               *
-*      déplacements + forces surfaciques + températures imposées       *
-*          non linéaire, quasi statique, matériau hétérogène           *
+*               elasto plasticite + dilatation thermique               *
+*      deplacements + forces surfaciques + temperatures imposees       *
+*          non lineaire, quasi statique, materiau heterogene           *
 *                                                                      *
 *               M E C H A N I C H A L   A N A L Y S I S                *
 *                elasto plasticity + thermal expansion                 *
@@ -347,24 +342,28 @@ FINSI ;
 *           non linear, quasi static, heterogeneous material           *
 *----------------------------------------------------------------------*
 
-** Nouveau modèle mécanique / New mechanical model
-mom2 = MODE vol1 'MECANIQUE' 'ELASTIQUE' 'PLASTIQUE' 'PARFAIT' ;
-mam2 = MATE mom2 'YOUN' you 'NU' nu 'ALPH' chealpha 'SIGY' sigy 'TREF' t0 'TALP' t0 ;
+** Nouveau modele mecanique / New mechanical model
+mom2     = MODE vol1 'MECANIQUE' 'ELASTIQUE' 'PLASTIQUE' 'PARFAIT' ;
+chealpha = CHAN 'CHAM' chpalpha mom2 ;
+mam2     = MATE mom2 'YOUN' you 'NU' nu 'SIGY' sigy
+                     'ALPH' chealpha 'TREF' t0 'TALP' t0 ;
 
-** Descriptions temporelles des chargements / Time descriptions of the loads
-*  1) Forces imposées / Imposed forces
+** Descriptions temporelles des chargements /
+*  Time descriptions of the loads
+*  1) Forces imposees / Imposed forces
 evm1    = EVOL 'MANU' (PROG 0. 100.) (PROG 0. 1.) ;
 chamass = CHAR 'MECA' fmass3 evm1 ;
-*  2) Températures imposées / Imposed temperatures
-ttemps  = TABL ;
+*  2) Temperatures imposees / Imposed temperatures
+ttemps     = TABL ;
 ttemps . 0 = 0. ;
 ttemps . 1 = 100. ;
-ttimp   = TABL ;
+ttimp      = TABL ;
 ttimp  . 0 = tab1 . 'TEMPERATURES' . 0 ;
 ttimp  . 1 = tab1 . 'TEMPERATURES' . (n1 - 1) ;
-chatemp = CHAR 'T' ttemps ttimp ;
+chatemp    = CHAR 'T' ttemps ttimp ;
 
-** Résolution avec la procédure PASAPAS / Solving with the PASAPAS procedure
+** Resolution avec la procedure PASAPAS /
+*  Solving with the PASAPAS procedure
 tab2                         = TABL ;
 tab2 . 'MODELE'              = mom2 ;
 tab2 . 'CARACTERISTIQUES'    = mam2 ;
@@ -374,12 +373,12 @@ tab2 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 5. 100. ;
 PASAPAS tab2 ;
 
 ** Post traitement / Post processing
-* 1) Boucle : tracé des contraintes à chaque instant /
+* 1) Boucle : trace des contraintes a chaque instant /
 *    Loop:    plotting the stresses for each time step
 SI ipsc ;
   OPTI 'FTRA' '9.1_contraintes.ps' ;
 FINSI ;
-n2 = DIME (tab2 . 'DEPLACEMENTS') ;
+n2    = DIME (tab2 . 'DEPLACEMENTS') ;
 liso2 = PROG 0. 'PAS' (sigy / 20.) sigy ;
 REPE b2 n2 ;
   ui    = tab2 . 'DEPLACEMENTS' . (&b2 - 1) ;
@@ -387,16 +386,16 @@ REPE b2 n2 ;
   sigi  = tab2 . 'CONTRAINTES' . (&b2 - 1) ;
   titi  = CHAI '[9.1] Contraintes au pas' ' ' (&b2 - 1) ' /' ' ' (n2 - 1) ;
   SI itrac ;
-    TRAC sigi mom2 defi are1 liso2 'TITR' titi ;
+  TRAC sigi mom2 defi are1 liso2 'TITR' titi ;
   FINSI ;
 FIN b2 ;
 
-* 2) Boucle : tracé des variables internes à chaque instant /
+* 2) Boucle : trace des variables internes a chaque instant /
 *    Loop:    plotting the internal variables for each time step
 SI ipsc ;
   OPTI 'FTRA' '9.1_variables_internes.ps' ;
 FINSI ;
-emax = MAXI (EXCO 'EPSE' (tab2 . 'VARIABLES_INTERNES' . (n2 - 1))) ;
+emax  = MAXI (EXCO 'EPSE' (tab2 . 'VARIABLES_INTERNES' . (n2 - 1))) ;
 liso3 = PROG 0. 'PAS' (emax / 20.) emax ;
 REPE b2 n2 ;
   ui    = tab2 . 'DEPLACEMENTS' . (&b2 - 1) ;
@@ -404,7 +403,7 @@ REPE b2 n2 ;
   epi   = tab2 . 'VARIABLES_INTERNES' . (&b2 - 1) ;
   titi  = CHAI '[9.1] Variables internes au pas' ' ' (&b2 - 1) ' /' ' ' (n2 - 1) ;
   SI itrac ;
-    TRAC epi mom2 defi are1 liso3 'TITR' titi ;
+  TRAC epi mom2 defi are1 liso3 'TITR' titi ;
   FINSI ;
 FIN b2 ;
 
@@ -414,10 +413,10 @@ FIN b2 ;
 * Chapitre / Chapter    9.2                                            *
 *----------------------------------------------------------------------*
 *                   C A L C U L   M E C A N I Q U E                    *
-*               élasto plasticité + dilatation thermique               *
-*      déplacements + forces surfaciques + températures imposées       *
-*          non linéaire, quasi statique, matériau hétérogène           *
-*                     dépendand de la température                      *
+*               elasto plasticite + dilatation thermique               *
+*      deplacements + forces surfaciques + temperatures imposees       *
+*          non lineaire, quasi statique, materiau heterogene           *
+*                     dependand de la temperature                      *
 *                                                                      *
 *               M E C H A N I C H A L   A N A L Y S I S                *
 *                elasto plasticity + thermal expansion                 *
@@ -426,20 +425,25 @@ FIN b2 ;
 *                        temperature dependent                         *
 *----------------------------------------------------------------------*
 
-** Évolution de SIGY selon T / Evolution of SIGY with T
-evsigy = EVOL 'MANU' 'T'     (PROG 0. 100. 150. 200. 215. 230. 235. 240. 250. 275. 300.)
-                     'SIGY' ((PROG 1. 0.99 0.98 0.94 0.9  0.8  0.4  0.33 0.28 0.23 0.20) * sigy) ;
+** Evolution de SIGY selon T /
+*  Evolution of SIGY with T
+evsigy = EVOL 'MANU'
+ 'T'     (PROG 0. 100. 150. 200. 215. 230. 235. 240. 250. 275. 300.)
+ 'SIGY' ((PROG 1. 0.99 0.98 0.94 0.9  0.8  0.4  0.33 0.28 0.23 0.20) * sigy) ;
 SI ipsc ;
   OPTI 'FTRA' '9.2_evol_sigy.ps' ;
 FINSI ;
 SI itrac ;
-  DESS evsigy 'TITR' '[9.2] Limite elastique vs Temperature' ;
+DESS evsigy ;
 FINSI ;
 
-* Mise à jour des parmètres matériau / Updating the material parameters
-mam2 = MATE mom2 'YOUN' you 'NU' nu 'ALPH' chealpha 'SIGY' evsigy 'TREF' t0 'TALP' t0 ;
+* Mise a jour des parmetres materiau /
+* Updating the material parameters
+mam2 = MATE mom2 'YOUN' you 'NU' nu 'SIGY' evsigy
+                 'ALPH' chealpha 'TREF' t0 'TALP' t0 ;
 
-** Résolution avec la procédure PASAPAS / Solving with the PASAPAS procedure
+** Resolution avec la procedure PASAPAS /
+*  Solving with the PASAPAS procedure
 tab2                         = TABL ;
 tab2 . 'MODELE'              = mom2 ;
 tab2 . 'CARACTERISTIQUES'    = mam2 ;
@@ -450,7 +454,7 @@ PASAPAS tab2 ;
 
 ** Post traitement / Post processing
 n2 = DIME (tab2 . 'DEPLACEMENTS') ;
-* 1) Boucle : tracé des variables internes à chaque instant /
+* 1) Boucle : trace des variables internes a chaque instant /
 *    Loop:    plotting the internal variables for each time step
 SI ipsc ;
   OPTI 'FTRA' '9.2_variables_internes.ps' ;
