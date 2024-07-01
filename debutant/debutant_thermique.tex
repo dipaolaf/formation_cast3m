@@ -17,11 +17,11 @@
     \setlength\tabcolsep{1.5pt}
     \fe{\begin{tabular}{lrll}
           Températures imposées & $T$                  & $=T_{\tx{imp}}$ & sur $\partial V_T$\\
-          Flux imposés          & $\tou{\phi}.\tou{n}$ & $=\phi_{\tx{imp}}+\underbrace{h(T_f-T)}_{\tx{convection}}+\underbrace{\varepsilon \sigma(T_\infty^4-T^4)}_{\tx{\fe{rayonnement}{radiation}}}$ & sur $\partial V_{\phi}$\\
+          Flux imposés          & $\tou{\phi}.\tou{n}$ & $=\phi_{\tx{imp}}+\underbrace{h(T_f-T)}_{\tx{convection}}+\underbrace{\varepsilon \sigma(T_\infty^4-T^4)}_{\tx{rayonnement}}$ & sur $\partial V_{\phi}$\\
         \end{tabular}}
        {\begin{tabular}{lrll}
           Imposed temperatures  & $T$                  & $=T_{\tx{imp}}$ & on $\partial V_T$\\
-          Imposed heat flow     & $\tou{\phi}.\tou{n}$ & $=\phi_{\tx{imp}}+\underbrace{h(T_f-T)}_{\tx{convection}}+\underbrace{\varepsilon \sigma(T_\infty^4-T^4)}_{\tx{\fe{rayonnement}{radiation}}}$ & on $\partial V_{\phi}$\\
+          Imposed heat flow     & $\tou{\phi}.\tou{n}$ & $=\phi_{\tx{imp}}+\underbrace{h(T_f-T)}_{\tx{convection}}+\underbrace{\varepsilon \sigma(T_\infty^4-T^4)}_{\tx{radiation}}$ & on $\partial V_{\phi}$\\
         \end{tabular}}
     \normalsize
     \item \fe{Avec}{With}
@@ -133,7 +133,7 @@
     \item \fe{Méthode :}{Method:}\\
     \begin{tabular}{ll}
       \fe{calcul de la matrice de conductivité}{conductivity matrix calculation} & $[K]$\\
-      \fe{calcul des chargement nodaux équivalents}{fixed nodal heat loads calculation} & $\{P\}$\\
+      \fe{calcul des chargement nodaux équivalents}{equivalent nodal heat loads calculation} & $\{P\}$\\
       \fe{résolution avec \kwr{RESO}}{sovling with \kwr{RESO}} & $\{T\}=[K]^{-1}\{P\}$
     \end{tabular}
   \end{itemize}

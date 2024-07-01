@@ -27,8 +27,8 @@
 
 OPTI 'REST' 'formation_debutant_2_thermique.sauv' ;
 REST ;
-itrac = vrai ;
-OPTI 'TRAC' 'PSC' ;
+itrac = faux ;
+***OPTI 'TRAC' 'PSC' ;
 ipsc = EGA (VALE 'TRAC') 'PSC' ;
 
 
@@ -467,7 +467,7 @@ REPE b2 n2 ;
   epi   = tab2 . 'VARIABLES_INTERNES' . (&b2 - 1) ;
   titi  = CHAI '[9.2] Variables internes au pas' ' ' (&b2 - 1) ' /' ' ' (n2 - 1) ;
   SI itrac ;
-    TRAC epi mom2 defi are1 liso3 'TITR' titi ;
+  TRAC epi mom2 defi are1 liso3 'TITR' titi ;
   FINSI ;
 FIN b2 ;
 
