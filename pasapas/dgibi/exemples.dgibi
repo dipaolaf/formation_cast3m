@@ -1,0 +1,12 @@
+tab1                         = TABL ;
+tab1 . 'MODELE'              = mod1 ET mod2 ;
+tab1 . 'CARACTERISTIQUES'    = mat1 ET mat2 ;
+tab1 . 'BLOCAGES_MECANIQUES' = blo1 ;
+tab1 . 'CHARGEMENT'          = cha1 ET cha2 ET cha3 ;
+tab1 . 'TEMPS_CALCULES'      = PROG 0.1 'PAS' 0.1 50. ;
+tab1 . 'TEMPS_SAUVES'        = PROG 4. 8. 15. 16. 23. 42. ;
+tab1 . 'PRECISION'           = 1.E-6 ;
+tab1 . 'GRANDS_DEPLACEMENTS' = VRAI ;
+
+PASAPAS tab1 ;
+

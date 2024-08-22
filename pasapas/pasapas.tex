@@ -1,0 +1,104 @@
+\documentclass[xcolor={dvipsnames}]{beamer}
+
+% Paquets utilisés
+\usepackage{animate} % pour faire des animations
+\usepackage{listings} % pour insérer des lignes de codes avec de la coloration syntaxique
+\usepackage[audience=french]{beameraudience}  % pour écrire la présentation en 2 langues
+\usepackage{textpos} % pour positionner des figure où l'on veut
+\usepackage{tikz} % pour faire de jolies figures
+\usepackage{pifont} % pour avoir des symboles sympa
+
+% Thème et options générales de mise en forme
+\usetheme{Singapore}
+\usecolortheme{rose}
+\setbeamertemplate{page number in head/foot}[totalframenumber] % pour ajouter les numéros des pages
+\setbeamertemplate{navigation symbols}{} % pour virer les symboles "page suivantes" ...
+\makeatletter % pour avoir des puces de progression
+\setbeamersize{
+  text margin left = 0.2cm, % modification des marges (normalement c'est 1 cm)
+  text margin right = 0.2cm}
+\setbeamertemplate{block begin}{  % pour ajuster la taille des block
+  \begin{minipage}{.87\textwidth}%
+    \begin{beamerboxesrounded}[upper=block title,lower=block body,shadow=true]{
+    \raggedright\usebeamerfont*{block title}\insertblocktitle}
+    \raggedright
+    \usebeamerfont{block body}}
+  \setbeamertemplate{block end}
+{\end{beamerboxesrounded}\end{minipage}\vskip\smallskipamount}
+\setlength{\unitlength}{1cm}
+
+% Ajout de la description du language Gibiane (pour le paquet "listings")
+\input{description_gibiane}
+
+% Infos générales : titre / sous titre / date / auteur / organisme ...
+\justfor{french}{
+  \title{Cast3M~: la procédure PASAPAS}
+  \subtitle{et les procédures utilisateurs}
+  \date{Automne 2024}}
+\justfor{english}{
+  \title{Cast3M: the PASAPAS procedure}
+  \subtitle{and the user's procedures}
+  \date{Fall 2024}}
+\author{François Di Paola}
+\institute{CEA Saclay,\\
+\url{http://www-cast3m.cea.fr}}
+
+% Quelques raccourcis perso
+\newcommand{\fe}[2]{\justfor{french}{#1}\justfor{english}{#2}}
+\newcommand{\g}[1]{\textbf{#1}}
+\newcommand{\tou}[1]{\underline{#1}}
+\newcommand{\tod}[1]{\underline{\underline{#1}}}
+\newcommand{\kw}[1]{\mbox{\texttt{#1}}}
+\newcommand{\kwr}[1]{\textcolor{red}{\kw{#1}}}
+\newcommand{\kwg}[1]{\textcolor{Green}{\kw{#1}}}
+\newcommand{\kwo}[1]{\textcolor{orange}{\kw{#1}}}
+\newcommand{\kwb}[1]{\textcolor{blue}{\kw{#1}}}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\orange}[1]{\textcolor{orange}{#1}}
+\newcommand{\green}[1]{\textcolor{Green}{#1}}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\newcommand{\violet}[1]{\textcolor{violet}{#1}}
+\newcommand{\gray}[1]{\textcolor{gray}{#1}}
+\newcommand{\white}[1]{\textcolor{white}{#1}}
+\newcommand{\grille}{\draw[help lines,xstep=.1,ystep=.1] (0,0) grid (1,1);
+                     \foreach \x in {0,1,...,9} { \node [anchor=north] at (\x/10,0) {0.\x}; }
+                     \foreach \y in {0,1,...,9} { \node [anchor=east] at (0,\y/10) {0.\y}; }}
+\newcommand{\avous}[1]{\orange{\ding{43}\emph{#1}}}
+\newcommand{\tx}[1]{\textsf{#1}}
+
+
+\begin{document}
+
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{\fe{Sommaire}{Summary}}
+  \begin{itemize}
+    \item \fe{\hyperlink{rappels}{Rappels sur Cast3M et PASAPAS}}
+             {\hyperlink{rappels}{Reminders reminders on Cast3M and PASAPAS}}
+    \item \fe{\hyperlink{pasapas}{Fonctionnement de PASAPAS}}
+             {\hyperlink{pasapas}{How works PASAPAS}}
+    \item \fe{\hyperlink{unpas}{\blue{Équilibre mécanique statique} - procédure UNPAS}\\
+              $\rightarrow$ exercice 1~: \blue{force suiveuse}\\
+              $\rightarrow$ exercice 2~: \blue{rupture par suppression d'éléments}}
+             {\hyperlink{unpas}{\blue{Mechanical static equilibrium} - procedure UNPAS}\\
+              $\rightarrow$ exercice 1: \blue{following force}\\
+              $\rightarrow$ exercice 2: \blue{fracture by elements removal}}
+    \item \fe{\hyperlink{transnon}{\red{Équilibre thermique} - procédure TRANSNON}\\
+              $\rightarrow$ exercice 3~: \red{source de chaleur variable}\\
+              $\rightarrow$ exercice 4~: \red{contact thermo} \blue{mécanique}}
+             {\hyperlink{transnon}{\red{Thermal equilibrium} - procedure TRANSNON}\\
+              $\rightarrow$ exercice 3: \red{variable heat source}\\
+              $\rightarrow$ exercice 4: \red{thermo} \blue{mechanical} \red{contact}}
+  \end{itemize}
+\end{frame}
+
+\input{pasapas_rappels}
+%\input{pasapas_pasapas}
+%\input{pasapas_unpas}
+%\input{pasapas_transnon}
+
+
+\end{document}

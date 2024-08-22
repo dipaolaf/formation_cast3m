@@ -1,0 +1,98 @@
+\lstdefinelanguage{gibiane}{
+  morekeywords=[1]{
+      opti, born, dens, droi, lapl, cerc, mota, oper,
+      quel, inte, para, et  , poin, plus, moin, tran, lister,
+      rota, trac, inve, cote, elem, cont, diff, chan, list,
+      surf, conf, info, tour, homo, affi, syme, incl, elim,
+      titr, racc, tass, sort, lire, bary, dall, orie, manu,
+      oubl, comp, cout, pave, comm, noeu, nbel, nbno,
+      noti, face, coor, norm, temp, volu, lect, sauf, prog,
+      +   , -   , *   , /   , **  , flot, enti, log , exp ,
+      depl, psca, pvec, pmix, liai, regl, hook, sols, reso,
+      date, rigi, bloq, depi, hota, stru, text, proj, venv,
+      elst, jonc, reco, mass, clst, sigm, rela, forc, mome,
+      vloc, base, dime, extr, vers, vibr, maxi, xtmx, ytmx,
+      >   , <   , >eg , <eg , ou  , ega , non , neg , mult,
+      pjba, crit, diag, xtx , uniq, bsig, deda, max1, mots,
+      ipol, abs , sin , cos ,
+      atg , enve, isov, detr, enle, remp, inse, coli, tria,
+      tabl, redu, symt, anti, resu, pres, exco, nomc, saut,
+      defo, appu, inva, prin, vmis, ksig, sign, suit, 
+      valp, ordo, tire, rege, dess, amor, char, coul, chpo,
+      afco, evol, orth, thet, comb, deve, vect, pica, capi, 
+      copi, dimn, sauv, rest, cara, mate, gene,
+      capa, elfe, jaco, plas, gree, mode, finp, xty ,
+      debp, ktan, form, mess, nnor, cubp, cubt, cer3, fdt ,
+      seis, ener, epsi, intg, cour, reac, supe, zero, depb,
+      exci, kp  , acti, elas, erre, cong, lump, obte,
+      vari, modi, masq, exis, mini, grad, ense, ifre, dfou,
+      sigs, mapp, somm, brui, rten, dspr, tfr , tote,
+      graf, tres, type, osci, spo , inde, chsp,
+      tagr, perm, cabl, fofi, work, qulx, debi, 
+      cmoy, comt, cond, flux, rimp, filt, tfri,
+      conc, iter, acqu, sour, conv, acoh, psmo, asih, ecou,
+      mena, synt, argu, atah, dyne, fonc, resp, plac,
+      vale, proi, exce, aret, calp, indi, act3, biot,
+      dedu, conn, nloc, chai, cosi, cvol, diad, hann, insi,
+      lsqf, ltl , pert, prns, psrs, siar, spon, visa, cneq,
+      ccon, mesu, pile, util, menu, cosh, sinh, tanh,
+      deg3, aide, racp, refe, ksof, nske, kmab,
+      noel, doma, fpu , gmv , eqpr, eqex, vibc, avct,
+      kdia, kmtp, kmf , mdia, dfdt, tcrr, tcnm, sqtp, somt,
+      nlin, cmct, kcht, lapn, raft, klop, kres, cson, %fimp, 
+      nuag, weip, khis, kops, fsur, flam, elno,
+      dbit, ns  , toim, kmbt, kbbt, dudw, frot, tsca,
+      konv, kcha, mhyb, matp, hdeb, hvit, hybp, smtp, divu,
+      mocu, chau, tail, erf , sens, impo, dans, impf, ntab,
+      fron, fuit, epth, fpt , kfpt, fpa , kfpa, echi, qond,
+      kpro, ffor, raye, rayn, vsur, traj, aju1, aju2, frig,
+      excf, nomm, prec, erfc, onde, cfl , dedo, dcov, parc,
+      pola, chi1, chi2, pent, pret, meth, xxt , cblo, genj,
+      zleg, mesm, fion, neut, logk, coac, resi, mutu, sore,
+      diri, lign, obje, debm, finm, heri, deco, exte, dmmu,
+      dmtd, bmtd, ssch, mrem, assi, fiss, prim, annu, prob,
+      sais, choi, deto, part, clmi, pmat, excp, prop, phaj,
+      alea, gnfl, mpro, sste, adve, bgmo, ecfe, coup, verm,
+      dfer, gyro, cori, kent, fant, itrc, reto, ijet, impe,
+      moca, levm, ravc, idli, raff, cfnd, adet, psip, acos,
+      asin, tan , trie, gane, hist, etg , oter, xfem, rfco,
+      vide, voro, prra, posi, mise, misl, coll, pod,  
+      option, borne, droit, droite, point, moins, titre,
+  },
+  morekeywords=[2]{  % quelques procedures
+    pasapas, peche, explorer, @vecoul, vecflu
+  },
+  morekeywords=[3]{  % operateurs speciaux
+    si, sino, sinon, fins, finsi, repe, repeter, quit, fin
+  },
+  sensitive=false, % mots clefs non sensibles à la casse
+  morecomment=[f]*, % indique que les commentaires ont des * en 'first' colonne
+  morestring=[b]', % indique que les chaines sont définies entre simples quotes
+  moredelim=[is][\sffamily\slshape\color{blue}]{/*}{*/}
+}
+\definecolor{bckg}{rgb}{0.96,0.96,0.96}
+\lstset{
+%  language={gibiane},
+%  backgroundcolor=\color{white},
+  keywordstyle=[1]\color{red}\bfseries,
+  keywordstyle=[2]\color{orange}\bfseries,
+  keywordstyle=[3]\color{blue}\bfseries,
+  commentstyle=\color{Aquamarine},
+  stringstyle=\color{Green},
+  basicstyle=\ttfamily\scriptsize,
+  %captionpos=b, % Position of the Caption (t for top, b for bottom)
+  %extendedchars=true, % Allows 256 instead of 128 ASCII characters
+  tabsize=2, % number of spaces indented when discovering a tab 
+  columns=fixed, % make all characters equal width
+  keepspaces=true, % does not ignore spaces to fit width, convert tabs to spaces
+  showstringspaces=false, % lets spaces in strings appear as real spaces
+  breaklines=true, % wrap lines if they don't fit
+  %frame=tb, % draw a frame at the top, right, left and bottom of the listing
+  %frameround=tttt, % make the frame round at all four corners
+  %framesep=4pt, % quarter circle size of the round corners
+  %framexleftmargin=2mm, framexrightmargin=2mm,
+  %framextopmargin=2mm,framexbottommargin=2mm,
+  %frame=shadowbox, rulesepcolor=\color{gray},
+  xrightmargin=5mm,
+  belowskip=0pt
+}
