@@ -1,0 +1,9 @@
+pasapas.pdf
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.vrb
+dgibi/*.sauv

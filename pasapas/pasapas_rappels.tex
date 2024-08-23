@@ -149,19 +149,19 @@
     \item \fe{Généralités}{General}\\
     \tiny
     \begin{tabular}{lll}
-    \kwg{'MODELE'}           & MMODEL   & \fe{Équations à résoudre, formulation E.F. (\kwr{MODE})}
-                                             {Equations to solve, F. E. formulation (\kwr{MODE})}\\
+    \kwg{'MODELE'}           & MMODEL   & \fe{Équations à résoudre, formulation EF (\kwr{MODE})}
+                                             {Equations to solve, FE formulation (\kwr{MODE})}\\
     \kwg{'CARACTERISTIQUES'} & MCHAML   & \fe{Paramètres matériau et/ou géométriques (\kwr{MATE})}
                                              {Material and/or geometrical parameters (\kwr{MATE})}\\
-    \kwg{'CHARGEMENT'}       & CHARGEME & \fe{Évolution des C.L. au cours du calcul (\kwr{CHAR})}
-                                             {Boundary conditions and loading variation during calculation (\kwr{CHAR})}\\
+    \kwg{'CHARGEMENT'}       & CHARGEME & \fe{Évolution des CL et chargements au cours du calcul (\kwr{CHAR})}
+                                             {BC and loading variation during calculation (\kwr{CHAR})}\\
     \end{tabular}
     \normalsize
     \item \fe{Thermique}{Thermal analysis}\\
     \tiny
     \begin{tabular}{lll}
-    \kwg{'BLOCAGES\_THERMIQUES'} & RIGIDITE & \fe{Matrice de blocage des C.L. de type DIRICHLET (\kwr{BLOQ})}
-                                                 {Stiffness matrix for DIRICHLET B.C. (\kwr{BLOQ})}\\
+    \kwg{'BLOCAGES\_THERMIQUES'} & RIGIDITE & \fe{Matrice de blocage des CL de type Dirichlet (\kwr{BLOQ})}
+                                                 {Stiffness matrix for Dirichlet BC (\kwr{BLOQ})}\\
     \kwg{'CELSIUS'}              & LOGIQUE  & \fe{= VRAI si les températures sont en degrés Celsius}
                                                  {=VRAI (true) if temperature unit is Celsius}\\
     \kwg{'TEMPERATURES' . 0}     & CHPOINT  & \fe{Conditions initiales}
@@ -171,18 +171,15 @@
     \item \fe{Mécanique}{Mechanics}\\
     \tiny
     \begin{tabular}{lll}
-    \kwg{'BLOCAGES\_MECANIQUES'}           & RIGIDITE & \fe{Matrice de blocage des C.L. de type DIRICHLET (\kwr{BLOQ})}
-                                                           {Stiffness matrix for DIRICHLET B.C. (\kwr{BLOQ})}\\
+    \kwg{'BLOCAGES\_MECANIQUES'}           & RIGIDITE & \fe{Matrice de blocage des CL de type Dirichlet (\kwr{BLOQ})}
+                                                           {Stiffness matrix for Dirichlet BC (\kwr{BLOQ})}\\
     \kwg{'GRANDS\_DEPLACEMENTS'}           & LOGIQUE  & \fe{Équilibre vérifié sur les configurations déformées}
                                                            {Equilibrium checked on the deformed mesh}\\
     \kwg{'DEPLACEMENTS' . 0}               & CHPOINT  & \fe{Conditions initiales}
                                                            {Initial conditions}\\
-    \kwg{'CONTRAINTES' . 0}                & MCHAML   & \fe{Conditions initiales}
-                                                           {Initial conditions}\\
-    \kwg{'VARIABLES\_INTERNES' . 0}        & MCHAML   & \fe{Conditions initiales}
-                                                           {Initial conditions}\\
-    \kwg{'DEFORMATIONS\_INELASTIQUES' . 0} & MCHAML   & \fe{Conditions initiales}
-                                                           {Initial conditions}\\
+    \kwg{'CONTRAINTES' . 0}                & MCHAML   & Idem\\
+    \kwg{'VARIABLES\_INTERNES' . 0}        & MCHAML   & Idem\\
+    \kwg{'DEFORMATIONS\_INELASTIQUES' . 0} & MCHAML   & Idem\\
     \end{tabular}
     \normalsize
     \item \fe{Mécanique (dynamique)}{Mechanics (dynamics)}\\
@@ -194,8 +191,7 @@
                                                {Damping matrix}\\
     \kwg{'VITESSES' . 0}       & MCHAML   & \fe{Conditions initiales}
                                                {Initial conditions}\\
-    \kwg{'ACCELERATIONS' . 0 } & CHPOINT  & \fe{Conditions initiales}
-                                               {Initial conditions}\\
+    \kwg{'ACCELERATIONS' . 0 } & CHPOINT  & Idem\\
     \end{tabular}
     \normalsize
     \item \fe{Instants de calcul et sauvegarde}{Calculation and saving times}\\
@@ -210,3 +206,40 @@
   \end{itemize}
 \end{frame}
 
+\begin{frame}{\fe{Aperçu des paramètres de sortie}{Overview of ouput parameters}}
+  \begin{itemize}
+    \item \fe{Résultats}{Results}\\
+    \tiny
+    \begin{tabular}{lll}
+    \kwg{'TEMPS'}                      & TABLE & \fe{Instants de calcul, identiques aux \kwg{'TEMPS\_SAUVES'}}
+                                                    {Time values, identical to \kwg{'TEMPS\_SAUVES'}}\\
+    & & \\
+    \kwg{'TEMPERATURES'}               & TABLE & \fe{Champs solutions pour chaque \kwg{'TEMPS\_SAUVES'}}
+                                                    {Fields (solution) calculated for each stored time \kwg{'TEMPS\_SAUVES'}}\\
+    \kwg{'PROPORTION\_PHASE'}          & TABLE & Idem\\
+    & & \\
+    \kwg{'DEPLACEMENTS'}               & TABLE & Idem\\
+    \kwg{'REACTIONS'}                  & TABLE & Idem\\
+    \kwg{'CONTRAINTES'}                & TABLE & Idem\\
+    \kwg{'DEFORMATIONS\_INELASTIQUES'} & TABLE & Idem\\
+    \kwg{'VARIABLES\_INTERNES'}        & TABLE & Idem\\
+    \kwg{'VITESSES'}                   & TABLE & Idem\\
+    \kwg{'ACCELERATIONS'}              & TABLE & Idem\\
+    \end{tabular}
+    \normalsize
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Post traitement (exemples)}{Post processing (examples)}}
+  \begin{itemize}
+    \item \fe{Extraction des champs solution :}{Solution fields extraction:}\\
+      \fe{avec l'indice dans la table}{from the table index}\\
+      \lstinputlisting[language=gibiane, firstline=13, lastline=13]{dgibi/exemples.dgibi}
+      \fe{ou bien avec l'instant de calcul}{or from the time value}\\
+      \lstinputlisting[language=gibiane, firstline=14, lastline=14]{dgibi/exemples.dgibi}
+    \item \fe{Tracé en mode graphique interactif :}{Graphical mode, interactive plot:}\\
+    \lstinputlisting[language=gibiane, firstline=15, lastline=15]{dgibi/exemples.dgibi}
+    \item \fe{Évolution temporelle d'un champ calculé :}{Evolution of calculated field with time:}\\
+    \lstinputlisting[language=gibiane, firstline=16, lastline=16]{dgibi/exemples.dgibi}
+  \end{itemize}
+\end{frame}

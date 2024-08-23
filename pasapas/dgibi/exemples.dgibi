@@ -10,3 +10,7 @@ tab1 . 'GRANDS_DEPLACEMENTS' = VRAI ;
 
 PASAPAS tab1 ;
 
+   sig1 = tab1 . 'CONTRAINTES' . 5 ;
+   sig1 = PECHE tab1 'CONTRAINTES' 28.3 ;
+   EXPLORER tab1 ;
+   ev1  = EVOL 'TEMP' tab1 'DEPLACEMENTS' 'UX' pt1 ;
