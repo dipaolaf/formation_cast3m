@@ -3,10 +3,31 @@
 % Paquets utilisés
 \usepackage{animate} % pour faire des animations
 \usepackage{listings} % pour insérer des lignes de codes avec de la coloration syntaxique
-\usepackage[audience=french]{beameraudience}  % pour écrire la présentation en 2 langues
+\usepackage[audience=english]{beameraudience}  % pour écrire la présentation en 2 langues
 \usepackage{textpos} % pour positionner des figure où l'on veut
 \usepackage{tikz} % pour faire de jolies figures
 \usepackage{pifont} % pour avoir des symboles sympa
+
+\usetikzlibrary{shapes.geometric} % pour faire des logigrammes avec TikZ
+\usetikzlibrary{arrows.meta}
+\tikzset{%
+  >={Latex[width=1mm,length=1mm]},
+  % Specifications for style of nodes:
+     note/.style  = {rectangle, minimum width=1cm, minimum height=0.3cm, align=left},
+     bstep/.style = {rectangle, rounded corners, draw=black,
+                     minimum width=1cm, minimum height=0.3cm, text centered},
+     gstep/.style = {rectangle, rounded corners, draw=Green, fill=Green!10,
+                     minimum width=1cm, minimum height=0.3cm, text centered},
+     rstep/.style = {rectangle, rounded corners, draw=red, fill=red!10,
+                     minimum width=1cm, minimum height=0.3cm, text centered},
+     gtest/.style = {diamond, aspect=3., rounded corners, draw=Green, fill=Green!10,
+                     minimum width=1cm, minimum height=0.3cm, text centered},
+     rtest/.style = {diamond, aspect=3., rounded corners, draw=red, fill=red!10,
+                     minimum width=1cm, minimum height=0.1cm, text centered},
+}
+
+
+
 
 % Thème et options générales de mise en forme
 \usetheme{Singapore}
@@ -50,14 +71,15 @@
 \newcommand{\tod}[1]{\underline{\underline{#1}}}
 \newcommand{\kw}[1]{\mbox{\texttt{#1}}}
 \newcommand{\kwr}[1]{\textcolor{red}{\kw{#1}}}
-\newcommand{\kwg}[1]{\textcolor{Green}{\kw{#1}}}
 \newcommand{\kwo}[1]{\textcolor{orange}{\kw{#1}}}
+\newcommand{\kwg}[1]{\textcolor{Green}{\kw{#1}}}
 \newcommand{\kwb}[1]{\textcolor{blue}{\kw{#1}}}
+\newcommand{\kwv}[1]{\textcolor{Purple}{\kw{#1}}}
 \newcommand{\red}[1]{\textcolor{red}{#1}}
 \newcommand{\orange}[1]{\textcolor{orange}{#1}}
 \newcommand{\green}[1]{\textcolor{Green}{#1}}
 \newcommand{\blue}[1]{\textcolor{blue}{#1}}
-\newcommand{\violet}[1]{\textcolor{violet}{#1}}
+\newcommand{\violet}[1]{\textcolor{Purple}{#1}}
 \newcommand{\gray}[1]{\textcolor{gray}{#1}}
 \newcommand{\white}[1]{\textcolor{white}{#1}}
 \newcommand{\grille}{\draw[help lines,xstep=.1,ystep=.1] (0,0) grid (1,1);
@@ -74,30 +96,30 @@
   \titlepage
 \end{frame}
 
-\begin{frame}{\fe{Sommaire}{Summary}}
-  \begin{itemize}
-    \item \fe{\hyperlink{rappels}{Rappels sur Cast3M et PASAPAS}}
-             {\hyperlink{rappels}{Reminders reminders on Cast3M and PASAPAS}}
-    \item \fe{\hyperlink{pasapas}{Fonctionnement de PASAPAS}}
-             {\hyperlink{pasapas}{How works PASAPAS}}
-    \item \fe{\hyperlink{unpas}{\blue{Équilibre mécanique statique} - procédure UNPAS}\\
-              $\rightarrow$ exercice 1~: \blue{force suiveuse}\\
-              $\rightarrow$ exercice 2~: \blue{rupture par suppression d'éléments}}
-             {\hyperlink{unpas}{\blue{Mechanical static equilibrium} - procedure UNPAS}\\
-              $\rightarrow$ exercice 1: \blue{following force}\\
-              $\rightarrow$ exercice 2: \blue{fracture by elements removal}}
-    \item \fe{\hyperlink{transnon}{\red{Équilibre thermique} - procédure TRANSNON}\\
-              $\rightarrow$ exercice 3~: \red{source de chaleur variable}\\
-              $\rightarrow$ exercice 4~: \red{contact thermo} \blue{mécanique}}
-             {\hyperlink{transnon}{\red{Thermal equilibrium} - procedure TRANSNON}\\
-              $\rightarrow$ exercice 3: \red{variable heat source}\\
-              $\rightarrow$ exercice 4: \red{thermo} \blue{mechanical} \red{contact}}
-  \end{itemize}
-\end{frame}
+%\begin{frame}{\fe{Sommaire}{Summary}}
+%  \begin{itemize}
+%    \item \fe{\hyperlink{rappels}{Rappels sur Cast3M et PASAPAS}}
+%             {\hyperlink{rappels}{Reminders reminders on Cast3M and PASAPAS}}
+%    \item \fe{\hyperlink{pasapas}{Fonctionnement de PASAPAS}}
+%             {\hyperlink{pasapas}{How works PASAPAS}}
+%    \item \fe{\hyperlink{unpas}{\blue{Équilibre mécanique statique} - procédure UNPAS}\\
+%              $\rightarrow$ exercice 1~: \blue{force suiveuse}\\
+%              $\rightarrow$ exercice 2~: \blue{rupture par suppression d'éléments}}
+%             {\hyperlink{unpas}{\blue{Mechanical static equilibrium} - procedure UNPAS}\\
+%              $\rightarrow$ exercice 1: \blue{following force}\\
+%              $\rightarrow$ exercice 2: \blue{fracture by elements removal}}
+%    \item \fe{\hyperlink{transnon}{\red{Équilibre thermique} - procédure TRANSNON}\\
+%              $\rightarrow$ exercice 3~: \red{source de chaleur variable}\\
+%              $\rightarrow$ exercice 4~: \red{contact thermo} \blue{mécanique}}
+%             {\hyperlink{transnon}{\red{Thermal equilibrium} - procedure TRANSNON}\\
+%              $\rightarrow$ exercice 3: \red{variable heat source}\\
+%              $\rightarrow$ exercice 4: \red{thermo} \blue{mechanical} \red{contact}}
+%  \end{itemize}
+%\end{frame}
 
 %\input{en_cours}
-\input{pasapas_rappels}
-%\input{pasapas_pasapas}
+%\input{pasapas_rappels}
+\input{pasapas_pasapas}
 %\input{pasapas_unpas}
 %\input{pasapas_transnon}
 

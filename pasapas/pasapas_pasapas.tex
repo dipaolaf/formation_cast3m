@@ -1,0 +1,116 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fe{\section{Fonctionnement de PASAPAS}}{\section{How works PASAPAS}}
+\label{pasapas}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{\fe{Algorithme de PASAPAS}{PASAPAS algorithm}}
+  \begin{itemize}
+    \item \fe{Initialisations}{Initializations}
+    \item \fe{\green{Boucle sur les pas de temps}}{\green{Loop on time steps}}
+    \begin{itemize}
+      \item \fe{\red{Boucle de convergence thermo mécanique}}{\red{Loop for themo mechanical convergence}}
+      \begin{itemize}
+        \item \fe{\red{Solveur thermique}}{\red{Thermal solver}}
+        \item \fe{\red{Solveur thermique}}{\red{Thermal solver}}
+      \end{itemize}
+      \item \fe{\red{Convergence thermo mécanique ?}}{\red{Thermo mechanical convergence?}}
+    \end{itemize}
+    \item \fe{\green{Enregistrement des résultats}}{\green{Save results}}
+    \item \fe{Fin}{End}
+  \end{itemize}
+  \begin{center}
+    \fe{+ Appels optionnels à des procédures utilisateur}{+ Optional user procedures calls}\\
+    \kwv{PERSO1~~~PERSO2~~~REEV\_MEC~~~REEV\_THE}\\
+    \kwv{CHARMECA~~~CHARTHER~~~PARATHER}\\
+    \fe{ces procédures sont vides et à définir par l'utilisateur !}{procedures to be defined by the user!}
+  \end{center}
+\end{frame}
+
+\begin{frame}{\fe{Algorithme de PASAPAS}{PASAPAS algorithm}}
+  \tiny
+  \begin{tikzpicture}[node distance=0.6cm,
+    every node/.style={fill=white}, align=center]
+  % Cellules (style, position, contenu)
+  \fe{\node (start)  [bstep] {Initialisations,\\ \kwv{PERSO1}, \kwv{REEV\_MEC}, \kwv{REEV\_THE}};}
+     {\node (start)  [bstep] {Initializations,\\ \kwv{PERSO1}, \kwv{REEV\_MEC}, \kwv{REEV\_THE}};}
+  \fe{\node (start0) [note, right of=start, xshift=5.5cm] {Lecture des options, initialisations (matériaux, inconnues, chargements,\\
+                                                           variables temporaires), instants de calcul, \dots\\
+                                                           remplissage de \kw{tab1.}\kwg{'WTABLE'}};}
+     {\node (start0) [note, right of=start, xshift=5.cm] {Reading options, initializations (materials, unknowns, loading,\\
+                                                          temporary variables), time steps, \dots\\
+                                                          filling \kw{tab1.}\kwg{'WTABLE'}};}
+  \fe{\node (init)  [gstep, below of=start, yshift=-0.1cm] {Initialisation du pas de temps};}
+     {\node (init)  [gstep, below of=start, yshift=-0.1cm] {Time step initialization};}
+  \fe{\node (resot) [rstep, below of=init]  {Résolution Thermique};}
+     {\node (resot) [rstep, below of=init]  {Thermal solving};}
+  \fe{\node (resot0) [note, right of=resot, xshift=5.5cm] {Appel à la procédure de calcul thermique \kwr{TRANSNON}\\
+                                                           En grands déplacements, résolution sur dernière configuration déformée\\
+                                                           Écriture des résultats dans \kw{tab1.}\kwg{'ESTIMATION'}};}
+     {\node (resot0) [note, right of=resot, xshift=5.5cm] {Call of the procedure for thermal solver \kwr{TRANSNON}\\
+                                                           In large displacements, solving on the last deformed configuration\\
+                                                           Saving results in \kw{tab1.}\kwg{'ESTIMATION'}};}
+  \node (rthe)  [rstep, below of=resot] {\kwv{REEV\_THE}};
+  \fe{\node (rthe0) [note, right of=rthe, xshift=4.25cm] {Appel à la procédure \kwv{REEV\_THE} (si demandé)};}
+     {\node (rthe0) [note, right of=rthe, xshift=4.25cm] {Call to the \kwv{REEV\_THE} procédure (if asked)};}
+  \fe{\node (resom) [rstep, below of=rthe]  {Résolution Mécanique};}
+     {\node (resom) [rstep, below of=rthe]  {Mechanical solving};}
+  \fe{\node (resom0) [note, right of=resom, xshift=4.4cm] {Appel à la procédure de calcul mécanique \kwr{UNPAS}\\
+                                                           Écriture des résultats dans \kw{tab1.}\kwg{'ESTIMATION'}};}
+     {\node (resom0) [note, right of=resom, xshift=4.4cm] {Call of the procedure for mechanical solver \kwr{UNPAS}\\
+                                                           Saving results in \kw{tab1.}\kwg{'ESTIMATION'}};}
+  \node (rmec)  [rstep, below of=resom] {\kwv{REEV\_MEC}};
+  \fe{\node (rmec0) [note, right of=rmec, xshift=4.25cm] {Appel à la procédure \kwv{REEV\_MEC} (si demandé)};}
+     {\node (rmec0) [note, right of=rmec, xshift=4.25cm] {Call to the \kwv{REEV\_MEC} procedure (if asked)};}
+  \node (contm) [rtest, below of=rmec, yshift=-0.3cm]  {Convergence ?};
+  \fe{\node (contm0) [note, right of=contm, xshift=4.8cm] {Test de stationnarité, à activer avec :\\
+                                                           \kw{tab1.}\kwg{'CONVERGENCE\_MEC\_THE'}\kw{ = VRAI ;}\\ \\
+                                                           $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{'CRITERE\_COHERENCE'} $(10^{-2})$};}
+     {\node (contm0) [note, right of=contm, xshift=4.8cm] {Stationarity test, to be activated with:\\
+                                                           \kw{tab1.}\kwg{'CONVERGENCE\_MEC\_THE'}\kw{ = VRAI ;}\\ \\
+                                                           $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{'CRITERE\_COHERENCE'} $(10^{-2})$};}
+  \fe{\node (inip)  [gstep, below of=contm, yshift=-0.4cm] {Initialisation du pas de temps suivant};}
+     {\node (inip)  [gstep, below of=contm, yshift=-0.4cm] {Initialize next time step};}
+  \fe{\node (inip0) [note, right of=inip, xshift=5.5cm] {Enregistrement du nouvel état au début de pas dans : \kw{tab1.}\kwg{'WTABLE'}};}
+     {\node (inip0) [note, right of=inip, xshift=5.5cm] {Saving the new state as the initial time step state in: \kw{tab1.}\kwg{'WTABLE'}};}
+  \node (pers)  [gstep, below of=inip]  {\kwv{PERSO1}};
+  \fe{\node (pers0) [note, right of=pers, xshift=4.25cm] {Appel à la procédure \kwv{PERSO1} (si demandé)};}
+     {\node (pers0) [note, right of=pers, xshift=4.25cm] {Call to the \kwv{PERSO1} procedure (if asked)};}
+  \fe{\node (sauv)  [gstep, below of=pers] {Sauvegarde des résultats};}
+     {\node (sauv)  [gstep, below of=pers] {Saving results};}
+  \fe{\node (sauv0) [note, right of=sauv, xshift=5.4cm] {\kwr{PAS\_RESU} : remplissage de \kwg{'CONTINUATION'} d'après \kwg{'ESTIMATION'}\\
+                                                         \kwr{PAS\_SAUV} : écriture dans \kw{tab1} s'il s'agit d'un \kwg{'TEMPS\_SAUVE'}};}
+     {\node (sauv0) [note, right of=sauv, xshift=5.4cm] {\kwr{PAS\_RESU}: filling \kwg{'CONTINUATION'} according to \kwg{'ESTIMATION'}\\
+                                                         \kwr{PAS\_SAUV}: saving in \kw{tab1} if the time belong to \kwg{'TEMPS\_SAUVE'}};}
+  \fe{\node (cont)  [gtest, below of=sauv, , yshift=-0.3cm]  {Fin des pas\\ de temps ?};}
+     {\node (cont)  [gtest, below of=sauv, , yshift=-0.3cm]  {End of\\ time steps?};}
+  \fe{\node (end)   [bstep, right of=cont, , xshift=2cm]  {Fin};}
+     {\node (end)   [bstep, right of=cont, , xshift=2cm]  {End};}
+% Connections entre les cellules
+  \draw[->]             (start) -- (init);
+  \draw[->, draw=Green] (init) -- (resot);
+  \draw[->, draw=red]   (resot) -- (rthe);
+  \draw[->, draw=red]   (rthe) -- (resom);
+  \draw[->, draw=red]   (resom) -- (rmec);
+  \draw[->, draw=red]   (rmec) -- (contm);
+  \fe{\draw[->, draw=Green] (contm) -- node[xshift=0.4cm, yshift=0.1cm,]{oui} (inip);}
+     {\draw[->, draw=Green] (contm) -- node[xshift=0.4cm, yshift=0.1cm,]{yes} (inip);}
+  \fe{\draw[->, draw=red]   (contm.west) -- node[yshift=0.2cm]{non} ++(-0.55,0) -- ++(0,2.7) -- (resot.west);}
+     {\draw[->, draw=red]   (contm.west) -- node[yshift=0.2cm]{no} ++(-0.55,0) -- ++(0,2.7) -- (resot.west);}
+  \draw[->, draw=Green] (inip) -- (pers);
+  \draw[->, draw=Green] (pers) -- (sauv);
+  \draw[->, draw=Green] (sauv) -- (cont);
+  \fe{\draw[->]             (cont) -- node[yshift=0.2cm,]{oui} (end);}
+     {\draw[->]             (cont) -- node[yshift=0.2cm,]{yes} (end);}
+  \fe{\draw[->, draw=Green] (cont.west) -- node[yshift=0.2cm]{non} ++(-0.6,0) -- ++(0,6.4) -- (init.west);}
+     {\draw[->, draw=Green] (cont.west) -- node[yshift=0.2cm]{no} ++(-0.6,0) -- ++(0,6.4) -- (init.west);}
+  \draw[dotted]         (start) -- (start0);
+  \draw[dotted]         (resot) -- (resot0);
+  \draw[dotted]         (rthe)  -- (rthe0);
+  \draw[dotted]         (resom) -- (resom0);
+  \draw[dotted]         (rmec)  -- (rmec0);
+  \draw[dotted]         (contm) -- (contm0);
+  \draw[dotted]         (inip)  -- (inip0);
+  \draw[dotted]         (pers)  -- (pers0);
+  \draw[dotted]         (sauv)  -- (sauv0);
+  \end{tikzpicture}
+\end{frame}
