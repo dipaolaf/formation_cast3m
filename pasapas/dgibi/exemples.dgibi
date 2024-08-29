@@ -14,3 +14,14 @@ PASAPAS tab1 ;
    sig1 = PECHE tab1 'CONTRAINTES' 28.3 ;
    EXPLORER tab1 ;
    ev1  = EVOL 'TEMP' tab1 'DEPLACEMENTS' 'UX' pt1 ;
+
+   tab1 . 'ESTIMATION' . 'TEMPS'
+   tab1 . 'ESTIMATION' . 'DEPLACEMENTS'
+   tab1 . 'ESTIMATION' . 'CONTRAINTES'
+   tab1 . 'ESTIMATION' . 'TEMPERATURES'
+   etc...
+   tab1 . 'CONTINUATION' . 'TEMPS'
+   tab1 . 'CONTINUATION' . 'DEPLACEMENTS'
+   tab1 . 'CONTINUATION' . 'CONTRAINTES'
+   tab1 . 'CONTINUATION' . 'TEMPERATURES'
+   etc...
