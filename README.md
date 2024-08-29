@@ -1,13 +1,15 @@
-# Formations au logiciel Cast3M
+Formations au logiciel Cast3M
+=============================
 
-Ce dépôt contient les sources de documents de formation à Cast3M
+Ce dépôt héberge le code source des documents de formation au logociel Cast3M
 
 Les présentations sont construites avec LaTeX grâce à la classe Beamer
 
-## Construction des présentations
+Construction des présentations
+------------------------------
 Marche à suivre pour la formation débutants
 
-### Calculs Cast3M
+1. Calculs Cast3M
 Lancez les calculs Cast3M de tous les fichiers .dgibi :
 ```bash
 cd dgibi/
@@ -19,7 +21,7 @@ castem24 plaque.dgibi
 ```
 Ce qui créera plein de fichiers .ps
 
-### Traitement des images
+2. Traitement des images
 Revenir dans le répertoire parent et lancer le traitement des images :
 ```bash
 cd ../
@@ -29,7 +31,7 @@ Ce qui créera plein d'images .pdf dans le répertoire /images
 
 Cette étape peu prendre du temps...
 
-### Compilation LaTeX
+3. Compilation LaTeX
 Afin d'avoir un bon référencements des sections, il faut compiler deux fois avec pdflatex :
 ```bash
 pdflatex debutant
@@ -40,7 +42,8 @@ Ce qui peut être suivi par un ménage :
 rm *.aux *.log *.nav *.out *.snm *.toc
 ```
 
-## Rôle des fichiers
+Rôles des fichiers
+------------------
 Un répertoire par formation :
 - Répertoire "debutant" : pour la formation "débutants"
 - Répertoire "pasapas" : pour les formation avancée sur PASAPAS et les procédures utilisateurs
