@@ -1,0 +1,43 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\fe{\section{Procédures utilisateur}}{\section{User procedures}}
+\label{util_proc}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{\fe{Procédures utilisateur}{User procedures}}{\fe{Mode d'emploi}{Instructions for use}}
+  \begin{itemize}
+    \item[] \fe{Il existe 7 appels à des procédures utilisateurs\\ à différentes étapes de l'algorithme de \kwo{PASAPAS}}
+               {There are 7 calls to user procedures\\ at different steps of \kwo{PASAPAS} algorithm}
+    \begin{center}
+      \kwv{PERSO1~~PERSO2~~REEV\_MEC~~REEV\_THE}\\
+      \kwv{CHARMECA~~CHARTHER~~PARATHER}
+    \end{center}
+  \end{itemize}
+  \begin{enumerate}
+    \item \fe{\g{\blue{Choisir la procédure}}\\
+              selon son emplacement dans \kwo{PASAPAS} et l'action désirée}
+             {\g{\blue{Choose the procedure}}\\
+              according to its location in \kwo{PASAPAS} and the action required}\\
+    \scriptsize
+    \fe{\ding{43}\emph{par exemple : puisque \kwv{PERSO1} est appelée après le calcul d’un pas de temps,\\
+        ~~~elle peut servir à modifier le suivant (conditions aux limites, matériau \dots)}}
+       {\ding{43}\emph{for instance: since \kwv{PERSO1} is called after computing a time step,\\
+        ~~~it can be used to update the next one (boundary conditions, material \dots)}}
+    \normalsize
+    \item \fe{\g{\blue{Observer la syntaxe de la procédure}}\\
+              dans le code de \kwv{PASAPAS} \dots~ou bien voir le tableau suivant}
+             {\g{\blue{Analyze the procedure syntax}}\\
+              in the \kwv{PASAPAS} code \dots~or see table on next slide}
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{\fe{Procédures utilisateur}{User procedures}}{\fe{Mode d'emploi}{Instructions for use}}
+  \begin{enumerate}\addtocounter{enumi}{2}
+    \item \fe{\g{\blue{Définir la procédure}}
+              \lstinputlisting[language=gibiane, firstline=29, lastline=31]{dgibi/exemples.dgibi}}
+             {\g{\blue{Define the procedure}}
+              \lstinputlisting[language=gibiane, firstline=32, lastline=34]{dgibi/exemples.dgibi}}
+    \item \fe{\g{\blue{Brancher la dans}} \kwo{PASAPAS}}
+             {\g{\blue{Plug it in}} \kwo{PASAPAS}}
+          \lstinputlisting[language=gibiane, firstline=36, lastline=42]{dgibi/exemples.dgibi}
+  \end{enumerate}
+\end{frame}
