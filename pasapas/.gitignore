@@ -1,5 +1,6 @@
 pasapas.pdf
 *.aux
+*.fls
 *.log
 *.nav
 *.out
@@ -7,3 +8,5 @@ pasapas.pdf
 *.toc
 *.vrb
 dgibi/*.sauv
+pasapas.fdb_latexmk
+pasapas.synctex.gz
