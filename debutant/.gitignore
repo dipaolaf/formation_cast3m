@@ -1,5 +1,6 @@
 debutant.pdf
 *.aux
+*.fls
 *.log
 *.nav
 *.out
@@ -7,3 +8,5 @@ debutant.pdf
 *.toc
 *.vrb
 dgibi/*.sauv
+debutant.fdb_latexmk
+debutant.synctex.gz

@@ -298,7 +298,7 @@ chealpha = CHAN 'CHAM' chpalpha mom1 ;
 mam1b    = MATE mom1 'YOUN' you 'NU' nu
                      'ALPH' chealpha 'TREF' t0 'TALP' t0 ;
 
-** Mise a jour du chargement thermique / Updating the thermal load
+** Mise a jour chargement thermique / Updating thermal load
 epsth = EPTH temp1 mom1 mam1b ;
 sigth = ELAS mom1 epsth mam1b ;
 fth   = BSIG mom1 sigth ;
