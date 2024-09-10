@@ -22,27 +22,13 @@ cd images/
 echo "[2/5] Traitement des images .ps (retrait des légendes, titres ...)"
 for i in *.ps
 do
-# pour les fichiers ci-dessous : déplacement isovaleurs, changement taille fonte
-  if [ "${i}" = "3_temperatures.ps" ] ||
-     [ "${i}" = "5_flux.ps" ] ||
-     [ "${i}" = "5_temperatures.ps" ] ||
-     [ "${i}" = "9.1_contraintes.ps" ] ||
-     [ "${i}" = "9.1_variables_internes.ps" ] ||
-     [ "${i}" = "9.2_variables_internes.ps" ]
-  then
-    cast-post.sh -o    -c 1 -s 15 ${i}
-# pour les fichiers ci-dessous : retrait titre et legende, changement taille fonte
-  elif [ "${i}" = "coque_2d_axi.ps" ] ||
-       [ "${i}" = "coque_3d.ps" ]
-  then
-    cast-post.sh -o -t -c 2 -s 15 ${i}
 # pour les fichiers ci-dessous : retrait du titre et legende, déplacement isovaleurs, changement taille fonte et epaisseur trait
-  elif [ "${i}" = "treillis_grue_3d.ps" ]
+  if [ "${i}" = "exemple_0.ps" ]
   then
     cast-post.sh -o -t -c 2 -s 15 -l 10 ${i}
 # pour les fichiers ci-dessous : retrait du titre, déplacement isovaleurs, changement taille fonte et epaisseur trait
-  elif [ "${i}" = "thermique_1d_axi.ps" ] ||
-       [ "${i}" = "thermique_2d_axi.ps" ]
+  elif [ "${i}" = "exemple_1.ps" ] ||
+       [ "${i}" = "exemple_2.ps" ]
   then
     cast-post.sh -o -t -c 1 -s 15 -l 10 ${i}
 # et pour tous les autres : retrait du titre, déplacement isovaleurs, changement taille fonte

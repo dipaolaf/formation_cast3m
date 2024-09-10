@@ -1,0 +1,112 @@
+** Affichages dans un fichier .ps / Plot in a .ps file
+OPTI 'TRAC' 'PSC' ;
+
+
+** Cas 1 : sans PERSO1 / Case 1: without PERSO1
+OPTI 'FTRA' 'exemple_1.ps' ;
+
+OPTI 'DIME' 2 'MODE' 'PLAN' 'DEFO' 'ELEM' 'TRI6' ;
+
+OPTI 'DENS' 0.1 ;
+p1   = 0.   0. ; p2   = 1. 0. ;
+p3   = 1.   1. ; p4   = 0.55 1. ;
+p7   = 0.45 1. ; p8   = 0. 1. ;
+OPTI 'DENS' 0.005 ;
+pc   = 0.5 0.5 ;
+p5   = pc PLUS ( 0.005 -0.0025) ;
+p6   = pc PLUS (-0.005 -0.0025) ;
+con  = DROI p1 p2 DROI p3 DROI p4 DROI p5
+       CERC pc p6 DROI p7 DROI p8 DROI p1 ;
+msh  = SURF con ;
+l1   = con ELEM 'COMP' p8 p1 ;
+l2   = con ELEM 'COMP' p2 p3 ;
+
+mo   = MODE msh 'MECANIQUE' ;
+ma   = MATE mo 'YOUN' 1.E9 'NU' 0.3 ;
+
+bl   = (BLOQ 'UX' l1) ET (BLOQ 'UY' p1) ;
+f1   = FSUR 'MASS' mo (1.E6 0.) l2 ;
+ev1  = EVOL 'MANU' (PROG 0. 1.) (PROG 0. 1.) ;
+cha1 = CHAR 'MECA' f1 ev1 ;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+tab1                         = TABL ;
+tab1 . 'MODELE'              = mo ;
+tab1 . 'CARACTERISTIQUES'    = ma ;
+tab1 . 'BLOCAGES_MECANIQUES' = bl ;
+tab1 . 'CHARGEMENT'          = cha1 ;
+tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 0.05 1. ;
+
+
+PASAPAS tab1 ;
+
+liso = PROG 0. 'PAS' 1.E6 20.E6 ;
+REPE b1 (DIME tab1 . 'TEMPS') ;
+  u1   = tab1 . 'DEPLACEMENTS' . (&b1 - 1) ;
+  sig1 = tab1 . 'CONTRAINTES' . (&b1 - 1) ;
+  def1 = DEFO msh u1 10. ;
+  TRAC sig1 mo def1 con liso ;
+FIN b1 ;
+
+
+
+** Cas 2 : avec PERSO1 / Case 2: with PERSO1
+OPTI 'FTRA' 'exemple_2.ps' ;
+
+DEBP PERSO1 t1*'TABLE' ;
+  u   = t1 . 'ESTIMATION' . 'DEPLACEMENTS' ;
+  du  = (EXTR u 'UX' p4) - (EXTR u 'UX' p7) ;
+  SI ((t1 . 'PHASE_1') ET (du > 3.E-3)) ;
+    t1 . 'PHASE_1' = FAUX ;
+    tps  = t1 . 'ESTIMATION' . 'TEMPS' ;
+    f2   = FSUR 'MASS' mo (0. -5.E5) l2 ;
+    ev2  = EVOL 'MANU' (PROG tps 1.) (PROG 0. 1.) ;
+    cha2 = CHAR 'MECA' f2 ev2 ;
+    t1 . 'WTABLE' . 'CHARGEMENT' = cha1 ET cha2 ;
+  FINSI ;
+FINP ;
+
+tab2                         = TABL ;
+tab2 . 'MODELE'              = mo ;
+tab2 . 'CARACTERISTIQUES'    = ma ;
+tab2 . 'BLOCAGES_MECANIQUES' = bl ;
+tab2 . 'CHARGEMENT'          = cha1 ;
+tab2 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 0.05 1. ;
+tab2 . 'PROCEDURE_PERSO1'    = VRAI ;
+tab2 . 'PHASE_1'             = VRAI ;
+PASAPAS tab2 ;
+
+liso = PROG 0. 'PAS' 1.E6 20.E6 ;
+REPE b1 (DIME tab2 . 'TEMPS') ;
+  u1   = tab2 . 'DEPLACEMENTS' . (&b1 - 1) ;
+  sig1 = tab2 . 'CONTRAINTES' . (&b1 - 1) ;
+  def1 = DEFO msh u1 10. ;
+  TRAC sig1 mo def1 con liso ;
+FIN b1 ;
+
+
+
+
+
+OPTI 'FTRA' 'exemple_0.ps' ;
+f1   = FSUR 'MASS' mo (1. 0.) l2 ;
+v1   = VECT f1 'FORC' 'BLEU' ;
+TRAC 'FACE' v1 (msh COUL 'GRIS') ;
+f2   = FSUR 'MASS' mo (0.1 -1.) l2 ;
+v2   = VECT f2 'FORC' 'ROUG' ;
+TRAC 'FACE' (v1 ET v2) (msh COUL 'GRIS') ;
+
+
+FIN ;
