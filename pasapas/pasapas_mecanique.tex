@@ -6,13 +6,160 @@
 \fe{\subsection{Équations}}{\subsection{Equations}}
 \label{mecanique_equations}
 
-\begin{frame}{\fe{Rappel des équations mécaniques}{Reminder on mechanical equations}}
+\begin{frame}{\fe{Solveur mécanique}{Mechanical solver}}
+             {\fe{Rappel des équations}{Reminder on equations}}
   \begin{itemize}
-    \item \fe{Salut}{Hello}
+    \item<1->[] \fe{Équations locales du problème statique}
+                   {Local equations of the static equilibrium}\\
+    \scriptsize
+    \fe{\begin{tabular}{lll}
+          équilibre            & $\tx{div}(\gm{\sigma})+f=0$ & sur $\partial V$ \\
+          efforts imposés      & $\gm{\sigma}.n=t$           & sur $\partial V^t$ \\
+          déplacements imposés & $u=d$                       & sur $\partial V^d$ \\
+        \end{tabular}}
+       {\begin{tabular}{lll}
+        equilibrium           & $\tx{div}(\gm{\sigma})+f=0$ & on $\partial V$ \\
+        imposed forces        & $\gm{\sigma}.n=t$           & on $\partial V^t$ \\
+        imposed displacements & $u=d$                       & on $\partial V^d$ \\
+      \end{tabular}}
+    \normalsize
+    \onslide<2->{
+    \begin{block}{\fe{Formulation faible + discrétisation EF}{Weak form + FE discretization}}
+      \footnotesize
+      \begin{equation*}
+        \{F\}^{\tx{ext}}-\int_V[B]^T\{\sigma\}dV=\{0\}
+      \end{equation*}
+      \begin{equation*}
+        \underbrace{\int_{\partial V^t}[N]^T\{t\}dS + \int_V[N]^T\{f\}dV}_{\{F\}^{\tx{imp}}} +
+        \underbrace{\int_{\partial V^d}[N]^T\{\gm{\sigma}.n\}dS}_{\{F\}^{\tx{reac}}} -
+        \underbrace{\int_V[B]^T\{\sigma\}dV}_{\{F\}^{\tx{int}}=[B]\{\sigma\}}=\{0\}
+      \end{equation*}
+    \end{block}}
+    \item<3->[] \fe{Vecteurs de forces nodales équivalentes :}
+                   {Equivalent nodal forces vector:}
+    \scriptsize
+    \begin{tabular}{lll}
+      $\{F\}^{\tx{imp}}$  & \fe{forces volumiques $(f)$ et surfaciques $(t)$ imposées}{imposed volume $(f)$ and surface $(t)$ forces} & \kwr{PRES FSUR FORC CNEQ}\\
+      $\{F\}^{\tx{reac}}$ & \fe{réactions aux déplacements imposés $(d)$}{reactions to imposed displacements $(d)$}                   & \kwr{REAC}\\
+      $[B]\{\sigma\}$     & \fe{forces volumique intérieures}{internal volume forces}                                                 & \kwr{BSIG}
+    \end{tabular}
   \end{itemize}
 \end{frame}
 
+\begin{frame}{\fe{Solveur mécanique}{Mechanical solver}}
+             {\fe{Résidu}{Imbalance}}
+  \begin{itemize}
+    \item \fe{Résidu = mesure du déséquilibre}
+             {Imbalance = measure of deviation of equilibrium}
+    \begin{equation*}
+      \{R\}=\{F\}^{\tx{imp}}+\{F\}^{\tx{reac}}-[B]\{\sigma\}
+    \end{equation*}
+    \item \fe{Équilibre atteint lorsque}{The balance is obtained when}
+    \begin{equation*}
+      \|R\| < \varepsilon F^{\tx{ref}}
+    \end{equation*}
+    \scriptsize
+    \begin{tabular}{cl}
+      $\|R\|$            & \fe{norme du résidu (par exemple la norme infinie)}
+                              {norm of the imbalance vector (for instance infinity norm)}\\
+      $\varepsilon$      & \fe{précision du calcul (fournie par utilisateur)}
+                              {computational precision (given by user)}\\
+      $\{F\}^{\tx{ref}}$ & \fe{effort de référence du problème considéré}
+                              {reference force for the studied problem}
+    \end{tabular}
+  \end{itemize}
+\end{frame}
 
+\begin{frame}{\fe{Solveur mécanique}{Mechanical solver}}
+             {\fe{Comportement non linéaire}{Non linear behavior}}
+  \footnotesize
+  \begin{itemize}
+    \item<1-> \fe{Décomposition avec matrice de rigidité élastique linéaire}
+                 {Decomposition with the linear elastic stiffness matrix}\\
+    \begin{tabular}{lrrl}
+      $\gm{\sigma}=\mathbb{E}:\gm{\varepsilon}^{\tx{lin}}+\gm{\sigma}^{\tx{nlin}}$ & \fe{avec}{with} & $\gm{\varepsilon}^{\tx{lin}}=$ & $\frac{1}{2}(\nabla u+\nabla^T u)$\\
+       & & $\{\varepsilon\}^{\tx{lin}} =$ & $[B]\{U\}$
+    \end{tabular}
+    \item<2-> \fe{L'équilibre s'écrit alors}{Equilibrium can be re written}
+    \begin{equation*}
+      [B]\{\sigma\}=\{F\}^{\tx{imp}}+\{F\}^{\tx{reac}}
+    \end{equation*}
+    \begin{equation*}
+      [B][E]\{\varepsilon\}^{\tx{lin}}=\{F\}^{\tx{imp}}+\{F\}^{\tx{reac}}-[B]\{\sigma\}^{\tx{nlin}}
+    \end{equation*}
+    \begin{equation*}
+      \underbrace{\int_V[B]^T[E][B]dVdV}_{[K]}\{U\} =\{F\}^{\tx{imp}}+\{F\}^{\tx{reac}}-[B]\{\sigma\}^{\tx{nlin}}
+    \end{equation*}
+    \onslide<3->{
+    \begin{equation*}
+      [K]\{U\}=\{F\}^{\tx{imp}}+\{F\}^{\tx{reac}}-[B]\{\sigma\}^{\tx{nlin}}
+    \end{equation*}\\~\\
+    \scriptsize
+    \begin{tabular}{llrl}
+      $\{U\}$                      & \fe{déplacements nodaux}{nodal displacements}                                      & $u(x)=$                       & $[N(x)]\{U\}$\\
+      $\{\varepsilon\}^{\tx{lin}}$ & \fe{déformations linéaires (petites déformations)}{linear strains (small strains)} & $\{\varepsilon\}^{\tx{lin}}=$ & $[B]\{U\}$\\
+      $\{\sigma\}^{\tx{nlin}}$     & \fe{contraintes non linéaires}{non linear stresses}                                & & \\
+      $[E]$                        & \fe{matrice de Hooke}{Hooke matrix}                                                & \kwr{ELAS} & \\
+      $[K]$                        & \fe{matrice de rigidité élastique}{elastic stiffness matrix}                       & \kwr{RIGI} &
+    \end{tabular}}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Solveur mécanique}{Mechanical solver}}
+             {\fe{Prise en compte des déplacements imposés}{Introduction of the imposed displacements}}
+  \begin{itemize}
+    \item<1-> \fe{Matrice de blocage}{Boundary condition matrix}
+    \scriptsize
+    \begin{tabular}{rl}
+      $u=$        & $d$ \quad \fe{sur}{on} $\partial V^d$\\
+      $[A]\{U\}=$ & $\{d\}$
+    \end{tabular}
+    \normalsize
+    \item<2-> \fe{Multiplicateurs de Lagrange}{Lagrange Multipliers}\\
+    \scriptsize
+    \fe{depuis un problème linéaire et sans contrainte :}{Ffom a linear and unconstraint problem:}
+    $[K]\{U\}=\{F\}^{\tx{imp}}-[B]\{\sigma\}^{\tx{nlin}}$\\
+    \fe{on ajoute les inconnues $\{\lambda\}$ :}{we add the unknowns $\{\lambda\}$:}
+    \begin{equation*}
+      [K]\{U\}+\underbrace{\red{[A]^T\{\lambda\}}}_{-\{F\}^{\tx{reac}}}=\{F\}^{\tx{imp}}-[B]\{\sigma\}^{\tx{nlin}} \quad \tx{\fe{avec}{with}} [A]\{U\}=\{d\}
+    \end{equation*}
+    \onslide<3->{
+      \begin{block}{\fe{L'équilibre s'écrit alors :}{The equilibrium is now written:}}
+        \begin{equation*}
+          \underbrace{
+            \begin{bmatrix}
+              \green{K} & A^T\\
+              A         & 0
+            \end{bmatrix}}_{[\hat{K}]}
+          \begin{Bmatrix}
+            U\\
+            \lambda
+          \end{Bmatrix}
+          =
+          \begin{Bmatrix}
+            \green{\{F\}^{\tx{imp}}}-\green{[B]\{\sigma\}^{\tx{nlin}}}\\
+            d
+          \end{Bmatrix}
+        \end{equation*}
+      \end{block}
+    \scriptsize
+    \fe{\begin{tabular}{lll}
+          $[A]$         & matrice blocages/relations  & \kwr{BLOQ RELA}\\
+          $\{d\}$       & déplacements nodaux imposés & \kwr{DEPI}\\
+          $\{\lambda\}$ & multiplicateurs de Lagrange &
+        \end{tabular}}
+       {\begin{tabular}{lll}
+        $[A]$         & constraints/relations matrix & \kwr{BLOQ RELA}\\
+        $\{d\}$       & imposed nodal displacements  & \kwr{DEPI}\\
+        $\{\lambda\}$ & Lagrange multipliers         &
+      \end{tabular}}}\\
+    \scriptsize
+    \onslide<4->{
+      $\green{[K],~\{F\}^{\tx{imp}},~[B]\{\sigma\}^{\tx{nlin}}}$
+      \fe{dépendents de $\{U\}$ \tiny (comportement non lin., grands dépl., forces suiveuses \dots)}
+         {depends on $\{U\}$ \tiny (non lin. behavior, large displacements, following forces \dots)}}
+  \end{itemize}
+\end{frame}
 
 \fe{\subsection{la procédure UNPAS}}{\subsection{the UNPAS procedure}}
 \label{unpas}

@@ -8,6 +8,7 @@
 \usepackage{tikz} % pour faire de jolies figures
 \usepackage{pifont} % pour avoir des symboles sympa
 \usepackage{setspace} % pour affiner l'espace interlignes localement
+\usepackage{bm} % pour faire des lettres en gras en mode maths (\boldsymbol)
 
 \usetikzlibrary{shapes.geometric} % pour faire des logigrammes avec TikZ
 \usetikzlibrary{arrows.meta}
@@ -67,8 +68,10 @@
 % Quelques raccourcis perso
 \newcommand{\fe}[2]{\justfor{french}{#1}\justfor{english}{#2}}
 \newcommand{\g}[1]{\textbf{#1}}
+\newcommand{\gm}[1]{\boldsymbol{#1}}
 \newcommand{\tou}[1]{\underline{#1}}
 \newcommand{\tod}[1]{\underline{\underline{#1}}}
+\newcommand{\acc}[1]{\{{#1}\}}
 \newcommand{\kw}[1]{\mbox{\texttt{#1}}}
 \newcommand{\kwr}[1]{\textcolor{red}{\kw{#1}}}
 \newcommand{\kwo}[1]{\textcolor{orange}{\kw{#1}}}
@@ -121,10 +124,10 @@
 
 %\input{en_cours}
 %\input{pasapas_rappels}
-\input{pasapas_pasapas}
+%\input{pasapas_pasapas}
 %\input{pasapas_procedures_utilisateur}
+\input{pasapas_mecanique}
 %\input{pasapas_thermique}
-%\input{pasapas_mecanique}
 
 
 \end{document}
