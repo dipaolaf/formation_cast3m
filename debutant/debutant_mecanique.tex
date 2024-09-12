@@ -442,10 +442,10 @@
       \int_{V}[B]^T[C]\{\varepsilon-\green{\varepsilon^{\tx{th}}}\}dV=\{F\}
     \end{equation*}
     \begin{equation*}
-      \int_{V}[B]^T[C]\{\varepsilon\}dV=\{F\}+\green{\int_{V}[B]^T[C]\{\varepsilon^{\tx{th}}\}dV}
+      \int_{V}[B]^T[C]\{\varepsilon\}dV=\{F\}+\green{\int_{V}[B]^T[C]\{\varepsilon\}^{\tx{th}}dV}
     \end{equation*}
     \begin{equation*}
-      [K]\{U\}=\{F\}+\green{\underbrace{\int_{V}[B]^T[C]\{\varepsilon^{\tx{th}}\}dV}_{\{F\}^{\tx{th}}}}
+      [K]\{U\}=\{F\}+\green{\underbrace{\int_{V}[B]^T[C]\{\varepsilon\}^{\tx{th}}dV}_{\{F\}^{\tx{th}}}}
     \end{equation*}
   \end{itemize}
 \end{frame}
@@ -458,14 +458,14 @@
             {Objective: previous linear mechanical calculation\\
              \tou{with an additional thermal load}}
     \begin{equation*}
-      [K]\{U\}=\{F\}+\green{\underbrace{\int_{V}[B]^T[C]\{\varepsilon^{\tx{th}}\}dV}_{\{F\}^{\tx{th}}}}
+      [K]\{U\}=\{F\}+\green{\underbrace{\int_{V}[B]^T[C]\{\varepsilon\}^{\tx{th}}dV}_{\{F\}^{\tx{th}}}}
     \end{equation*}
     \item \fe{Méthode :}{Method:}\\
     \begin{tabular}{ll}
-      \fe{déformations thermiques}{thermal strains} & $\green{\{\varepsilon^{\tx{th}}\}}$\\
-      \fe{contraintes thermiques}{thermal stresses} & $\green{\{\sigma^{\tx{th}}\}=[C]\{\varepsilon^{\tx{th}}\}}$\\
-      \fe{forces nodales éq.}{nodal eq. forces} & $\green{\{F^{\tx{th}}\}=\int_{V}[B]^T\{\sigma^{\tx{th}}\}dV}$\\
-      \fe{résolution avec \kwr{RESO}}{sovling with \kwr{RESO}} & $\{U\}=[K]^{-1}(\{F\}+\green{\{F^{\tx{th}}\}})$
+      \fe{déformations thermiques}{thermal strains} & $\green{\{\varepsilon\}^{\tx{th}}}$\\
+      \fe{contraintes thermiques}{thermal stresses} & $\green{\{\sigma\}^{\tx{th}}=[C]\{\varepsilon\}^{\tx{th}}}$\\
+      \fe{forces nodales éq.}{nodal eq. forces} & $\green{\{F\}^{\tx{th}}=\int_{V}[B]^T\{\sigma\}^{\tx{th}}dV}$\\
+      \fe{résolution avec \kwr{RESO}}{sovling with \kwr{RESO}} & $\{U\}=[K]^{-1}(\{F\}+\green{\{F\}^{\tx{th}}})$
     \end{tabular}
   \end{itemize}
 \end{frame}
@@ -477,21 +477,21 @@
     \lstinputlisting[language=gibiane, firstline=229, lastline=232]{dgibi/formation_debutant_3_mecanique.dgibi}
     \begin{flushright}
       \footnotesize
-      $\{\varepsilon^{\tx{th}}\}=\alpha\{\Delta T\}$
+      $\{\varepsilon\}^{\tx{th}}=\alpha\{\Delta T\}$
       \normalsize
     \end{flushright}
     \item \fe{Pseudo contraintes thermique}{Pseudo thermal stresses}
     \lstinputlisting[language=gibiane, firstline=234, lastline=235]{dgibi/formation_debutant_3_mecanique.dgibi}
     \begin{flushright}
       \footnotesize
-      $\{\sigma^{\tx{th}}\}=[C]\{\varepsilon^{\tx{th}}\}$
+      $\{\sigma\}^{\tx{th}}=[C]\{\varepsilon\}^{\tx{th}}$
       \normalsize
     \end{flushright}
     \item \fe{Forces nodale équivalentes}{Nodal equivalent forces}
     \lstinputlisting[language=gibiane, firstline=237, lastline=239]{dgibi/formation_debutant_3_mecanique.dgibi}
     \begin{flushright}
       \footnotesize
-      $\{F^{\tx{th}}\}=\int_{V}[B]^T\{\sigma^{\tx{th}}\}dV$
+      $\{F\}^{\tx{th}}=\int_{V}[B]^T\{\sigma\}^{\tx{th}}dV$
       \normalsize
     \end{flushright}
   \end{itemize}
