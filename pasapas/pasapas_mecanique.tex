@@ -13,35 +13,38 @@
                    {Local equations of the static equilibrium}\\
     \scriptsize
     \fe{\begin{tabular}{lll}
-          équilibre            & $\tx{div}(\gm{\sigma})+f=0$ & sur $\partial V$ \\
-          efforts imposés      & $\gm{\sigma}.n=t$           & sur $\partial V^t$ \\
-          déplacements imposés & $u=d$                       & sur $\partial V^d$ \\
+          équilibre            & $\tx{div}(\tod{\sigma})+f_{\tx{imp}}=0$ & sur $\partial V$ \\
+          efforts imposés      & $\tod{\sigma}.n=t_{\tx{imp}}$           & sur $\partial V_t$ \\
+          déplacements imposés & $u=u_{\tx{imp}}$                        & sur $\partial V_u$ \\
         \end{tabular}}
        {\begin{tabular}{lll}
-        equilibrium           & $\tx{div}(\gm{\sigma})+f=0$ & on $\partial V$ \\
-        imposed forces        & $\gm{\sigma}.n=t$           & on $\partial V^t$ \\
-        imposed displacements & $u=d$                       & on $\partial V^d$ \\
+        equilibrium           & $\tx{div}(\tod{\sigma})+f_{\tx{imp}}=0$ & on $\partial V$ \\
+        imposed forces        & $\tod{\sigma}.n=t_{\tx{imp}}$           & on $\partial V^t$ \\
+        imposed displacements & $u=u_{\tx{imp}}$                        & on $\partial V^u$ \\
       \end{tabular}}
     \normalsize
     \onslide<2->{
     \begin{block}{\fe{Formulation faible + discrétisation EF}{Weak form + FE discretization}}
       \footnotesize
       \begin{equation*}
-        \{F\}^{\tx{ext}}-\int_V[B]^T\{\sigma\}dV=\{0\}
+        \{F\}_{\tx{ext}}-\int_V[B]^T\{\sigma\}dV=\{0\}
       \end{equation*}
+      \scriptsize
       \begin{equation*}
-        \underbrace{\int_{\partial V^t}[N]^T\{t\}dS + \int_V[N]^T\{f\}dV}_{\{F\}^{\tx{imp}}} +
-        \underbrace{\int_{\partial V^d}[N]^T\{\gm{\sigma}.n\}dS}_{\{F\}^{\tx{reac}}} -
-        \underbrace{\int_V[B]^T\{\sigma\}dV}_{\{F\}^{\tx{int}}=[B]\{\sigma\}}=\{0\}
+        \underbrace{\int_{\partial V_t}[N]^T\{t\}_{\tx{imp}}dS + \int_V[N]^T\{f\}_{\tx{imp}}dV}_{\{F\}_{\tx{imp}}} +
+        \underbrace{\int_{\partial V_u}[N]^T\{\tod{\sigma}.n\}dS}_{\{F\}_{\tx{reac}}} -
+        \underbrace{\int_V[B]^T\{\sigma\}dV}_{\{F\}_{\tx{int}}=[B]\{\sigma\}}=\{0\}
       \end{equation*}
     \end{block}}
     \item<3->[] \fe{Vecteurs de forces nodales équivalentes :}
                    {Equivalent nodal forces vector:}
     \scriptsize
     \begin{tabular}{lll}
-      $\{F\}^{\tx{imp}}$  & \fe{forces volumiques $(f)$ et surfaciques $(t)$ imposées}{imposed volume $(f)$ and surface $(t)$ forces} & \kwr{PRES FSUR FORC CNEQ}\\
-      $\{F\}^{\tx{reac}}$ & \fe{réactions aux déplacements imposés $(d)$}{reactions to imposed displacements $(d)$}                   & \kwr{REAC}\\
-      $[B]\{\sigma\}$     & \fe{forces volumique intérieures}{internal volume forces}                                                 & \kwr{BSIG}
+      $\{F\}_{\tx{imp}}$  & \fe{forces volumiques $f_{\tx{imp}}$ et surfaciques $t_{\tx{imp}}$ imposées}
+                               {imposed volume $f_{\tx{imp}}$ and surface $t_{\tx{imp}}$ forces}          & \kwr{PRES FSUR CNEQ}\\
+      $\{F\}_{\tx{reac}}$ & \fe{réactions aux déplacements imposés $u_{\tx{imp}}$}
+                               {reactions to imposed displacements $u_{\tx{imp}}$}                        & \kwr{REAC}\\
+      $[B]\{\sigma\}$     & \fe{forces volumique intérieures}{internal volume forces}                     & \kwr{BSIG}
     \end{tabular}
   \end{itemize}
 \end{frame}
@@ -52,11 +55,11 @@
     \item \fe{Résidu = mesure du déséquilibre}
              {Imbalance = measure of deviation of equilibrium}
     \begin{equation*}
-      \{R\}=\{F\}^{\tx{imp}}+\{F\}^{\tx{reac}}-[B]\{\sigma\}
+      \{R\}=\{F\}_{\tx{imp}}+\{F\}_{\tx{reac}}-[B]\{\sigma\}
     \end{equation*}
     \item \fe{Équilibre atteint lorsque}{The balance is obtained when}
     \begin{equation*}
-      \|R\| < \varepsilon F^{\tx{ref}}
+      \|R\| < \varepsilon F_{\tx{ref}}
     \end{equation*}
     \scriptsize
     \begin{tabular}{cl}
@@ -64,7 +67,7 @@
                               {norm of the imbalance vector (for instance infinity norm)}\\
       $\varepsilon$      & \fe{précision du calcul (fournie par utilisateur)}
                               {computational precision (given by user)}\\
-      $\{F\}^{\tx{ref}}$ & \fe{effort de référence du problème considéré}
+      $\{F\}_{\tx{ref}}$ & \fe{effort de référence du problème considéré}
                               {reference force for the studied problem}
     \end{tabular}
   \end{itemize}
@@ -77,28 +80,28 @@
     \item<1-> \fe{Décomposition avec matrice de rigidité élastique linéaire}
                  {Decomposition with the linear elastic stiffness matrix}\\
     \begin{tabular}{lrrl}
-      $\gm{\sigma}=\mathbb{E}:\gm{\varepsilon}^{\tx{lin}}+\gm{\sigma}^{\tx{nlin}}$ & \fe{avec}{with} & $\gm{\varepsilon}^{\tx{lin}}=$ & $\frac{1}{2}(\nabla u+\nabla^T u)$\\
-       & & $\{\varepsilon\}^{\tx{lin}} =$ & $[B]\{U\}$
+      $\tod{\sigma}=\mathbb{E}:\tod{\varepsilon}_{\tx{lin}}+\tod{\sigma}_{\tx{nlin}}$ & \fe{avec}{with} & $\tod{\varepsilon}_{\tx{lin}}=$ & $\frac{1}{2}(\nabla u+\nabla^T u)$\\
+       & & $\{\varepsilon\}_{\tx{lin}} =$ & $[B]\{U\}$
     \end{tabular}
     \item<2-> \fe{L'équilibre s'écrit alors}{Equilibrium can be re written}
     \begin{equation*}
-      [B]\{\sigma\}=\{F\}^{\tx{imp}}+\{F\}^{\tx{reac}}
+      [B]\{\sigma\}=\{F\}_{\tx{imp}}+\{F\}_{\tx{reac}}
     \end{equation*}
     \begin{equation*}
-      [B][E]\{\varepsilon\}^{\tx{lin}}=\{F\}^{\tx{imp}}+\{F\}^{\tx{reac}}-[B]\{\sigma\}^{\tx{nlin}}
+      [B][E]\{\varepsilon\}_{\tx{lin}}=\{F\}_{\tx{imp}}+\{F\}_{\tx{reac}}-[B]\{\sigma\}_{\tx{nlin}}
     \end{equation*}
     \begin{equation*}
-      \underbrace{\int_V[B]^T[E][B]dVdV}_{[K]}\{U\} =\{F\}^{\tx{imp}}+\{F\}^{\tx{reac}}-[B]\{\sigma\}^{\tx{nlin}}
+      \underbrace{\int_V[B]^T[E][B]dV}_{[K]}\{U\} =\{F\}_{\tx{imp}}+\{F\}_{\tx{reac}}-[B]\{\sigma\}_{\tx{nlin}}
     \end{equation*}
     \onslide<3->{
     \begin{equation*}
-      [K]\{U\}=\{F\}^{\tx{imp}}+\{F\}^{\tx{reac}}-[B]\{\sigma\}^{\tx{nlin}}
+      [K]\{U\}=\{F\}_{\tx{imp}}+\{F\}_{\tx{reac}}-[B]\{\sigma\}_{\tx{nlin}}
     \end{equation*}\\~\\
     \scriptsize
     \begin{tabular}{llrl}
       $\{U\}$                      & \fe{déplacements nodaux}{nodal displacements}                                      & $u(x)=$                       & $[N(x)]\{U\}$\\
-      $\{\varepsilon\}^{\tx{lin}}$ & \fe{déformations linéaires (petites déformations)}{linear strains (small strains)} & $\{\varepsilon\}^{\tx{lin}}=$ & $[B]\{U\}$\\
-      $\{\sigma\}^{\tx{nlin}}$     & \fe{contraintes non linéaires}{non linear stresses}                                & & \\
+      $\{\varepsilon\}_{\tx{lin}}$ & \fe{déformations linéaires (petites déformations)}{linear strains (small strains)} & $\{\varepsilon\}_{\tx{lin}}=$ & $[B]\{U\}$\\
+      $\{\sigma\}_{\tx{nlin}}$     & \fe{contraintes non linéaires}{non linear stresses}                                & & \\
       $[E]$                        & \fe{matrice de Hooke}{Hooke matrix}                                                & \kwr{ELAS} & \\
       $[K]$                        & \fe{matrice de rigidité élastique}{elastic stiffness matrix}                       & \kwr{RIGI} &
     \end{tabular}}
@@ -111,17 +114,17 @@
     \item<1-> \fe{Matrice de blocage}{Boundary condition matrix}
     \scriptsize
     \begin{tabular}{rl}
-      $u=$        & $d$ \quad \fe{sur}{on} $\partial V^d$\\
-      $[A]\{U\}=$ & $\{d\}$
+      $u=$        & $u_{\tx{imp}}$ \quad \fe{sur}{on} $\partial V^u$\\
+      $[A]\{U\}=$ & $\{u\}_{\tx{imp}}$
     \end{tabular}
     \normalsize
     \item<2-> \fe{Multiplicateurs de Lagrange}{Lagrange Multipliers}\\
     \scriptsize
     \fe{depuis un problème linéaire et sans contrainte :}{Ffom a linear and unconstraint problem:}
-    $[K]\{U\}=\{F\}^{\tx{imp}}-[B]\{\sigma\}^{\tx{nlin}}$\\
+    $[K]\{U\}=\{F\}_{\tx{imp}}-[B]\{\sigma\}_{\tx{nlin}}$\\
     \fe{on ajoute les inconnues $\{\lambda\}$ :}{we add the unknowns $\{\lambda\}$:}
     \begin{equation*}
-      [K]\{U\}+\underbrace{\red{[A]^T\{\lambda\}}}_{-\{F\}^{\tx{reac}}}=\{F\}^{\tx{imp}}-[B]\{\sigma\}^{\tx{nlin}} \quad \tx{\fe{avec}{with}} [A]\{U\}=\{d\}
+      [K]\{U\}+\underbrace{\red{[A]^T\{\lambda\}}}_{-\{F\}_{\tx{reac}}}=\{F\}_{\tx{imp}}-[B]\{\sigma\}_{\tx{nlin}} \quad \tx{\fe{avec}{with}} [A]\{U\}=\{u\}_{\tx{imp}}
     \end{equation*}
     \onslide<3->{
       \begin{block}{\fe{L'équilibre s'écrit alors :}{The equilibrium is now written:}}
@@ -137,16 +140,16 @@
           \end{Bmatrix}
           =
           \begin{Bmatrix}
-            \green{\{F\}^{\tx{imp}}}-\green{[B]\{\sigma\}^{\tx{nlin}}}\\
-            d
+            \green{F_{\tx{imp}}}-\green{[B]\sigma_{\tx{nlin}}}\\
+            u_{\tx{imp}}
           \end{Bmatrix}
         \end{equation*}
       \end{block}
     \scriptsize
     \fe{\begin{tabular}{lll}
-          $[A]$         & matrice blocages/relations  & \kwr{BLOQ RELA}\\
-          $\{d\}$       & déplacements nodaux imposés & \kwr{DEPI}\\
-          $\{\lambda\}$ & multiplicateurs de Lagrange &
+          $[A]$              & matrice blocages/relations  & \kwr{BLOQ RELA}\\
+          $\{u\}_{\tx{imp}}$ & déplacements nodaux imposés & \kwr{DEPI}\\
+          $\{\lambda\}$      & multiplicateurs de Lagrange &
         \end{tabular}}
        {\begin{tabular}{lll}
         $[A]$         & constraints/relations matrix & \kwr{BLOQ RELA}\\
@@ -155,12 +158,104 @@
       \end{tabular}}}\\
     \scriptsize
     \onslide<4->{
-      $\green{[K],~\{F\}^{\tx{imp}},~[B]\{\sigma\}^{\tx{nlin}}}$
+      $\green{[K],~\{F\}_{\tx{imp}},~[B]\{\sigma\}_{\tx{nlin}}}$
       \fe{dépendents de $\{U\}$ \tiny (comportement non lin., grands dépl., forces suiveuses \dots)}
          {depends on $\{U\}$ \tiny (non lin. behavior, large displacements, following forces \dots)}}
   \end{itemize}
 \end{frame}
 
-\fe{\subsection{la procédure UNPAS}}{\subsection{the UNPAS procedure}}
+
+\begin{frame}{\fe{Solveur mécanique}{Mechanical solver}}
+             {\fe{Décomposition incrémentale 1/2}{Incremental décomposition 1/2}}
+  \begin{itemize}
+    \item<1-> \fe{Calcul d'un pas de temps entre $t_0$ et $t_1$}
+                 {Computation on a time step between $t_0$ and $t_1$}
+    \scriptsize
+    \begin{tabular}{lll}
+      $\green{t_0~\{U\}_0~\{\lambda\}_0~\{\sigma\}_0}$ & \fe{\green{état connu}}{\green{known state}}                 & \fe{\green{début du pas de temps}}{\green{beginning of time step}}\\
+      $  \red{t_1~\{U\}_1~\{\lambda\}_1~\{\sigma\}_1}$ & \fe{\red{état \tou{recherché}}}{\green{\tou{unknown} state}} & \fe{\red{fin du pas de temps}}{\red{end of time step}}\\
+    \end{tabular}
+    \item<2-> \fe{Décomposition incrémentale des déplacements nodaux}
+                 {Incremental decomposition of nodal displacements}\\
+    \scriptsize
+    \begin{equation*}
+      \red{\{U\}_1^i}=\green{\{U\}_0}+\red{\Delta \{U\}_1^i} \qquad \fe{\tx{et}}{\tx{and}} \qquad \red{\Delta \{U\}_1^{i+1}}=\red{\Delta \{U\}_1^i}+\violet{\delta \{U\}_1^{i+1}}
+    \end{equation*}
+    \fe{et donc}{and so}
+    \begin{equation*}
+      \red{\{U\}_1^{i+1}}=\red{\{U\}_1^i}+\violet{\delta \{U\}_1^{i+1}}
+    \end{equation*}
+    \scriptsize
+    \begin{tabular}{ll}
+      $\red{\{U\}_1^i}$               & \fe{estimation du déplacement $\red{\{U\}_1}$ à l’itération $i$}
+                                           {estimation of displacement $\red{\{U\}_1}$ at iteration $i$}\\
+      $\red{\Delta \{U\}_1^i}$        & \fe{estimation de l'incrément de déplacement à l’itération $i$}
+                                           {estimation of displacement increment at iteration $i$}\\
+      $\violet{\delta \{U\}_1^{i+1}}$ & \fe{correction de l’incrément de déplacement à l’itération $i$}
+                                           {correction of displacement increment at iteration $i$}
+    \end{tabular}
+    \item<3-> \fe{Décomposition incrémentale des conditions sur les déplacements}
+                 {Incremental decomposition of boundary conditions}
+    \scriptsize
+    \begin{equation*}
+      [A]\red{\{U\}_1^{i+1}}=\{u\}_{\tx{imp},1}
+    \end{equation*}
+    \begin{equation*}
+      [A]\violet{\delta\{U\}_1^{i+1}}=\{u\}_{\tx{imp},1}-[A]\red{\{U\}_1^i}
+    \end{equation*}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Solveur mécanique}{Mechanical solver}}
+             {\fe{Décomposition incrémentale 2/2}{Incremental décomposition 2/2}}
+  \begin{itemize}
+    \item<1-> \fe{Décomposition incrémentale de l’équilibre}
+                 {Incremental decomposition of equilibrium}
+    \scriptsize
+    \begin{equation*}
+      [K]\red{\{U\}_1^{i+1}}+[A]^T\red{\{\lambda\}_1^{i+1}} = \{F\}_{\tx{imp},1} - [B]\red{\{\sigma\}_{\tx{nlin},1}^i}
+    \end{equation*}
+    \begin{equation*}
+      [K]\violet{\delta\{U\}_1^{i+1}} = \{F\}_{\tx{imp},1} - [A]^T\red{\{\lambda\}_1^{i+1}} - \underbrace{([K]\red{\{U\}_1^i} + [B]\red{\{\sigma\}_{\tx{nlin},1}^i})}_{[B]\red{\{\sigma\}_1^i}}
+    \end{equation*}
+    \begin{equation*}
+      [K]\violet{\delta\{U\}_1^{i+1}} = \underbrace{\{F\}_{\tx{imp},1} - [A]^T\red{\{\lambda\}_1^{i+1}} - [B]\red{\{\sigma\}_1^i}}_{\red{\{R\}_1^i}}
+    \end{equation*}
+    \normalsize
+    \onslide<2->{
+      \begin{block}{\fe{L’équilibre s’écrit finalement}{Equilibrium is finally written}}
+        \begin{equation*}
+          \underbrace{
+            \begin{bmatrix}
+              K & A^T\\
+              A & 0
+            \end{bmatrix}}_{[\hat{K}]}
+          \begin{Bmatrix}
+            \violet{\delta U_1^{i+1}}\\
+            \red{\lambda_1^{i+1}}
+          \end{Bmatrix}
+          =
+          \begin{Bmatrix}
+            F_{\tx{imp}}-[B]\red{\sigma_1^i}\\
+            u_{\tx{imp},1}-[A]\red{U_1^i}
+          \end{Bmatrix}
+        \end{equation*}
+      \end{block}}
+  \end{itemize}
+\end{frame}
+
+
+
+
+\fe{\subsection{La procédure UNPAS}}{\subsection{The UNPAS procedure}}
 \label{unpas}
 
+\begin{frame}{\fe{Algoritme de minimisation du résidu}{Imbalance minimization algorithm}}
+  \begin{itemize}
+    \item \fe{Algorithme simple}{Simple algorithm}
+    \scriptsize
+    \begin{tabular}{ll}
+      $[\red{\{U\}_1^{i=0}~\{\lambda\}_1^{i=0}~\{\sigma\}_1^{i=0}}] = [\green{\{U\}_0~\{\lambda\}_0~\{\sigma\}_0}]$ & \fe{initialisations}{initialization}\\
+    \end{tabular}
+  \end{itemize}
+\end{frame}
