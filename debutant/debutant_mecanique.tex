@@ -47,18 +47,18 @@
     \end{block}~\\
     \footnotesize
     \begin{center}
-      $\underbrace{\int_{V}[B]^T\{\sigma\}dV}_{[B]\{\sigma\}}=\underbrace{\int_{\partial V_t}[N]^T\{t_{\tx{imp}}\}dS}_{\{F\}^S}+\underbrace{\int_{\partial V_u}[N]^T\{\sigma .n\}dS}_{\{F\}^R}+\underbrace{\int_{V}[N]^T\{f\}dV}_{\{F\}^V}$
+      $\underbrace{\int_{V}[B]^T\{\sigma\}dV}_{[B]\{\sigma\}}=\underbrace{\int_{\partial V_t}[N]^T\{t\}_{\tx{imp}}dS}_{\{F\}_{\tx{s}}}+\underbrace{\int_{\partial V_u}[N]^T\{\sigma .n\}dS}_{\{F\}_{\tx{reac}}}+\underbrace{\int_{V}[N]^T\{f\}_{\tx{s}}dV}_{\{F\}_{\tx{v}}}$
     \end{center}
     \scriptsize
     \fe{Vecteurs de forces nodales équivalentes aux :}{Equivalent nodal forces vector to:}
     \scriptsize
     \begin{tabular}{ll}
-      $\{F\}^S$ & \fe{densité surfacique d'efforts imposés $\tou{t}_{\tx{imp}}$}
-                     {imposed surface forces $\tou{t}_{\tx{imp}}$}\\
-      $\{F\}^R$ & \fe{densité surfacique d'efforts de réaction aux déplacements imposés $\tou{u}_{\tx{imp}}$}
-                     {surface forces in reaction to imposed displacements $\tou{u}_{\tx{imp}}$}\\
-      $\{F\}^V$ & \fe{densité volumique d'efforts imposés $\tou{f}$}{imposed volume forces $\tou{f}$}\\
-      $[B]\{\sigma\}$ & \fe{densité volumique d'efforts intérieurs}{internal volume forces}
+      $\{F\}_{\tx{s}}$    & \fe{densité surfacique d'efforts imposés $\tou{t}_{\tx{imp}}$}
+                               {imposed surface forces $\tou{t}_{\tx{imp}}$}\\
+      $\{F\}_{\tx{reac}}$ & \fe{densité surfacique de réaction aux déplacements imposés $\tou{u}_{\tx{imp}}$}
+                               {surface reactions to imposed displacements $\tou{u}_{\tx{imp}}$}\\
+      $\{F\}_{\tx{v}}$    & \fe{densité volumique d'efforts imposés $\tou{f}_{\tx{imp}}$}{imposed volume forces $\tou{f}_{\tx{imp}}$}\\
+      $[B]\{\sigma\}$     & \fe{densité volumique d'efforts intérieurs}{internal volume forces}
     \end{tabular}\\
     \fe{Matrices :}{Matrices:}\\
     \begin{tabular}{ll}
@@ -439,13 +439,13 @@
       \int_{V}[B]^T\{\sigma\}dV=\{F\}
     \end{equation*}
     \begin{equation*}
-      \int_{V}[B]^T[C]\{\varepsilon-\green{\varepsilon^{\tx{th}}}\}dV=\{F\}
+      \int_{V}[B]^T[C]\{\varepsilon-\green{\varepsilon_{\tx{th}}}\}dV=\{F\}
     \end{equation*}
     \begin{equation*}
-      \int_{V}[B]^T[C]\{\varepsilon\}dV=\{F\}+\green{\int_{V}[B]^T[C]\{\varepsilon\}^{\tx{th}}dV}
+      \int_{V}[B]^T[C]\{\varepsilon\}dV=\{F\}+\green{\int_{V}[B]^T[C]\{\varepsilon\}_{\tx{th}}dV}
     \end{equation*}
     \begin{equation*}
-      [K]\{U\}=\{F\}+\green{\underbrace{\int_{V}[B]^T[C]\{\varepsilon\}^{\tx{th}}dV}_{\{F\}^{\tx{th}}}}
+      [K]\{U\}=\{F\}+\green{\underbrace{\int_{V}[B]^T[C]\{\varepsilon\}_{\tx{th}}dV}_{\{F\}_{\tx{th}}}}
     \end{equation*}
   \end{itemize}
 \end{frame}
@@ -458,14 +458,14 @@
             {Objective: previous linear mechanical calculation\\
              \tou{with an additional thermal load}}
     \begin{equation*}
-      [K]\{U\}=\{F\}+\green{\underbrace{\int_{V}[B]^T[C]\{\varepsilon\}^{\tx{th}}dV}_{\{F\}^{\tx{th}}}}
+      [K]\{U\}=\{F\}+\green{\underbrace{\int_{V}[B]^T[C]\{\varepsilon\}_{\tx{th}}dV}_{\{F\}_{\tx{th}}}}
     \end{equation*}
     \item \fe{Méthode :}{Method:}\\
     \begin{tabular}{ll}
-      \fe{déformations thermiques}{thermal strains} & $\green{\{\varepsilon\}^{\tx{th}}}$\\
-      \fe{contraintes thermiques}{thermal stresses} & $\green{\{\sigma\}^{\tx{th}}=[C]\{\varepsilon\}^{\tx{th}}}$\\
-      \fe{forces nodales éq.}{nodal eq. forces} & $\green{\{F\}^{\tx{th}}=\int_{V}[B]^T\{\sigma\}^{\tx{th}}dV}$\\
-      \fe{résolution avec \kwr{RESO}}{sovling with \kwr{RESO}} & $\{U\}=[K]^{-1}(\{F\}+\green{\{F\}^{\tx{th}}})$
+      \fe{déformations thermiques}{thermal strains} & $\green{\{\varepsilon\}_{\tx{th}}}$\\
+      \fe{contraintes thermiques}{thermal stresses} & $\green{\{\sigma\}_{\tx{th}}=[C]\{\varepsilon\}_{\tx{th}}}$\\
+      \fe{forces nodales éq.}{nodal eq. forces} & $\green{\{F\}_{\tx{th}}=\int_{V}[B]^T\{\sigma\}_{\tx{th}}dV}$\\
+      \fe{résolution avec \kwr{RESO}}{sovling with \kwr{RESO}} & $\{U\}=[K]^{-1}(\{F\}+\green{\{F\}_{\tx{th}}})$
     \end{tabular}
   \end{itemize}
 \end{frame}
@@ -477,21 +477,21 @@
     \lstinputlisting[language=gibiane, firstline=229, lastline=232]{dgibi/formation_debutant_3_mecanique.dgibi}
     \begin{flushright}
       \footnotesize
-      $\{\varepsilon\}^{\tx{th}}=\alpha\{\Delta T\}$
+      $\{\varepsilon\}_{\tx{th}}=\alpha\{\Delta T\}$
       \normalsize
     \end{flushright}
     \item \fe{Pseudo contraintes thermique}{Pseudo thermal stresses}
     \lstinputlisting[language=gibiane, firstline=234, lastline=235]{dgibi/formation_debutant_3_mecanique.dgibi}
     \begin{flushright}
       \footnotesize
-      $\{\sigma\}^{\tx{th}}=[C]\{\varepsilon\}^{\tx{th}}$
+      $\{\sigma\}_{\tx{th}}=[C]\{\varepsilon\}_{\tx{th}}$
       \normalsize
     \end{flushright}
     \item \fe{Forces nodale équivalentes}{Nodal equivalent forces}
     \lstinputlisting[language=gibiane, firstline=237, lastline=239]{dgibi/formation_debutant_3_mecanique.dgibi}
     \begin{flushright}
       \footnotesize
-      $\{F\}^{\tx{th}}=\int_{V}[B]^T\{\sigma\}^{\tx{th}}dV$
+      $\{F\}_{\tx{th}}=\int_{V}[B]^T\{\sigma\}_{\tx{th}}dV$
       \normalsize
     \end{flushright}
   \end{itemize}

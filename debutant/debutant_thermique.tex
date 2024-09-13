@@ -9,7 +9,7 @@
     \item \fe{Équation de la chaleur}{Heat equation}
     \begin{block}{\fe{Forme locale}{Local form}}
       \begin{equation*}
-        \rho c_p \frac{\partial T}{\partial t}+\tx{div}\underbrace{\left(-\lambda\tou{\tx{grad}}(T)\right)}_{\tou{\phi}}=q\quad\fe{\tx{sur }V}{\tx{on }V}
+        \rho c_p \frac{\partial T}{\partial t}+\tx{div}\underbrace{\left(-\lambda\tou{\tx{grad}}(T)\right)}_{\tou{\phi}}=q_{\tx{imp}} \quad \fe{\tx{sur }V}{\tx{on }V}
       \end{equation*}
     \end{block}~
     \item \fe{Conditions aux limites}{Boundary conditions}\\
@@ -32,7 +32,7 @@
         \begin{column}{.4\textwidth}
           \item[] $T$ \fe{température}{temperature}
           \item[] $\tou{\phi}$ \fe{densité de flux de chaleur}{heat flow density}
-          \item[] $q$ \fe{source de chaleur volumique}{volumic heat source}
+          \item[] $q_{\tx{imp}}$ \fe{source de chaleur volumique}{volumic heat source}
           \item[] $t$ \fe{temps}{time}
         \end{column}
         \begin{column}{.42\textwidth}
@@ -68,7 +68,7 @@
      \end{tabular}~\\~\\
     \fe{et le vecteur chargement nodal équivalent :}{and the equivalent nodal load vector:}
     \begin{itemize}
-      \item[] $\{P\}=\int_V[N]^TqdV+\int_{\partial V_{\phi}}[N]^T(\phi_{\tx{imp}}+hT_f+\varepsilon\sigma(T_\infty^4-T^4))dS$
+      \item[] $\{P\}=\int_V[N]^Tq_{\tx{imp}}dV+\int_{\partial V_{\phi}}[N]^T(\phi_{\tx{imp}}+hT_f+\varepsilon\sigma(T_\infty^4-T^4))dS$
     \end{itemize}
     \normalsize
   \end{itemize}
@@ -189,7 +189,7 @@
       \lstinputlisting[language=gibiane, firstline=110, lastline=112]{dgibi/formation_debutant_2_thermique.dgibi}
       \begin{flushright}
         \footnotesize
-        $\{P\}=\gray{\int_V[N]^TqdV}+\int_{\partial V_{\phi}}[N]^T(\phi_{\tx{imp}}\gray{+hT_f+\varepsilon\sigma(T_\infty^4-T^4)})dS$
+        $\{P\}=\gray{\int_V[N]^Tq_{\tx{imp}}dV}+\int_{\partial V_{\phi}}[N]^T(\phi_{\tx{imp}}\gray{+hT_f+\varepsilon\sigma(T_\infty^4-T^4)})dS$
         \normalsize
       \end{flushright}}
   \end{itemize}
@@ -271,7 +271,7 @@
           \node[anchor=south west,inner sep=0] (image) at (0,0)
           {\includegraphics[width=3.5cm]{images/exo/2.2_cl_source}};
           \begin{scope}[x={(image.south east)},y={(image.north west)},color=green]
-            \draw (0.5,0.7) node[anchor=south west] {$q$~=~2600~kW.m$^{-3}$};
+            \draw (0.5,0.7) node[anchor=south west] {$q_{\tx{imp}}$~=~2600~kW.m$^{-3}$};
           \end{scope}
         \end{tikzpicture}
         \normalsize
@@ -321,7 +321,7 @@
       \lstinputlisting[language=gibiane, firstline=181, lastline=184]{dgibi/formation_debutant_2_thermique.dgibi}
       \begin{flushright}
         \footnotesize
-        $\{P\}=\gray{\int_V[N]^TqdV}+\int_{\partial V_{\phi}}[N]^T(\gray{\phi_{\tx{imp}}}+hT_f\gray{+\varepsilon\sigma(T_\infty^4-T^4)})dS$
+        $\{P\}=\gray{\int_V[N]^Tq_{\tx{imp}}dV}+\int_{\partial V_{\phi}}[N]^T(\gray{\phi_{\tx{imp}}}+hT_f\gray{+\varepsilon\sigma(T_\infty^4-T^4)})dS$
         \normalsize
       \end{flushright}}
   \end{itemize}
@@ -334,7 +334,7 @@
     \lstinputlisting[language=gibiane, firstline=158, lastline=159]{dgibi/formation_debutant_2_thermique.dgibi}
     \begin{flushright}
       \footnotesize
-      $\{P\}=\int_V[N]^TqdV\gray{+\int_{\partial V_{\phi}}[N]^T(\gray{\phi_{\tx{imp}}+}hT_f\gray{+\varepsilon\sigma(T_\infty^4-T^4)})dS}$
+      $\{P\}=\int_V[N]^Tq_{\tx{imp}}dV\gray{+\int_{\partial V_{\phi}}[N]^T(\gray{\phi_{\tx{imp}}+}hT_f\gray{+\varepsilon\sigma(T_\infty^4-T^4)})dS}$
       \normalsize
     \end{flushright}
     \item<2->\fe{Résolution et affichage des résultats}{Solving and plotting results}
@@ -531,7 +531,7 @@
           \node[anchor=south west,inner sep=0, opacity=0.3] (image) at (0,0)
           {\includegraphics[width=3.5cm]{images/exo/2.2_cl_source}};
           \begin{scope}[x={(image.south east)},y={(image.north west)},color=green,opacity=0.3]
-            \draw (0.5,0.7) node[anchor=south west] {$q$~=~2600~kW.m$^{-3}$};
+            \draw (0.5,0.7) node[anchor=south west] {$q_{\tx{imp}}$~=~2600~kW.m$^{-3}$};
           \end{scope}
         \end{tikzpicture}
         \normalsize
