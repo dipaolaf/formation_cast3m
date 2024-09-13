@@ -252,10 +252,29 @@
 
 \begin{frame}{\fe{Algoritme de minimisation du résidu}{Imbalance minimization algorithm}}
   \begin{itemize}
-    \item \fe{Algorithme simple}{Simple algorithm}
+    \item<1-> \fe{Initialisations}{Initializations}
     \scriptsize
     \begin{tabular}{ll}
-      $[\red{\{U\}_1^{i=0}~\{\lambda\}_1^{i=0}~\{\sigma\}_1^{i=0}}] = [\green{\{U\}_0~\{\lambda\}_0~\{\sigma\}_0}]$ & \fe{initialisations}{initialization}\\
+      &\\
+      $\left[\red{\{U\}_1^{i=0}~\{\lambda\}_1^{i=0}~\{\sigma\}_1^{i=0}}\right] = \left[\green{\{U\}_0~\{\lambda\}_0~\{\sigma\}_0^{\white{0}}}\right]$ & \fe{initialisation de la solution}{solution initialization} \vspace{1mm}\\
+      $\red{\{F\}_{\tx{reac},1}^{i=0}} = -[A]^T\red{\{\lambda\}_1^{i=0}}$                                           & \fe{initialisation des réactions \kwr{REAC}}{reactions initialization \kwr{REAC}} \vspace{1mm}\\
+      $F_{\tx{ref}} = \|\{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i=0}}\|$                                       & \fe{norme de convergence \kwr{MAXI}\kwg{ 'ABS'}}{convergence norm \kwr{MAXI}\kwg{ 'ABS'}} \vspace{1mm}\\
+      $\{R\}_1^{i=0} = \{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i=0}}-[B]\red{\{\sigma\}_1^{i=0}}$              & \fe{premier résidu \kwr{BSIG}}{first imbalance (residual) \kwr{BSIG}}\\
+      &
     \end{tabular}
+    \normalsize
+    \item<2-> \fe{Tant que : $\|\{R\}_1^i\| \geq \varepsilon F_{\tx{ref}}$}{While: $\|\{R\}_1^i\| \geq \varepsilon F_{\tx{ref}}$}
+    \scriptsize
+    \begin{tabular}{ll}
+      &\\
+      $\left[\violet{\delta\{U\}_1^{i+1}}~\red{\{\lambda\}_1^{i+1}}\right] = [\hat{K}]^{-1}\{R\}_1^i$ & \fe{résolution \kwr{RESO}}{resolution \kwr{RESO}} \vspace{1mm}\\
+      $\red{\{U\}_1^{i+1}} = \red{\{U\}_1^i} + \violet{\delta\{U\}_1^{i+1}}$               & \fe{estim. déplacements}{estim. displacements} \vspace{1mm}\\
+      $\red{\{\varepsilon\}_1^{i+1}} = \mathcal{D}(\red{\{U\}_1^{i+1}})$                   & \fe{estim. déformations \kwr{EPSI}}{estim. strains \kwr{EPSI}} \vspace{1mm}\\
+      $\red{\{\sigma\}_1^{i+1}} = \mathcal{C}(\Delta\{\varepsilon\}_1^{i+1})$              & \fe{estim. contraintes \kwr{COMP}}{estim. stresses \kwr{COMP}} \vspace{1mm}\\
+      $\red{\{F\}_{\tx{reac},1}^{i+1}} = -[A]^T\red{\{\lambda\}_1^{i+1}}$                  & \fe{estim. réactions \kwr{REAC}}{estim. reactions \kwr{REAC}} \vspace{1mm}\\
+      $\{R\}_1^{i+1} = \{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i+1}}-[B]\red{\{\sigma\}_1^{i+1}}$ & \fe{nouveau résidu \kwr{BSIG}}{new imbalance \kwr{BSIG}}
+    \end{tabular}
+    \normalsize
+    \item<2->[] \fe{Fin}{End}
   \end{itemize}
 \end{frame}
