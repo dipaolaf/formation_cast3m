@@ -41,65 +41,65 @@
   % Cellules (style, position, contenu)
   \fe{\node (start)  [bstep] {Initialisations,\\ \kwv{PERSO1}, \kwv{REEV\_MEC}, \kwv{REEV\_THE}};}
      {\node (start)  [bstep] {Initializations,\\ \kwv{PERSO1}, \kwv{REEV\_MEC}, \kwv{REEV\_THE}};}
-  \fe{\node (start0) [note, right of=start, xshift=5cm] {\kwo{PAS\_DEFA} (lecture des options),\\
-                                                         \kwo{PAS\_INIT PAS\_ETAT PAS\_MATE} (initialisations matériaux, inconnues,\\
-                                                         chargements, variables temporaires), remplissage de \kw{tab1.}\kwg{'WTABLE'}};}
-     {\node (start0) [note, right of=start, xshift=5cm] {\kwo{PAS\_DEFA} (reading options),\\
-                                                         \kwo{PAS\_INIT PAS\_DEFA PAS\_MATE} (initializations materials, unknowns,\\
-                                                         loading, temporary variables), filling \kw{tab1.}\kwg{'WTABLE'}};}
+  \fe{\node (start0) [note, right of=start, xshift=2cm, anchor=west] {\kwo{PAS\_DEFA} (lecture des options),\\
+                                                                      \kwo{PAS\_INIT PAS\_ETAT PAS\_MATE} (initialisations matériaux, inconnues,\\
+                                                                      chargements, variables temporaires), remplissage de \kw{tab1.}\kwg{'WTABLE'}};}
+     {\node (start0) [note, right of=start, xshift=2cm, anchor=west] {\kwo{PAS\_DEFA} (reading options),\\
+                                                                      \kwo{PAS\_INIT PAS\_DEFA PAS\_MATE} (initializations materials, unknowns,\\
+                                                                      loading, temporary variables), filling \kw{tab1.}\kwg{'WTABLE'}};}
 
   \fe{\node (init)  [gstep, below of=start, yshift=-0.1cm] {Initialisation du pas de temps};}
      {\node (init)  [gstep, below of=start, yshift=-0.1cm] {Time step initialization};}
-  \fe{\node (init0) [note, right of=init, xshift=5.28cm] {\kwo{PAS\_MODL PAS\_ETAT PAS\_MATE} Mise à jour modèle, matériau, chargement};}
-     {\node (init0) [note, right of=init, xshift=4.9cm] {\kwo{PAS\_MODL PAS\_ETAT PAS\_MATE} Updating model, properties, load};}
+  \fe{\node (init0) [note, right of=init, xshift=2cm, anchor=west] {\kwo{PAS\_MODL PAS\_ETAT PAS\_MATE} Mise à jour modèle, matériau, chargement};}
+     {\node (init0) [note, right of=init, xshift=2cm, anchor=west] {\kwo{PAS\_MODL PAS\_ETAT PAS\_MATE} Updating model, properties, load};}
 
   \fe{\node (resot) [rstep, below of=init] {\g{Résolution Thermique}};}
      {\node (resot) [rstep, below of=init] {\g{Thermal solving}};}
-  \fe{\node (resot0) [note, right of=resot, xshift=5.1cm] {\kwo{TRANSNON} Solveur thermique sur le pas de temps\\
-                                                           (aussi dispo : \kwo{TRANSLIN}, \kwo{DUPONT2})\\
-                                                           Écriture des résultats dans \kw{tab1.}\kwg{'ESTIMATION'}};}
-     {\node (resot0) [note, right of=resot, xshift=4.9cm] {\kwo{TRANSNON} Thermal solver on the time step\\
-                                                           (also available: \kwo{TRANSLIN}, \kwo{DUPONT2})\\
-                                                           Saving results in \kw{tab1.}\kwg{'ESTIMATION'}};}
+  \fe{\node (resot0) [note, right of=resot, xshift=2cm, anchor=west] {\kwo{TRANSNON} Solveur thermique sur le pas de temps\\
+                                                                      (aussi dispo : \kwo{TRANSLIN}, \kwo{DUPONT2})\\
+                                                                      Écriture des résultats dans \kw{tab1.}\kwg{'ESTIMATION'}};}
+     {\node (resot0) [note, right of=resot, xshift=2cm, anchor=west] {\kwo{TRANSNON} Thermal solver on the time step\\
+                                                                      (also available: \kwo{TRANSLIN}, \kwo{DUPONT2})\\
+                                                                      Saving results in \kw{tab1.}\kwg{'ESTIMATION'}};}
 
   \node (rthe)  [rstep, below of=resot] {\kwv{REEV\_THE}};
-  \fe{\node (rthe0) [note, right of=rthe, xshift=4.94cm] {Appel à la procédure \kwv{REEV\_THE} (si demandé)};}
-     {\node (rthe0) [note, right of=rthe, xshift=4.87cm] {Call to the \kwv{REEV\_THE} procédure (if asked)};}
+  \fe{\node (rthe0) [note, right of=rthe, xshift=2cm, anchor=west] {Appel à la procédure \kwv{REEV\_THE} (si demandé)};}
+     {\node (rthe0) [note, right of=rthe, xshift=2cm, anchor=west] {Call to the \kwv{REEV\_THE} procédure (if asked)};}
 
   \fe{\node (resom) [rstep, below of=rthe]  {\g{Résolution Mécanique}};}
      {\node (resom) [rstep, below of=rthe]  {\g{Mechanical solving}};}
-  \fe{\node (resom0) [note, right of=resom, xshift=5.08cm] {\kwo{UNPAS} Solveur mécanique sur le pas de temps\\
-                                                           Écriture des résultats dans \kw{tab1.}\kwg{'ESTIMATION'}};}
-     {\node (resom0) [note, right of=resom, xshift=4.87cm] {\kwo{UNPAS} Mechanical solver on the time step\\
-                                                           Saving results in \kw{tab1.}\kwg{'ESTIMATION'}};}
+  \fe{\node (resom0) [note, right of=resom, xshift=2cm, anchor=west] {\kwo{UNPAS} Solveur mécanique sur le pas de temps\\
+                                                                      Écriture des résultats dans \kw{tab1.}\kwg{'ESTIMATION'}};}
+     {\node (resom0) [note, right of=resom, xshift=2cm, anchor=west] {\kwo{UNPAS} Mechanical solver on the time step\\
+                                                                       Saving results in \kw{tab1.}\kwg{'ESTIMATION'}};}
 
   \node (rmec)  [rstep, below of=resom] {\kwv{REEV\_MEC}};
-  \fe{\node (rmec0) [note, right of=rmec, xshift=4.94cm] {Appel à la procédure \kwv{REEV\_MEC} (si demandé)};}
-     {\node (rmec0) [note, right of=rmec, xshift=4.82cm] {Call to the \kwv{REEV\_MEC} procedure (if asked)};}
+  \fe{\node (rmec0) [note, right of=rmec, xshift=2cm, anchor=west] {Appel à la procédure \kwv{REEV\_MEC} (si demandé)};}
+     {\node (rmec0) [note, right of=rmec, xshift=2cm, anchor=west] {Call to the \kwv{REEV\_MEC} procedure (if asked)};}
 
   \node (contm) [rtest, below of=rmec, yshift=-0.3cm]  {Convergence ?};
-  \fe{\node (contm0) [note, right of=contm, xshift=5.5cm] {Test de stationnarité, à activer avec :\\
-                                                           \kw{tab1.}\kwg{'CONVERGENCE\_MEC\_THE'}\kw{ = VRAI ;}\\ \\
-                                                           $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{'CRITERE\_COHERENCE'} $(10^{-2})$};}
-     {\node (contm0) [note, right of=contm, xshift=5.61cm] {Stationarity test, to be activated with:\\
-                                                           \kw{tab1.}\kwg{'CONVERGENCE\_MEC\_THE'}\kw{ = VRAI ;}\\ \\
-                                                           $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{'CRITERE\_COHERENCE'} $(10^{-2})$};}
+  \fe{\node (contm0) [note, right of=contm, xshift=2cm, anchor=west] {Test de stationnarité, à activer avec :\\
+                                                                      \kw{tab1.}\kwg{'CONVERGENCE\_MEC\_THE'}\kw{ = VRAI ;}\\ \\
+                                                                      $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{'CRITERE\_COHERENCE'} $(10^{-2})$};}
+     {\node (contm0) [note, right of=contm, xshift=2cm, anchor=west] {Stationarity test, to be activated with:\\
+                                                                      \kw{tab1.}\kwg{'CONVERGENCE\_MEC\_THE'}\kw{ = VRAI ;}\\ \\
+                                                                      $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{'CRITERE\_COHERENCE'} $(10^{-2})$};}
 
   \fe{\node (prep)  [gstep, below of=contm, yshift=-0.4cm] {Préparation du pas de temps suivant};}
      {\node (prep)  [gstep, below of=contm, yshift=-0.4cm] {Next time step preparation};}
-  \fe{\node (prep0) [note, right of=prep, xshift=5.15cm] {Enregistrement du nouvel état au début de pas dans : \kw{tab1.}\kwg{'WTABLE'}};}
-     {\node (prep0) [note, right of=prep, xshift=5.15cm] {Saving the new state as the initial time step state in: \kw{tab1.}\kwg{'WTABLE'}};}
+  \fe{\node (prep0) [note, right of=prep, xshift=2cm, anchor=west] {Enregistrement du nouvel état au début de pas dans : \kw{tab1.}\kwg{'WTABLE'}};}
+     {\node (prep0) [note, right of=prep, xshift=2cm, anchor=west] {Saving the new state as the initial time step state in: \kw{tab1.}\kwg{'WTABLE'}};}
 
   \node (pers)  [gstep, below of=prep]  {\kwv{PERSO1}};
-  \fe{\node (pers0) [note, right of=pers, xshift=3.8cm] {Appel à la procédure \kwv{PERSO1} (si demandé)};}
-     {\node (pers0) [note, right of=pers, xshift=3.7cm]    {Call to the \kwv{PERSO1} procedure (if asked)};}
+  \fe{\node (pers0) [note, right of=pers, xshift=2cm, anchor=west] {Appel à la procédure \kwv{PERSO1} (si demandé)};}
+     {\node (pers0) [note, right of=pers, xshift=2cm, anchor=west] {Call to the \kwv{PERSO1} procedure (if asked)};}
 
   \fe{\node (sauv)  [gstep, below of=pers] {Sauvegarde des résultats};}
      {\node (sauv)  [gstep, below of=pers] {Saving results};}
-  \fe{\node (sauv0) [note, right of=sauv, xshift=4.93cm] {\kwo{PAS\_RESU} : remplissage de \kwg{'CONTINUATION'} d'après \kwg{'ESTIMATION'}\\
-                                                         écriture dans \kw{tab1} s'il s'agit d'un \kwg{'TEMPS\_SAUVE'}};}
-     {\node (sauv0) [note, right of=sauv, xshift=4.8cm] {\kwo{PAS\_RESU}: filling \kwg{'CONTINUATION'} according to \kwg{'ESTIMATION'}\\
-                                                         saving in \kw{tab1} if the time belong to \kwg{'TEMPS\_SAUVE'}};}
+  \fe{\node (sauv0) [note, right of=sauv, xshift=2cm, anchor=west] {\kwo{PAS\_RESU} : remplissage de \kwg{'CONTINUATION'} d'après \kwg{'ESTIMATION'}\\
+                                                                    écriture dans \kw{tab1} s'il s'agit d'un \kwg{'TEMPS\_SAUVE'}};}
+     {\node (sauv0) [note, right of=sauv, xshift=2cm, anchor=west] {\kwo{PAS\_RESU}: filling \kwg{'CONTINUATION'} according to \kwg{'ESTIMATION'}\\
+                                                                    saving in \kw{tab1} if the time belong to \kwg{'TEMPS\_SAUVE'}};}
 
   \fe{\node (cont)  [gtest, below of=sauv, , yshift=-0.3cm]  {Fin des pas\\ de temps ?};}
      {\node (cont)  [gtest, below of=sauv, , yshift=-0.3cm]  {End of\\ time steps?};}

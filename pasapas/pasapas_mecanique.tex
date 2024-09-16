@@ -173,7 +173,7 @@
     \scriptsize
     \begin{tabular}{lll}
       $\green{t_0~\{U\}_0~\{\lambda\}_0~\{\sigma\}_0}$ & \fe{\green{état connu}}{\green{known state}}                 & \fe{\green{début du pas de temps}}{\green{beginning of time step}}\\
-      $  \red{t_1~\{U\}_1~\{\lambda\}_1~\{\sigma\}_1}$ & \fe{\red{état \tou{recherché}}}{\green{\tou{unknown} state}} & \fe{\red{fin du pas de temps}}{\red{end of time step}}\\
+      $  \red{t_1~\{U\}_1~\{\lambda\}_1~\{\sigma\}_1}$ & \fe{\red{état \tou{recherché}}}{\red{\tou{unknown} state}} & \fe{\red{fin du pas de temps}}{\red{end of time step}}\\
     \end{tabular}
     \item<2-> \fe{Décomposition incrémentale des déplacements nodaux}
                  {Incremental decomposition of nodal displacements}\\
@@ -264,6 +264,9 @@
     \end{tabular}
     \normalsize
     \item<2-> \fe{Tant que : $\|\{R\}_1^i\| \geq \varepsilon F_{\tx{ref}}$}{While: $\|\{R\}_1^i\| \geq \varepsilon F_{\tx{ref}}$}
+    \begin{textblock*}{2.5cm}(9.5cm,-3.9cm)
+      \includegraphics[width=3cm]{images/obi_wan}
+    \end{textblock*}
     \scriptsize
     \begin{tabular}{ll}
       &\\
@@ -277,4 +280,108 @@
     \normalsize
     \item<2->[] \fe{Fin}{End}
   \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Algorithme de UNPAS}{UNPAS algorithm}}
+  \tiny
+  \begin{tikzpicture}[node distance=0.55cm,
+    every node/.style={fill=white}, align=center]
+  % Cellules (style, position, contenu)
+  \fe{\node (ini)   [bstep] {Initialisations, \kwv{CHARMECA}};}
+     {\node (ini)   [bstep] {Initializations, \kwv{CHARMECA}};}
+  \fe{\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Instanciations matériaux, calcul matrice de rigidité $[K]$, forces imposées $\{F\}_{\tx{imp}}$};}
+     {\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Material updating, stiffness matrix $[K]$ calculation, imposed forces $\{F\}_{\tx{imp}}$};}
+
+  \fe{\node (1r)    [bstep, below of=ini] {1er résidu};}
+     {\node (1r)    [bstep, below of=ini] {1st imbalance};}
+  \fe{\node (1r0)   [note, right of=1r, xshift=1.5cm, anchor=west] {Déséquilibre entre les forces internes et externes\\
+                                                                  $\{R\}_1^{i=0}=\{F\}_{\tx{imp},1}+\green{\{F\}_{\tx{reac},0}}-[B]\green{\{\sigma\}_0}$ \kwr{BSIG}};}
+     {\node (1r0)   [note, right of=1r, xshift=1.5cm, anchor=west] {Imbalance between the internal and external forces\\
+                                                                  $\{R\}_1^{i=0}=\{F\}_{\tx{imp},1}+\green{\{F\}_{\tx{reac},0}}-[B]\green{\{\sigma\}_0}$ \kwr{BSIG}};}
+
+  \fe{\node (1res)  [rstep, below of=1r, yshift=-0.1cm] {1er \kwr{RESO}\\ norme de convergence};}
+     {\node (1res)  [rstep, below of=1r, yshift=-0.1cm] {1st \kwr{RESO}\\ convergence norm};}
+  \fe{\node (1res0) [note, right of=1res, xshift=1.5cm, anchor=west] {Incrément déplacement $\red{\Delta\{U\}_1^{i=0}}=\violet{\delta\{U\}_1^{i=0}}=[K]^{-1}\{R\}_1^{i=0}$ \kwr{RESO}\\
+                                                                    Norme de convergence $F_{\tx{ref}}$ selon $\{R\}_1^{i=0}$ et $\red{\Delta\{U\}_1^{i=0}}$};}
+     {\node (1res0) [note, right of=1res, xshift=1.5cm, anchor=west] {Displacement increment $\red{\Delta\{U\}_1^{i=0}}=\violet{\delta\{U\}_1^{i=0}}=[K]^{-1}\{R\}_1^{i=0}$ \kwr{RESO}\\
+                                                                    Convergence norm $F_{\tx{ref}}$ according to $\{R\}_1^{i=0}$ and $\red{\Delta\{U\}_1^{i=0}}$};}
+
+  \fe{\node (acc)  [rstep, below of=1res, yshift=-0.13cm] {Accélération convergence};}
+     {\node (acc)  [rstep, below of=1res, yshift=-0.13cm] {Convergence acceleration};}
+  \fe{\node (acc0) [note, right of=acc, xshift=1.5cm, anchor=west] {Correction du résidu à partir des 3 résidus précédents \kwr{ACT3}};}
+     {\node (acc0) [note, right of=acc, xshift=1.5cm, anchor=west] {Imbalance correction from the 3 previous imbalances \kwr{ACT3}};}
+
+      \node (reso)  [rstep, below of=acc] {\kwr{RESO}};
+  \fe{\node (reso0) [note, right of=reso, xshift=1.5cm, anchor=west] {Correction d'incrément $\violet{\delta\{U\}_1^{i+1}} | \red{\{\lambda\}_1^{i+1}}=[K]^{-1}\{R\}_1^i$};}
+     {\node (reso0) [note, right of=reso, xshift=1.5cm, anchor=west] {Correction of increment $\violet{\delta\{U\}_1^{i+1}}=[K]^{-1}\{R\}_1^i$};}
+
+  \fe{\node (comp) [rstep, below of=reso, yshift=-0.1cm]  {Intégration comportement\\ \kwv{CHARMECA}};}
+     {\node (comp) [rstep, below of=reso, yshift=-0.1cm]  {Integration behavior law\\ \kwv{CHARMECA}};}
+  \fe{\node (comp0) [note, right of=comp, xshift=1.5cm, anchor=west] {Incrément déformations $\Delta\{\varepsilon\}_1^{i+1}$, contraintes $\{\sigma\}_1^{i+1}$, variables internes $\{V\}_1^{i+1}$ \kwr{COMP}};}
+     {\node (comp0) [note, right of=comp, xshift=1.5cm, anchor=west] {Strains increment $\Delta\{\varepsilon\}_1^{i+1}$, stresses $\{\sigma\}_1^{i+1}$, internal variables $\{V\}_1^{i+1}$ \kwr{COMP}};}
+
+  \fe{\node (res)  [rstep, below of=comp, yshift=-0.13cm]  {Nouveau résidu};}
+     {\node (res)  [rstep, below of=comp, yshift=-0.13cm]  {New imbalance};}
+  \fe{\node (res0) [note, right of=res, xshift=1.5cm, anchor=west] {Réactions $\red{\{F\}_{\tx{reac},1}^{i+1}} = -[A]^T\red{\{\lambda\}_1^{i+1}}$ \kwr{REAC}\\
+                                                                  Résidu $\{R\}_1^{i+1} = \{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i+1}}-[B]\red{\{\sigma\}_1^{i+1}}$ \kwr{BSIG}};}
+     {\node (res0) [note, right of=res, xshift=1.5cm, anchor=west] {Reactions $\red{\{F\}_{\tx{reac},1}^{i+1}} = -[A]^T\red{\{\lambda\}_1^{i+1}}$ \kwr{REAC}\\
+                                                                  Imbalance $\{R\}_1^{i+1} = \{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i+1}}-[B]\red{\{\sigma\}_1^{i+1}}$ \kwr{BSIG}};}
+
+  \fe{\node (eq)  [rtest, below of=res, yshift=-0.2cm]  {Équilibre ?};}
+     {\node (eq)  [rtest, below of=res, yshift=-0.2cm]  {Equilibrium?};}
+  \fe{\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Mesure normée du résidu $\leq$ critère ? \kwg{'PRECISION' 'FTOL' 'MTOL'}\\
+                                                                Variation de l'incrément de déformations entre 2 itérations < critère ?};}
+     {\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Magnitude of the imbalance $\leq$ criterion? \kwg{'PRECISION' 'FTOL' 'MTOL'}\\
+                                                                Variation of the strains increment between 2 iterations < criterion?};}
+
+  \fe{\node (nc)  [rtest, below of=eq, yshift=-0.5cm]  {Non convergence ?};}
+     {\node (nc)  [rtest, below of=eq, yshift=-0.5cm]  {Non congergence?};}
+  \fe{\node (nc0) [note, right of=nc, xshift=1.5cm, anchor=west] {Détection de la non convergence :\\
+                                                                - nombre maximal d’itérations atteint\\
+                                                                - augmentation significative du résidu sur plusieurs itérations\\
+                                                                Passage en convergence forcée};}
+     {\node (nc0) [note, right of=nc, xshift=1.5cm, anchor=west] {Non convergence detection:\\
+                                                                - maximum number of iterations reached\\
+                                                                - significant increase of the imbalance over several iterations\\
+                                                                Forced convergence process};}
+  \fe{\node (sauv) [bstep, below of=nc, yshift=-0.4cm] {Enregistrement résultats};}
+     {\node (sauv) [bstep, below of=nc, yshift=-0.4cm] {Save esults};}
+
+  \fe{\node (conv) [btest, below of=sauv, yshift=-0.2cm] {Convergence ?};}
+     {\node (conv) [btest, below of=sauv, yshift=-0.2cm] {Convergence?};}
+
+  \fe{\node (fin)   [bstep, right of=conv, xshift=2cm] {Fin};}
+     {\node (fin)   [bstep, right of=conv, xshift=2cm] {End};}
+
+% Connections entre les cellules
+  \draw[->]               (ini) -- (1r);
+  \draw[->]               (1r) -- (1res);
+  \draw[->]               (1res) -- (acc);
+  \draw[->, draw=red]     (acc) -- (reso);
+  \draw[->, draw=red]     (reso) -- (comp);
+  \draw[->, draw=red]     (comp) -- (res);
+  \draw[->, draw=red]     (res) -- (eq);
+  \fe{\draw[->, draw=red] (eq) -- node[xshift=0.4cm]{non} (nc);}
+     {\draw[->, draw=red] (eq) -- node[xshift=0.4cm]{no} (nc);}
+  \fe{\draw[->]           (eq.east) -- node[yshift=0.2cm]{oui} ++(0.4,0) -- ++(0,-2) -- (sauv.east);}
+     {\draw[->]           (eq.east) -- node[yshift=0.2cm]{yes} ++(0.4,0) -- ++(0,-2) -- (sauv.east);}
+  \fe{\draw[->, draw=red] (nc.west) -- node[xshift=0.1cm, yshift=0.2cm]{non} ++(-0.4,0) -- ++(0,3.68) -- (acc.west);}
+     {\draw[->, draw=red] (nc.west) -- node[yshift=0.2cm]{no}  ++(-0.4,0) -- ++(0,3.68) -- (acc.west);}
+  \fe{\draw[->]           (nc) -- node[xshift=0.4cm, yshift=0.05cm]{oui} (sauv);}
+     {\draw[->]           (nc) -- node[xshift=0.4cm]{yes} (sauv);}
+  \draw[->]               (sauv) -- (conv);
+  \fe{\draw[->] (conv.west) -- node[yshift=0.2cm]{non} ++(-0.8,0) -- ++(0,7.25) -- (ini.west);}
+     {\draw[->] (conv.west) -- node[yshift=0.2cm]{no}  ++(-0.8,0) -- ++(0,7.25) -- (ini.west);}
+  \fe{\draw[->] (conv.east) -- node[yshift=0.2cm]{oui} (fin.west);}
+     {\draw[->] (conv.east) -- node[yshift=0.2cm]{yes} (fin.west);}
+  \draw[dotted]           (ini) -- (ini0);
+  \draw[dotted]           (1r)  -- (1r0);
+  \draw[dotted]           (1res) -- (1res0);
+  \draw[dotted]           (acc)  -- (acc0);
+  \draw[dotted]           (reso) -- (reso0);
+  \draw[dotted]           (comp)  -- (comp0);
+  \draw[dotted]           (res) -- (res0);
+  \draw[dotted]           (eq) -- (eq0);
+  \draw[dotted]           (nc)  -- (nc0);
+  \end{tikzpicture}
 \end{frame}
