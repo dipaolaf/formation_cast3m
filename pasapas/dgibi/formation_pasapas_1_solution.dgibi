@@ -1,0 +1,172 @@
+* fichier : formation_pasapas_1_solution.dgibi
+*
+*----------------------------------------------------------------------*
+*              FORMATION AVANCEE SUR LA PROCEDURE PASAPAS              *
+*                                                                      *
+* Flexion d'une poutre en grands deplacements avec chargemet suiveur   *
+*                                                                      *
+* Ce fichier constitue la mise donnee solution du probleme et realise  *
+* - le maillage                                                        *
+* - la definition du modele et des parametres materiaux                *
+* - la definition du chargement sur la configuration deformee avec la  *
+*   procedure CHARMECA (ou bien PERSO1)                                *
+* - la resolution avec PASAPAS en hypothese grands deplacements        *
+* - le post traitement du deplacement de la poutre                     *
+*----------------------------------------------------------------------*
+
+
+
+
+
+** Options de trace / Plotting options
+itrac = vrai ;
+OPTI 'TRAC' 'PSC' ;
+ipsc = EGA (VALE 'TRAC') 'PSC' ;
+
+** Options generales / general options
+OPTI 'DIME' 2 'ELEM' 'SEG2' ;
+xpas = 0.05 ;
+
+** Parametres geometriques
+long = 1. ;
+sec  = 1.E-2 ;
+inr1 = 1.E-4 ;
+
+** Maillage
+p1   = 0. 0. ;
+p2   = 0. long ;
+l1   = DROI 25 p1 p2 ;
+
+** Modele et materiau (elastique)
+mo1  = MODE l1 'MECANIQUE' 'ELASTIQUE' 'POUT' ;
+ma1  = MATE mo1 'YOUN' 50.E6 'NU' 0.3 'SECT' sec 'INRZ' inr1 ;
+
+** Blocages mecaniques (encastrement de la base)
+blo1 = BLOQ 'DEPL' 'ROTA' p1 ;
+
+** Chargement en effort impose
+f1   = FORC (1. 0.) p2 ;
+ev1  = EVOL 'MANU' 'Temps' (PROG 0. 1.) 'Coef' (PROG 0. 3.E4) ;
+cha1 = CHAR 'MECA' f1 ev1 ;
+
+** Procedure PERSO1
+DEBP PERSO1 t1*'TABLE' ;
+  pf   = t1 . 'MON_POINT' ;
+  ev   = t1 . 'MON_EVOL' ;
+* angle de rotation / rotation angle
+  u1   = t1 . 'ESTIMATION' . 'DEPLACEMENTS' ;
+  rs   = EXTR u1 'RZ' pf ;
+  rsd  = rs * 180. / pi ;
+* direction force
+  dir1 = (COS rsd) (SIN rsd) ;
+* ecrasement du chargement / load overwrite
+  f1   = FORC dir1 pf ;
+  cha2 = CHAR 'MECA' f1 ev ;
+  t1 . 'WTABLE' . 'CHARGEMENT' = cha2 ;
+FINP ;
+
+** Procedure CHARMECA
+DEBP CHARMECA t1*'TABLE' tps1*'FLOTTANT' ;
+  pf   = t1 . 'MON_POINT' ;
+  ev   = t1 . 'MON_EVOL' ;
+* angle de rotation / rotation angle
+  u1   = t1 . 'ESTIMATION' . 'DEPLACEMENTS' ;
+  rs   = EXTR u1 'RZ' pf ;
+  rsd  = rs * 180. / pi ;
+* direction force
+  dir1 = (COS rsd) (SIN rsd) ;
+* ajout de la force / adding the force
+  val1 = IPOL tps1 ev ;
+  f1   = FORC (val1 * dir1) pf ;
+  t2   = TABLE ;
+  t2 . 'ADDI_SECOND' = f1 ;
+FINP t2 ;
+
+** Resolution
+tab1                         = TABL ;
+tab1 . 'MODELE'              = mo1 ;
+tab1 . 'CARACTERISTIQUES'    = ma1 ;
+tab1 . 'BLOCAGES_MECANIQUES' = blo1 ;
+tab1 . 'CHARGEMENT'          = cha1 ;
+tab1 . 'TEMPS_CALCULES'      = PROG xpas 'PAS' xpas 1. ;
+tab1 . 'GRANDS_DEPLACEMENTS' = VRAI ;
+tab1 . 'PREDICTEUR'          = 'HPP' ;
+tab1 . 'PROCEDURE_PERSO1'    = VRAI ;
+tab1 . 'MON_EVOL'            = ev1 ;
+tab1 . 'MON_POINT'           = p2 ;
+PASAPAS tab1 ;
+
+** Post-traitement
+tt   = tab1 . 'TEMPS' ;
+tu1  = tab1 . 'DEPLACEMENTS' ;
+tr1  = tab1 . 'REACTIONS' ;
+def0 = DEFO l1 (tu1 . 0) 0. ;
+con0 = FORM ;
+* trace des deformees successives
+SI ipsc ;
+  OPTI 'FTRA' 'exo_1_solu_deformee.ps' ;
+FINSI ;
+box  = (-0.2 -0.1) ET (0.8 1.) COUL 'JAUN' ;
+REPE b1 (DIME tt) ;
+  i1   = &b1 - 1 ;
+  tps1 = tt . i1 ;
+  u1   = tu1 . i1 ;
+  r1   = tr1 . i1 ;
+  v1   = VECT r1 2.E-5 'FORC' 'ROUG' ;
+  def1 = DEFO (l1 ET box) u1 1. v1 'BLEU' ;
+  SI itrac ;
+    TRAC (def0 ET def1) 'TITR' (CHAI 'Deformee au temps ' tps1) ;
+  FINSI ;
+FIN b1 ;
+* evolution des deplacements du sommet au cours du temps
+tleg               = TABL ;
+tleg . 'TITRE'     = TABL ;
+tleg . 'TITRE' . 1 = 'Ux' ;
+tleg . 'TITRE' . 2 = 'Uy' ;
+evux1 = EVOL 'ROUG' 'TEMP' tab1 'DEPLACEMENTS' 'UX' p2 ;
+evuy1 = EVOL 'BLEU' 'TEMP' tab1 'DEPLACEMENTS' 'UY' p2 ;
+
+** Trace des evolutions deplacements vs temps /
+*  Plotting evolutions of diplacements vs time
+SI ipsc ;
+  OPTI 'FTRA' 'exo_1_solu_evol.ps' ;
+FINSI ;
+SI itrac ;
+  DESS (evux1 ET evuy1) 'TITR' 'Deplacements vs Temps' 'LEGE' 'SE' tleg 'TITY' 'Ux | Uy' ;
+FINSI ;
+
+FIN ;
+
+
+
+
+
+
+
+
+***tab1 . 'CHARGEMENT'          = cha1 ;
+tab1 . 'GRANDS_DEPLACEMENTS' = VRAI ;
+tab1 . 'PREDICTEUR'          = 'HPP' ;
+tab1 . 'PROCEDURE_CHARMECA'  = VRAI ;
+tab1 . 'MON_EVOL'            = ev1 ;
+tab1 . 'MON_POINT'           = p2 ;
+PASAPAS tab1 ;
+
+DEBP CHARMECA t1*'TABLE' tps1*'FLOTTANT' ;
+  pf = t1 . 'MON_POINT' ;
+  ev = t1 . 'MON_EVOL' ;
+* angle de rotation / rotation angle
+  drs = 0. ;
+  SI (EGA (TYPE zdept) 'CHPOINT') ;
+    drs = EXTR zdept 'RZ' pf ;
+  FINSI ;
+  rs = (EXTR (t1 . 'CONTINUATION' . 'DEPLACEMENTS') 'RZ' pf) + drs ;
+  rsd = rs * 180. / pi ;
+* direction force
+  dir1 = (COS rsd) (SIN rsd) ;
+* ajout de la force / adding the force
+  val1 = IPOL tps1 ev ;
+  f1 = FORC (val1 * dir1) pf ;
+  t2 = TABLE ;
+  t2 . 'ADDI_SECOND' = f1 ;
+FINP t2 ;

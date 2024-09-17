@@ -1,38 +1,6 @@
 % Décomposer en \subsection la méca :
 %   1) équations + formulation faible, minimisation du résidu
-%   2) la procédure UNPAS
-%   3) exemples
-
-% Faire la thermique en premier, puis la mécanique ??
+%   2) la procédure UNPAS + exemples
 
 % Remplacer les apostrophes ’ par des quotes '
 
-{\setbeamerfont{framesubtitle}{size=\tiny}
-\begin{frame}{\fe{Exercice 1 : poutre avec force suiveuse}{Exercise 1: beam with following force}}
-             {\url{https://www-cast3m.cea.fr/index.php?page=exemples&exemple=formation_pasapas_1_initial}}
-  \small
-  \begin{itemize}
-    \item \fe{Poutre en flexion}{Beam bending}\\
-    \scriptsize
-    \fe{base encastrée, force \tou{perpendiculaire} à la poutre, déplacement "important"}
-       {clamped base, force \tou{perpendicular} to the beam, "large" displacement}\\
-    \begin{tikzpicture}
-      \draw [-,thick] (0,0) -- (0,3);
-      \draw [->, red] (0,3) -- (0.5,3) node (force) [right, red] {$F$};
-      \draw [-]       (-0.2,0) -- (0.25,0);
-      \draw [-]       (-0.2,-0.1) -- (-0.1,0);
-      \draw [-]       (-0.1,-0.1) -- (0,0);
-      \draw [-]       (0,-0.1) -- (0.1,0);
-      \draw [-]       (0.1,-0.1) -- (0.2,0);
-    \end{tikzpicture}
-    \normalsize
-    \item \fe{\red{Problème : l'effort est calculé sur la configuration initiale et n'est pas mis à jour}}
-             {\red{Problem: the force is calculated on the initial shape and not updated}}
-    \item \fe{\green{Objectif : réappliquer l'effort correctement au cours des pas}}
-             {\green{Purpose: to correctly apply the force during the calculation}}
-    \begin{center}
-      \fe{\avous{~à vous de jouer !}}{\avous{~it's up to you!}}
-    \end{center}  
-  \end{itemize}
-\end{frame}
-}
