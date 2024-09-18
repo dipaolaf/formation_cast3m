@@ -62,7 +62,6 @@ tt   = tab1 . 'TEMPS' ;
 tu1  = tab1 . 'DEPLACEMENTS' ;
 tr1  = tab1 . 'REACTIONS' ;
 def0 = DEFO l1 (tu1 . 0) 0. ;
-con0 = FORM ;
 * trace des deformees successives
 SI ipsc ;
   OPTI 'FTRA' 'exo_1_deformee.ps' ;
