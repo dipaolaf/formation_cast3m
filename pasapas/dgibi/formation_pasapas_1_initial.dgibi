@@ -18,7 +18,7 @@
 
 
 ** Options de trace / Plotting options
-itrac = faux ;
+itrac = vrai ;
 OPTI 'TRAC' 'PSC' ;
 ipsc = EGA (VALE 'TRAC') 'PSC' ;
 
@@ -26,24 +26,24 @@ ipsc = EGA (VALE 'TRAC') 'PSC' ;
 OPTI 'DIME' 2 'ELEM' 'SEG2' ;
 xpas = 0.05 ;
 
-** Parametres geometriques
+** Parametres geometriques / Geometrical paramters
 long = 1. ;
 sec  = 1.E-2 ;
 inr1 = 1.E-4 ;
 
-** Maillage
+** Maillage / Mesh
 p1   = 0. 0. ;
 p2   = 0. long ;
 l1   = DROI 25 p1 p2 ;
 
-** Modele et materiau (elastique)
+** Modele et materiau / Model and material properties
 mo1  = MODE l1 'MECANIQUE' 'ELASTIQUE' 'POUT' ;
 ma1  = MATE mo1 'YOUN' 50.E6 'NU' 0.3 'SECT' sec 'INRZ' inr1 ;
 
-** Blocages mecaniques (encastrement de la base)
+** Blocages de la base / Clamping the base
 blo1 = BLOQ 'DEPL' 'ROTA' p1 ;
 
-** Chargement en effort impose
+** Chargement en effort impose / Load with imposed force
 f1   = FORC (1. 0.) p2 ;
 ev1  = EVOL 'MANU' 'Temps' (PROG 0. 1.) 'Coef' (PROG 0. 3.E4) ;
 cha1 = CHAR 'MECA' f1 ev1 ;
@@ -57,12 +57,12 @@ tab1 . 'CHARGEMENT'          = cha1 ;
 tab1 . 'TEMPS_CALCULES'      = PROG xpas 'PAS' xpas 1. ;
 PASAPAS tab1 ;
 
-** Post-traitement
+** Post-traitement / Post-processing
 tt   = tab1 . 'TEMPS' ;
 tu1  = tab1 . 'DEPLACEMENTS' ;
 tr1  = tab1 . 'REACTIONS' ;
 def0 = DEFO l1 (tu1 . 0) 0. ;
-* trace des deformees successives
+* trace des deformees / plotting deformed shape
 SI ipsc ;
   OPTI 'FTRA' 'exo_1_deformee.ps' ;
 FINSI ;
@@ -78,16 +78,13 @@ REPE b1 (DIME tt) ;
     TRAC (def0 ET def1) 'TITR' (CHAI 'Deformee au temps ' tps1) ;
   FINSI ;
 FIN b1 ;
-* evolution des deplacements du sommet au cours du temps
+* evolution temporelle des deplacements / time evolution of displacements
 tleg               = TABL ;
 tleg . 'TITRE'     = TABL ;
 tleg . 'TITRE' . 1 = 'Ux' ;
 tleg . 'TITRE' . 2 = 'Uy' ;
 evux1 = EVOL 'ROUG' 'TEMP' tab1 'DEPLACEMENTS' 'UX' p2 ;
 evuy1 = EVOL 'BLEU' 'TEMP' tab1 'DEPLACEMENTS' 'UY' p2 ;
-
-** Trace des evolutions deplacements vs temps /
-*  Plotting evolutions of diplacements vs time
 SI ipsc ;
   OPTI 'FTRA' 'exo_1_evol.ps' ;
 FINSI ;

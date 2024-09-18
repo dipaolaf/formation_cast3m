@@ -24,7 +24,8 @@ for i in *.ps
 do
 # pour les fichiers ci-dessous : retrait titre + legende, déplacement isovaleurs, changement taille fonte + epaisseur trait
   if [ "${i}" = "exemple_0.ps" ] ||
-     [[ "${i}" == exo_1_*.ps ]]
+     [[ "${i}" == exo_1_*.ps ]]  ||
+     [ "${i}" = "exo_2_chargement.ps" ]
   then
     cast-post.sh -o -t -c 2 -s 15 -l 10 ${i}
 # pour les fichiers ci-dessous : retrait titre, déplacement isovaleurs, changement taille fonte + epaisseur trait
