@@ -65,10 +65,10 @@ f1    = DEPI bl3 umax ;
 ev1   = EVOL 'MANU' (PROG 0. 1.) (PROG 0. 1.) ;
 cha   = CHAR 'DIMP' f1 ev1 ;
 SI ipsc ;
-  OPTI 'FTRA' 'exo_2_chargement.ps' ;
+***  OPTI 'FTRA' 'exo_2_chargement.ps' ;
 FINSI ;
 SI itrac ;
-  TRAC (VECT f1 ' ' 'FLX' 'VERT') ((RIGI mo ma) ET bl1 ET bl2) ;
+***  TRAC (VECT f1 ' ' 'FLX' 'VERT') ((RIGI mo ma) ET bl1 ET bl2) ;
 FINSI ;
 
 ** Procedure PERSO1
@@ -96,7 +96,7 @@ PASAPAS tab1 ;
 
 ** Post-traitement
 liso  = PROG 0. 'PAS' 4.E9 4.E10 ;
-box   = (0. -0.3) ET (1. 1.4) ;
+box   = (-0.05 -0.3) ET (1. 1.4) ;
 nt1   = DIME (tab1 . 'TEMPS') ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_2_solu_sigma.ps' ;
