@@ -80,24 +80,25 @@ PASAPAS tab1 ;
 
 ** Post-traitement
 liso  = PROG 0. 'PAS' 4.E9 4.E10 ;
-nt1   = (DIME (tab1 . 'TEMPS')) - 1 ;
+box   = (0. -0.2) ET (1. 1.4) ;
+nt1   = DIME (tab1 . 'TEMPS') ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_2_sigma.ps' ;
 FINSI ;
 REPE b1 nt1 ;
 * contraintes / stresses
-  sg1   = tab1 . 'CONTRAINTES' . &b1 ;
+  sg1   = tab1 . 'CONTRAINTES' . (&b1 - 1) ;
   sp1   = EXCO 'SI11' (PRIN sg1 mo) ;
 * deplacements / displacements
-  u1    = tab1 . 'DEPLACEMENTS' . &b1 ;
+  u1    = tab1 . 'DEPLACEMENTS' . (&b1 - 1) ;
 * reactions
-  r1    = tab1 . 'REACTIONS' . &b1 ;
+  r1    = tab1 . 'REACTIONS' . (&b1 - 1) ;
   vec1  = VECT r1 5.E-10 'FORC' 'VIOL' ;
 * deformees / deformed shape
-  def1  = DEFO s1 u1 1. vec1 sp1 mo ;
+  def1  = DEFO s1 u1 2. vec1 sp1 mo ;
 * traces / plot
   SI itrac ;
-    TRAC def1 cs1 liso ;
+    TRAC def1 cs1 liso 'BOIT' box ;
   FINSI ;
 FIN b1 ;
 * courbe force vs deplacement / force vs displacement curve

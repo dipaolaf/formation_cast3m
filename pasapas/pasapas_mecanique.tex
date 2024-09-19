@@ -425,7 +425,6 @@
 {\setbeamerfont{framesubtitle}{size=\tiny}
 \begin{frame}{\fe{Exercice 1 : poutre avec force suiveuse}{Exercise 1: beam with following force}}
              {\url{https://www-cast3m.cea.fr/index.php?page=exemples&exemple=formation_pasapas_1_initial}}
-
   \begin{itemize}
     \item \fe{Quelques objets utiles}{Some useful objects}\\
     \small
@@ -439,6 +438,12 @@
     \kwr{IPOL} \fe{pour interpoler l'amplitude de la force à l'instant de calcul}
                   {to interpolate the force magnitude at the current time step}\\
     \kwr{FORC} \fe{pour appliquer une force ponctuelle}{to apply a point force}
+    \normalsize
+    \item \fe{Quelques indices utiles de la table}{Some useful table indices}\\
+    \small
+    \kwg{'ESTIMATION'.'DEPLACEMENTS'} \fe{dernier champ de déplacement convergé}{last converged displacement field}
+    \kwg{'WTABLE'.'CHARGEMENT'} \fe{chargement courant}{current load}
+    \normalsize
   \end{itemize}
 \end{frame}
 }
@@ -472,7 +477,7 @@
              {\fe{Solution avec PERSO1}{Solution with PERSO1}}
   \small
   \begin{itemize}
-    \item \fe{Poutre en flexion}{Beam bending}\\
+    \item \fe{Résultats}{Results}\\
     \scriptsize
     \fe{base encastrée, force \tou{perpendiculaire} à la poutre, déplacement "important"}
        {clamped base, force \tou{perpendicular} to the beam, "large" displacement}\\

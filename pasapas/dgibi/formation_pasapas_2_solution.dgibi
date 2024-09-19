@@ -73,15 +73,12 @@ FINSI ;
 
 ** Procedure PERSO1
 DEBP PERSO1 t1*'TABLE' ;
-* modele courant / current model
   mo1   = t1 . 'WTABLE' . 'MODELE' ;
-* 1ere contrainte principale / 1st principal stress
   sg1   = t1 . 'ESTIMATION' . 'CONTRAINTES' ;
   sgp1  = PRIN sg1 mo1 ;
-* maillage a conserver / mesh to be conserved
-  sg11  = CHAN 'GRAVITE' (EXCO 'SI11' sgp1) mo1 ;
+  sgi   = EXCO 'SI11' sgp1 ;
+  sg11  = CHAN 'GRAVITE' sgi mo1 ;
   s2    = sg11 ELEM 'INFERIEUR' 2.2E10 ;
-* mise a jour du modele / updating the model
   mo2   = REDU mo1 s2 ;
   t1 . 'WTABLE' . 'MODELE' = mo2 ;
 FINP ;
@@ -92,30 +89,32 @@ tab1 . 'MODELE'              = mo ;
 tab1 . 'CARACTERISTIQUES'    = ma ;
 tab1 . 'BLOCAGES_MECANIQUES' = bl ;
 tab1 . 'CHARGEMENT'          = cha ;
-tab1 . 'TEMPS_CALCULES'      = PROG 0.1 'PAS' 0.1 0.6 'PAS' 0.01 1. ;
+tab1 . 'TEMPS_CALCULES' =
+  PROG 0.1 'PAS' 0.1 0.6 'PAS' 0.01 1. ;
 tab1 . 'PROCEDURE_PERSO1'    = VRAI ;
 PASAPAS tab1 ;
 
 ** Post-traitement
 liso  = PROG 0. 'PAS' 4.E9 4.E10 ;
-nt1   = (DIME (tab1 . 'TEMPS')) - 1 ;
+box   = (0. -0.3) ET (1. 1.4) ;
+nt1   = DIME (tab1 . 'TEMPS') ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_2_solu_sigma.ps' ;
 FINSI ;
 REPE b1 nt1 ;
 * contraintes / stresses
-  sg1   = tab1 . 'CONTRAINTES' . &b1 ;
+  sg1   = tab1 . 'CONTRAINTES' . (&b1 - 1) ;
   sp1   = EXCO 'SI11' (PRIN sg1 mo) ;
 * deplacements / displacements
-  u1    = tab1 . 'DEPLACEMENTS' . &b1 ;
+  u1    = tab1 . 'DEPLACEMENTS' . (&b1 - 1) ;
 * reactions
-  r1    = tab1 . 'REACTIONS' . &b1 ;
+  r1    = tab1 . 'REACTIONS' . (&b1 - 1) ;
   vec1  = VECT r1 5.E-10 'FORC' 'VIOL' ;
 * deformees / deformed shape
-  def1  = DEFO s1 u1 1. vec1 sp1 mo ;
+  def1  = DEFO s1 u1 2. vec1 sp1 mo ;
 * traces / plot
   SI itrac ;
-    TRAC def1 cs1 liso ;
+    TRAC def1 cs1 liso 'BOIT' box ;
   FINSI ;
 FIN b1 ;
 * courbe force vs deplacement / force vs displacement curve
