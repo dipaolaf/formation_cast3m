@@ -6,18 +6,172 @@
 \fe{\subsection{Équations}}{\subsection{Equations}}
 \label{thermique_equations}
 
-\begin{frame}{\fe{Rappel des équations thermiques}{Reminder on thermcal equations}}
+\begin{frame}{\fe{Solveur thermique}{Thermal solver}}
+             {\fe{Rappel des équations}{Reminder on equations}}
   \begin{itemize}
-    \item \fe{Salut}{Hello}
+    \item<1->[] \fe{Équations locales du problème statique}
+                   {Local equations of the static equilibrium}\\
+    \scriptsize
+    \fe{\begin{tabular}{lll}
+          équation de la chaleur & $\rho c_p \frac{\partial T}{\partial t}+\tx{div}\underbrace{(-\lambda \tx{grad}T)}_{\phi}-q=0$ & sur $V$ \\
+          flux imposé            & $\phi.n = \phi_{\tx{imp}} + \underbrace{h(T_f-T_{\infty})}_{convection}
+                                                             + \underbrace{\varepsilon\sigma(T^4_{\infty}-T^4)}_{rayonnement}$    & sur $\partial V_{\phi}$ \\
+          température imposée    & $T = T_{\tx{imp}}$                                                                             & sur $\partial V_{T}$ \\
+        \end{tabular}}
+       {\begin{tabular}{lll}
+        heat equation            & $\rho c_p \frac{\partial T}{\partial t}+\tx{div}\underbrace{(-\lambda \tx{grad}T)}_{\phi}-q=0$ & on $V$ \\
+        imposed heat flow        & $\phi.n = \phi_{\tx{imp}} + \underbrace{h(T_f-T_{\infty})}_{convection}
+                                                             + \underbrace{\varepsilon\sigma(T^4_{\infty}-T^4)}_{radiation}$      & on $\partial V_{\phi}$ \\
+        température imposée      & $T = T_{\tx{imp}}$                                                                             & on $\partial V_{T}$ \\
+    \end{tabular}}
+    \normalsize
+    \onslide<2->{
+    \begin{block}{\fe{Formulation faible et discrétisée :}
+                     {Weak and discrete formulation:}}
+      \begin{equation*}
+        [C]\{\dot{T}\}+[K]\{T\}=\{P\}
+      \end{equation*}
+    \end{block}~\\
+    \scriptsize
+    \fe{avec les matrices :}{with the matrices:}
+    \begin{tabular}{lll}~\\
+      $[C]=\int_V\rho c_p [N]^T[N]dV$                                     & \fe{matrice de capacité}{capacity matrix}         & \kwr{CAPA}\\
+      $[K]=\int_V[B]^T[\lambda][B]dV+\int_{\partial V_{\phi}}h[N]^T[N]dS$ & \fe{matrice de conductivité}{conductivity matrix} & \kwr{COND}
+     \end{tabular}~\\~\\
+    \fe{et le vecteur chargement nodal équivalent (\kwr{SOUR FLUX CONV} \kwo{PAS\_RAYO}) :}
+       {and the equivalent nodal load vector (\kwr{SOUR FLUX CONV} \kwo{PAS\_RAYO}):}\\
+      $\{P\}=\int_V[N]^T\{q\}_{\tx{imp}}dV+\int_{\partial V_{\phi}}[N]^T(\{\phi\}_{\tx{imp}}+h\{T\}_f+\varepsilon\sigma(\{T\}_\infty^4-\{T\}^4))dS$}
   \end{itemize}
+  \normalsize
+\end{frame}
+
+\begin{frame}{\fe{Solveur thermique}{Thermal solver}}
+  \begin{itemize}
+    \item[]
+    \begin{block}{\fe{Discrétisation temporelle avec un $\theta$-schéma}{Time discretization with a $\theta$-scheme}}
+      \begin{equation*}
+        [C]_{\star}\frac{\red{\{T\}_1}-\green{\{T\}_0}}{\Delta t}+[K]_{\star}\{T\}_{\star}=\{P\}_{\star}
+      \end{equation*}
+    \end{block}~\\
+    \footnotesize
+    \item[] \fe{Avec :}{With:}\\
+    \begin{tabular}{ll}
+      $\red{\{T\}_1}$                       & \fe{températures nodales à la fin du pas de temps $\red{t_1}$ (inconnues)}
+                                                 {nodal temperatures at end of time step $\red{t_1}$ (unknown)}\\
+      $\green{\{T\}_0}$                     & \fe{températures nodales au début du pas de temps $\green{t_0}$ (connues)}
+                                                 {nodal temperatures at beginning of time step $\green{t_0}$ (knwown)}\\
+      $\Delta t = \red{t_1} - \green{t_0}$  & \fe{le pas de temps}{the time step}
+    \end{tabular}~\\~\\
+    \item[] \fe{$[C]_{\star}$ $[K]_{\star}$ et $\{P\}_{\star}$ sont évalués :}{$[C]_{\star}$ $[K]_{\star}$ and $\{P\}_{\star}$ are estimated:}\\
+    \begin{tabular}{ll}
+      \fe{au temps}{at time}                & $t_{\star}     = \theta \red{t_1} + (1-\theta) \green{t_0}$\\
+      \fe{à la température}{at temperature} & $\{T\}_{\star} = \theta \red{\{T\}_1} + (1-\theta) \green{\{T\}_0}$
+    \end{tabular}~\\~\\
+    \item[] \fe{$\theta$ est le \g{coefficient de relaxation} de ce schéma, entre 0 et 1}
+               {$\theta$ is the \g{relaxation coefficient} of this scheme, between 0 and 1}\\
+    \begin{tabular}{ll}
+      $\theta$               & \fe{réglable via l'indice \kwg{'RELAXATION\_THETA'}}{adjustable via index \kwg{'RELAXATION\_THETA'}}\\
+      $\theta = 0$           & \fe{schéma explicite}{explicit scheme}\\
+      $\theta = \frac{1}{2}$ & \fe{schéma implicite de Crank-Nicolson}{implicit Crank-Nicolson scheme}\\
+      $\theta = 1$           & \fe{schéma implicite complet (par défaut)}{full implicit scheme (default)}
+    \end{tabular}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{Algorithme de TRANSNON}{TRANSNON algorithm}}
+  \tiny
+  \begin{tikzpicture}[node distance=0.6cm,
+    every node/.style={fill=white}, align=center]
+  % Cellules (style, position, contenu)
+  \fe{\node (ini)   [bstep] {Initialisations, \kwv{CHARTHER}};}
+     {\node (ini)   [bstep] {Initializations, \kwv{CHARTHER}};}
+  \fe{\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Lecture des options, unités (°C ou K), état initial,\\
+                                                                     calcul des facteurs de forme (rayonnement) \dots};}
+     {\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Option reading, units (°C or K), initial state,\\
+                                                                     view factors (for radiation) \dots};}
+
+  \fe{\node (ins)   [gstep, below of=ini, yshift=-0.5cm] {État à $\green{\{T\}_0}$,$t_{\star}$\\
+                                                         \kwv{PARATHER}\\
+                                                         Instanciation matériau, $[K]_{\star}$ et $[C]_{\star}$\\
+                                                         \kwv{CHARTHER}, $\{P\}_{\star}$};}
+     {\node (ins)   [gstep, below of=ini, yshift=-0.5cm] {State at $\green{\{T\}_0}$,$t_{\star}$\\
+                                                          \kwv{PARATHER}\\
+                                                          Material updating, $[K]_{\star}$ et $[C]_{\star}$\\
+                                                          \kwv{CHARTHER}, $\{P\}_{\star}$};}
+  \fe{\node (ins0)  [note, right of=ins, xshift=1.5cm, anchor=west] {Mise à jour variables externes, caractéristiques matériaux,\\
+                                                                     Calcul de $[K]_{\star}$ $[C]_{\star}$ et $\{P\}_{\star}$ à $\green{\{T\}_0}$ et $t_{\star}$\\
+                                                                     On définit alors l'opérateur $[L]_{\star}=\frac{1}{\Delta t}[C]_{\star}+\theta[K]_{\star}$};}
+     {\node (ins0)  [note, right of=ins, xshift=1.5cm, anchor=west] {External variables updating, material parameters,\\
+                                                                     Calculation of $[K]_{\star}$ $[C]_{\star}$ and $\{P\}_{\star}$ at $\green{\{T\}_0}$ and $t_{\star}$\\
+                                                                     We define the operator $[L]_{\star}=\frac{1}{\Delta t}[C]_{\star}+\theta[K]_{\star}$};}
+
+  \fe{\node (acc)  [rstep, below of=ins, yshift=-0.5cm] {Accélération convergence};}
+     {\node (acc)  [rstep, below of=ins, yshift=-0.5cm] {Convergence acceleration};}
+
+      \node (res)  [rstep, below of=acc, yshift=-0.4cm] {\kwr{RESO}};
+  \fe{\node (res0) [note, right of=res, xshift=1.5cm, anchor=west] {Calcul incrément de température : $\Delta \{T\}^{i+1} = [L]_{\star}^{-1}\{P\}_{\star}$\\
+                                                                    on déduit $\red{\{T\}_1^{i+1}}=\green{\{T\}_0}+\Delta \{T\}^{i+1}$\\
+                                                                    et aussi $\{T\}_{\star}^{i+1} = \theta \red{\{T\}_1^{i+1}} + (1-\theta) \green{\{T\}_0}$};}
+     {\node (res0) [note, right of=res, xshift=1.5cm, anchor=west] {Temperature increment calculation: $\Delta \{T\}^{i+1} = [L]_{\star}^{-1}\{P\}_{\star}$\\
+                                                                    so we get $\red{\{T\}_1^{i+1}}=\green{\{T\}_0}+\Delta \{T\}^{i+1}$\\
+                                                                    and also $\{T\}_{\star}^{i+1} = \theta \red{\{T\}_1^{i+1}} + (1-\theta) \green{\{T\}_0}$};}
+
+  \fe{\node (con)  [rtest, below of=res, yshift=-0.6cm] {Convergence ?};}
+     {\node (con)  [rtest, below of=res, yshift=-0.6cm] {Convergence?};}
+  \fe{\node (con0) [note, right of=con, xshift=1.5cm, anchor=west] {Test sur la \g{variation d'incrément de température}\\ entre 2 itérations successives\\
+                                                                    \kwr{MAX}\kwg{ 'ABS' } $\frac{\Delta \{T\}^{i+1}-\Delta \{T\}^i}{\red{\{T\}_1^{i+1}}} \leq$ \kwg{'PRECISION'}};}
+     {\node (con0) [note, right of=con, xshift=1.5cm, anchor=west] {Test on the \g{temperature increment variation}\\ between 2 successive iterations\\
+                                                                    \kwr{MAX}\kwg{ 'ABS' } $\frac{\Delta \{T\}^{i+1}-\Delta \{T\}^i}{\red{\{T\}_1^{i+1}}} \leq$ \kwg{'PRECISION'}};}
+
+  \fe{\node (maj)  [rstep, left of=res, xshift=-1.7cm] {État à $\{T\}_{\star}^{i+1}$,$t_{\star}$\\
+                                                        \kwv{PARATHER}\\
+                                                        Instanciation matériau\\
+                                                        \kwv{CHARTHER}, $\{P\}_{\star}$};}
+     {\node (maj)  [rstep, left of=res, xshift=-1.7cm] {State at $\{T\}_{\star}^{i+1}$,$t_{\star}$\\
+                                                        \kwv{PARATHER}\\
+                                                        Material updating\\
+                                                        \kwv{CHARTHER}, $\{P\}_{\star}$};}
+  
+      \node (per)  [gstep, below of=con, yshift=-0.25cm] {\kwv{PERSO2}};
+
+  \fe{\node (tim)  [gtest, below of=per, yshift=-0.4cm] {Fin des pas\\ de temps ?};}
+     {\node (tim)  [gtest, below of=per, yshift=-0.4cm] {End of\\ time steps?};}
+
+  \fe{\node (fin)   [bstep, right of=tim, xshift=2cm] {Fin};}
+     {\node (fin)   [bstep, right of=tim, xshift=2cm] {End};}
+
+  % Connections entre les cellules
+  \draw[->]               (ini) -- (ins);
+  \draw[->, draw=Green]   (ins) -- (acc);
+  \draw[->, draw=red]     (acc) -- (res);
+  \draw[->, draw=red]     (res) -- (con);
+  \fe{\draw[->, draw=red]   (con.west) -| node[near start]{non} (maj);}
+     {\draw[->, draw=red]   (con.west) -| node[near start]{no}  (maj);}
+  \draw[->, draw=red]     (maj) |- (acc);
+  \fe{\draw[->, draw=Green] (con) -- node[xshift=0.4cm]{oui} (per);}
+     {\draw[->, draw=Green] (con) -- node[xshift=0.4cm]{yes} (per);}
+  \draw[->, draw=Green]   (per) -- (tim);
+  \fe{\draw[->, draw=Green] (tim.west) -- node[yshift=0.2cm]{non} ++(-2.2,0) -- ++(0,5.15) -- (ins.west);}
+     {\draw[->, draw=Green] (tim.west) -- node[yshift=0.2cm]{no}  ++(-2,0) -- ++(0,5.15) -- (ins.west);}
+  \fe{\draw[->] (tim.east) -- node[yshift=0.2cm]{oui} (fin.west);}
+     {\draw[->] (tim.east) -- node[yshift=0.2cm]{yes} (fin.west);}
+  \draw[dotted]           (ini) -- (ini0);
+  \draw[dotted]           (ins) -- (ins0);
+  \draw[dotted]           (res) -- (res0);
+  \draw[dotted]           (con) -- (con0);
+  \end{tikzpicture}
 \end{frame}
 
 
 
-\fe{\subsection{La procédure TRANSNON}}{\subsection{The TRANSNON procedure}}
-\label{transnon}
 
-\begin{frame}{\fe{Algo de TRANSNON}{TRANSNON algo}}
+
+
+
+\fe{\subsection{Exercices}}{\subsection{Exercises}}
+\label{thermique_exo}
+
+\begin{frame}{\fe{Exo de thermique}{Exo of thermik}}
   \begin{itemize}
     \item \fe{Salut}{Hello}
   \end{itemize}

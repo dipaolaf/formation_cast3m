@@ -41,10 +41,10 @@
     \scriptsize
     \begin{tabular}{lll}
       $\{F\}_{\tx{imp}}$  & \fe{forces volumiques $f_{\tx{imp}}$ et surfaciques $t_{\tx{imp}}$ imposées}
-                               {imposed volume $f_{\tx{imp}}$ and surface $t_{\tx{imp}}$ forces}          & \kwr{PRES FSUR CNEQ}\\
+                               {imposed volume $f_{\tx{imp}}$ and surface $t_{\tx{imp}}$ forces} & \kwr{PRES FSUR CNEQ}\\
       $\{F\}_{\tx{reac}}$ & \fe{réactions aux déplacements imposés $u_{\tx{imp}}$}
-                               {reactions to imposed displacements $u_{\tx{imp}}$}                        & \kwr{REAC}\\
-      $[B]\{\sigma\}$     & \fe{forces volumique intérieures}{internal volume forces}                     & \kwr{BSIG}
+                               {reactions to imposed displacements $u_{\tx{imp}}$}               & \kwr{REAC}\\
+      $[B]\{\sigma\}$     & \fe{forces volumique intérieures}{internal volume forces}            & \kwr{BSIG}
     \end{tabular}
   \end{itemize}
 \end{frame}
@@ -172,7 +172,7 @@
                  {Computation on a time step between $t_0$ and $t_1$}
     \scriptsize
     \begin{tabular}{lll}
-      $\green{t_0~\{U\}_0~\{\lambda\}_0~\{\sigma\}_0}$ & \fe{\green{état connu}}{\green{known state}}                 & \fe{\green{début du pas de temps}}{\green{beginning of time step}}\\
+      $\green{t_0~\{U\}_0~\{\lambda\}_0~\{\sigma\}_0}$ & \fe{\green{état connu}}{\green{known state}}               & \fe{\green{début du pas de temps}}{\green{beginning of time step}}\\
       $  \red{t_1~\{U\}_1~\{\lambda\}_1~\{\sigma\}_1}$ & \fe{\red{état \tou{recherché}}}{\red{\tou{unknown} state}} & \fe{\red{fin du pas de temps}}{\red{end of time step}}\\
     \end{tabular}
     \item<2-> \fe{Décomposition incrémentale des déplacements nodaux}
@@ -244,12 +244,6 @@
   \end{itemize}
 \end{frame}
 
-
-
-
-\fe{\subsection{La procédure UNPAS}}{\subsection{The UNPAS procedure}}
-\label{unpas}
-
 \begin{frame}{\fe{Algoritme de minimisation du résidu}{Imbalance minimization algorithm}}
   \begin{itemize}
     \item<1-> \fe{Initialisations}{Initializations}
@@ -264,7 +258,7 @@
     \end{tabular}
     \normalsize
     \item<2-> \fe{Tant que : $\|\{R\}_1^i\| \geq \varepsilon F_{\tx{ref}}$}{While: $\|\{R\}_1^i\| \geq \varepsilon F_{\tx{ref}}$}
-    \begin{textblock*}{3cm}(9.5cm,-0.5cm)
+    \begin{textblock*}{4cm}(9.5cm,-0.5cm)
       \includegraphics[width=3cm]{images/obi_wan}
     \end{textblock*}
     \scriptsize
@@ -323,16 +317,16 @@
   \fe{\node (res)  [rstep, below of=comp, yshift=-0.13cm]  {Nouveau résidu};}
      {\node (res)  [rstep, below of=comp, yshift=-0.13cm]  {New imbalance};}
   \fe{\node (res0) [note, right of=res, xshift=1.5cm, anchor=west] {Réactions $\red{\{F\}_{\tx{reac},1}^{i+1}} = -[A]^T\red{\{\lambda\}_1^{i+1}}$ \kwr{REAC}\\
-                                                                  Résidu $\{R\}_1^{i+1} = \{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i+1}}-[B]\red{\{\sigma\}_1^{i+1}}$ \kwr{BSIG}};}
+                                                                    Résidu $\{R\}_1^{i+1} = \{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i+1}}-[B]\red{\{\sigma\}_1^{i+1}}$ \kwr{BSIG}};}
      {\node (res0) [note, right of=res, xshift=1.5cm, anchor=west] {Reactions $\red{\{F\}_{\tx{reac},1}^{i+1}} = -[A]^T\red{\{\lambda\}_1^{i+1}}$ \kwr{REAC}\\
-                                                                  Imbalance $\{R\}_1^{i+1} = \{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i+1}}-[B]\red{\{\sigma\}_1^{i+1}}$ \kwr{BSIG}};}
+                                                                    Imbalance $\{R\}_1^{i+1} = \{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i+1}}-[B]\red{\{\sigma\}_1^{i+1}}$ \kwr{BSIG}};}
 
   \fe{\node (eq)  [rtest, below of=res, yshift=-0.2cm]  {Équilibre ?};}
      {\node (eq)  [rtest, below of=res, yshift=-0.2cm]  {Equilibrium?};}
   \fe{\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Mesure normée du résidu $\leq$ critère ? \kwg{'PRECISION' 'FTOL' 'MTOL'}\\
-                                                                Variation de l'incrément de déformations entre 2 itérations < critère ?};}
+                                                                  Variation de l'incrément de déformations entre 2 itérations < critère ?};}
      {\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Magnitude of the imbalance $\leq$ criterion? \kwg{'PRECISION' 'FTOL' 'MTOL'}\\
-                                                                Variation of the strains increment between 2 iterations < criterion?};}
+                                                                  Variation of the strains increment between 2 iterations < criterion?};}
 
   \fe{\node (nc)  [rtest, below of=eq, yshift=-0.5cm]  {Non convergence ?};}
      {\node (nc)  [rtest, below of=eq, yshift=-0.5cm]  {Non congergence?};}
@@ -353,7 +347,7 @@
   \fe{\node (fin)   [bstep, right of=conv, xshift=2cm] {Fin};}
      {\node (fin)   [bstep, right of=conv, xshift=2cm] {End};}
 
-% Connections entre les cellules
+  % Connections entre les cellules
   \draw[->]               (ini) -- (1r);
   \draw[->]               (1r) -- (1res);
   \draw[->]               (1res) -- (acc);
