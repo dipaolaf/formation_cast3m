@@ -3,8 +3,8 @@
 \label{thermique}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\fe{\subsection{Équations}}{\subsection{Equations}}
-\label{thermique_equations}
+\fe{\subsection{Théorie}}{\subsection{Theory}}
+\label{thermique_theorie}
 
 \begin{frame}{\fe{Solveur thermique}{Thermal solver}}
              {\fe{Rappel des équations}{Reminder on equations}}
@@ -132,7 +132,7 @@
                                                         Material updating\\
                                                         \kwv{CHARTHER}, $\{P\}_{\star}$};}
   
-      \node (per)  [gstep, below of=con, yshift=-0.25cm] {\kwv{PERSO2}};
+      \node (per)  [gstep, below of=con, yshift=-0.3cm] {\kwv{PERSO2}};
 
   \fe{\node (tim)  [gtest, below of=per, yshift=-0.4cm] {Fin des pas\\ de temps ?};}
      {\node (tim)  [gtest, below of=per, yshift=-0.4cm] {End of\\ time steps?};}
@@ -151,8 +151,8 @@
   \fe{\draw[->, draw=Green] (con) -- node[xshift=0.4cm]{oui} (per);}
      {\draw[->, draw=Green] (con) -- node[xshift=0.4cm]{yes} (per);}
   \draw[->, draw=Green]   (per) -- (tim);
-  \fe{\draw[->, draw=Green] (tim.west) -- node[yshift=0.2cm]{non} ++(-2.2,0) -- ++(0,5.15) -- (ins.west);}
-     {\draw[->, draw=Green] (tim.west) -- node[yshift=0.2cm]{no}  ++(-2,0) -- ++(0,5.15) -- (ins.west);}
+  \fe{\draw[->, draw=Green] (tim.west) -- node[yshift=0.2cm]{non} ++(-2.2,0) -- ++(0,5.2) -- (ins.west);}
+     {\draw[->, draw=Green] (tim.west) -- node[yshift=0.2cm]{no}  ++(-2,0) -- ++(0,5.2) -- (ins.west);}
   \fe{\draw[->] (tim.east) -- node[yshift=0.2cm]{oui} (fin.west);}
      {\draw[->] (tim.east) -- node[yshift=0.2cm]{yes} (fin.west);}
   \draw[dotted]           (ini) -- (ini0);
