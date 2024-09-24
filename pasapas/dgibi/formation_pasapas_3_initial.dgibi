@@ -1,0 +1,96 @@
+* fichier : formation_pasapas_3_initial.dgibi
+*
+*----------------------------------------------------------------------*
+*              FORMATION AVANCEE SUR LA PROCEDURE PASAPAS              *
+*                                                                      *
+* Chauffage d'une plaque par une source de chaleur variable            *
+* dependante de la temperature                                         *
+*                                                                      *
+* Ce fichier constitue la mise donnee initiale du probleme et realise  *
+* - le maillage                                                        *
+* - la definition du modele et des parametres materiaux                *
+* - la definition du chargement (convection + source constante)        *
+* - la resolution avec PASAPAS                                         *
+* - le post traitement                                                 *
+*----------------------------------------------------------------------*
+
+
+
+
+
+** Options de trace / Plotting options
+itrac = vrai ;
+OPTI 'TRAC' 'PSC' ;
+ipsc  = EGA (VALE 'TRAC') 'PSC' ;
+
+** Options generales
+OPTI 'DIME' 2 'ELEM' 'QUA8' ;
+
+** Maillage
+p1    = 0. 0. ;
+p2    = 1. 0. ;
+l12   = DROI 20 p1 p2 ;
+s1    = l12 TRAN 20 (0. 1.) ;
+ptx   = (s1  COOR 1) POIN 'EGINFE' 0.25001 ;
+pty   = (ptx COOR 2) POIN 'EGINFE' 0.25001 ;
+s2    = s1 ELEM 'APPU' 'STRI' pty ;
+s3    = DIFF s1 s2 ;
+lext  = (s1 COTE 2) ET (s1 COTE 3) ;
+p2    = s1 'POIN' 'PROC' (1. 1.) ;
+SI itrac ;
+  SI ipsc ;
+    OPTI 'FTRA' 'exo_3_maillage.ps' ;
+  FINSI ;
+  TRAC 'FACE' ((s2 COUL 'ORAN') ET (s3 COUL 'CYAN')) 'TITR' 'Maillage (source en orange)' ;
+FINSI ;
+
+** Modeles et materiaux
+mocod = MODE s1 'THERMIQUE' 'CONDUCTION' ;
+macod = MATE mocod 'K' 317. 'C' 128. 'RHO' 19300. 'TINI' 20. ;
+* sous-modele reduit au maillage de la source (pour l'operateur SOUR)
+mosou = REDU mocod s2 ;
+* convection
+mocov = MODE lext 'THERMIQUE' 'CONVECTION' ;
+macov = MATE mocov 'H' 150. 'TC' 20. ;
+
+** Chargements
+evsou = EVOL 'MANU' (PROG 0. 1.E5) (PROG 1. 1.) ;
+psou  = SOUR mosou 4.E6 s2 ;
+chsou = CHAR 'Q' psou evsou ;
+
+**Resolution avec PASAPAS
+tab1                      = TABL ;
+tab1 . 'MODELE'           = mocod ET mocov ;
+tab1 . 'CARACTERISTIQUES' = macod ET macov ;
+tab1 . 'CHARGEMENT'       = chsou ;
+tab1 . 'TEMPS_CALCULES'   = PROG 0. 'PAS' (1.E5 / 50.) 1.E5 ;
+PASAPAS tab1 ;
+
+** Post-traitement
+n1    = DIME (tab1 . 'TEMPS_CALCULES') ;
+liso  = PROG 20. 'PAS' ((1800. - 20.) / 20.) 1800. ;
+SI ipsc ;
+  OPTI 'FTRA' 'exo_3_temperature.ps' ;
+FINSI ;
+REPE b1 n1 ;
+  tps1  = tab1 . 'TEMPS' . (&b1 - 1) ;
+  p100  = ENTI (100. * tps1 / 1.E5) ;
+  te1   = tab1 . 'TEMPERATURES' . (&b1 - 1) ;
+  SI itrac ;
+    TRAC te1 s1 liso 'TITR' (CHAI 'Temperature au temps' tps1 ' (' p100 '%)') ;
+  FINSI ;
+FIN b1 ;
+ev1   = EVOL 'ROUG' 'TEMP' tab1 'TEMPERATURES' 'T' p1 ;
+ev2   = EVOL 'BLEU' 'TEMP' tab1 'TEMPERATURES' 'T' p2 ;
+tl    = TABL ;
+tl . 'TITRE' = TABL ;
+tl . 'TITRE' . 1 = 'Coin inf. gauche' ;
+tl . 'TITRE' . 2 = 'Coin sup. droite' ;
+SI itrac ;
+  SI ipsc ;
+    OPTI 'FTRA' 'exo_3_evol.ps' ;
+  FINSI ;
+  DESS (ev1 ET ev2) 'LEGE' 'SE' tl 'TITR' 'Temperature vs Temps' 'YBOR' 0. 2000. ;
+FINSI ;
+
+FIN ;
