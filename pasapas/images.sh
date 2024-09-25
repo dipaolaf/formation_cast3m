@@ -30,7 +30,9 @@ do
     cast-post.sh -o -t -c 2 -s 15 -l 10 ${i}
 # pour les fichiers ci-dessous : retrait titre, déplacement isovaleurs, changement taille fonte + epaisseur trait
   elif [ "${i}" = "exemple_1.ps" ] ||
-       [ "${i}" = "exemple_2.ps" ]
+       [ "${i}" = "exemple_2.ps" ] ||
+       [[ "${i}" == "exo_3_temperature.ps" ]] ||
+       [[ "${i}" == "exo_3_solu_temperature.ps" ]]
   then
     cast-post.sh -o -t -c 1 -s 15 -l 10 ${i}
 # et pour tous les autres : retrait titre, déplacement isovaleurs, changement taille fonte
