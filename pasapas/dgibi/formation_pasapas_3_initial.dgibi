@@ -46,17 +46,16 @@ FINSI ;
 
 ** Modeles et materiaux
 mocod = MODE mail 'THERMIQUE' 'CONDUCTION' ;
-macod = MATE mocod 'K' 317. 'C' 128. 'RHO' 19300. 'TINI' 20. ;
-* sous-modele reduit au maillage de la source (pour l'operateur SOUR)
-mosou = REDU mocod sou ;
+macod = MATE mocod 'K' 317. 'C' 128.
+                   'RHO' 19300. 'TINI' 20. ;
 * convection
 mocov = MODE lext 'THERMIQUE' 'CONVECTION' ;
 macov = MATE mocov 'H' 150. 'TC' 20. ;
 
-** Chargements
-evsou = EVOL 'MANU' (PROG 0. 1.E5) (PROG 1. 1.) ;
+** Chargement (source)
+mosou = REDU mocod sou ;
 psou  = SOUR mosou 4.E6 sou ;
-chsou = CHAR 'Q' psou evsou ;
+chsou = CHAR 'Q' psou ;
 
 **Resolution avec PASAPAS
 tab1                      = TABL ;
@@ -77,7 +76,7 @@ REPE b1 n1 ;
   p100  = ENTI (100. * tps1 / 1.E5) ;
   te1   = tab1 . 'TEMPERATURES' . (&b1 - 1) ;
   SI itrac ;
-    TRAC te1 mail liso 'TITR' (CHAI 'Temperature au temps' tps1 ' (' p100 '%)') ;
+    TRAC te1 mail (CONT mail) liso 'TITR' (CHAI 'Temperature au temps' tps1 ' (' p100 '%)') ;
   FINSI ;
 FIN b1 ;
 ev1   = EVOL 'ROUG' 'TEMP' tab1 'TEMPERATURES' 'T' p1 ;

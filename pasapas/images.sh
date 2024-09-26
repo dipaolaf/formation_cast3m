@@ -35,9 +35,9 @@ do
        [[ "${i}" == "exo_3_solu_temperature.ps" ]]
   then
     cast-post.sh -o -t -c 1 -s 15 -l 10 ${i}
-# et pour tous les autres : retrait titre, déplacement isovaleurs, changement taille fonte
+# et pour tous les autres : retrait titre, déplacement isovaleurs, changement taille fonte + epaisseur trait
   else
-    cast-post.sh -o -t -c 1 -s 15 ${i}
+    cast-post.sh -o -t -c 1 -s 15 -l 10 ${i}
   fi
 done
 

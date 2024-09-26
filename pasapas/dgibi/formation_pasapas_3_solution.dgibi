@@ -30,28 +30,27 @@ OPTI 'DIME' 2 'ELEM' 'QUA8' ;
 p1    = 0. 0. ;
 p2    = 1. 0. ;
 l12   = DROI 20 p1 p2 ;
-s1    = l12 TRAN 20 (0. 1.) ;
-ptx   = (s1  COOR 1) POIN 'EGINFE' 0.25001 ;
-pty   = (ptx COOR 2) POIN 'EGINFE' 0.25001 ;
-s2    = s1 ELEM 'APPU' 'STRI' pty ;
-s3    = DIFF s1 s2 ;
-lext  = (s1 COTE 2) ET (s1 COTE 3) ;
-p2    = s1 'POIN' 'PROC' (1. 1.) ;
+mail  = l12 TRAN 20 (0. 1.) ;
+ptx   = (mail COOR 1) POIN 'EGINFE' 0.25001 ;
+pty   = (ptx  COOR 2) POIN 'EGINFE' 0.25001 ;
+sou   = mail ELEM 'APPU' 'STRI' pty ;
+nsou  = DIFF mail sou ;
+lext  = (mail COTE 2) ET (mail COTE 3) ;
+p2    = mail 'POIN' 'PROC' (1. 1.) ;
 SI itrac ;
   SI ipsc ;
 ***    OPTI 'FTRA' 'exo_3_maillage.ps' ;
   FINSI ;
-***  TRAC 'FACE' ((s2 COUL 'ORAN') ET (s3 COUL 'CYAN')) 'TITR' 'Maillage (source en orange)' ;
+***  TRAC 'FACE' ((sou COUL 'ORAN') ET (nsou COUL 'CYAN')) ((CONT sou) ET (CONT nsou))  ;
 FINSI ;
 
 ** Modeles et materiaux
-mocod = MODE s1 'THERMIQUE' 'CONDUCTION' ;
+mocod = MODE mail 'THERMIQUE' 'CONDUCTION' ;
 lt    = PROG 0. 1.E6 ;
 lk    = (0.3 * lt) + 200. ;
 evlam = EVOL 'MANU' 'T' lt 'K' lk ;
-macod = MATE mocod 'K' evlam 'C' 128. 'RHO' 19300. 'TINI' 20. ;
-* sous-modele reduit au maillage de la source (pour l'operateur SOUR)
-mosou = REDU mocod s2 ;
+macod = MATE mocod 'K' evlam 'C' 128.
+                   'RHO' 19300. 'TINI' 20. ;
 * convection
 mocov = MODE lext 'THERMIQUE' 'CONVECTION' ;
 ltps  = PROG 0. 1.E5 ;
@@ -59,10 +58,10 @@ lh    = PROG 10. 200. ;
 evh   = EVOL 'MANU' 'TEMP' ltps 'H' lh ;
 macov = MATE mocov 'H' evh 'TC' 20. ;
 
-** Chargements
-evsou = EVOL 'MANU' (PROG 0. 1.E5) (PROG 1. 1.) ;
-psou  = SOUR mosou 4.E6 s2 ;
-chsou = CHAR 'Q' psou evsou ;
+** Chargement (source)
+mosou = REDU mocod sou ;
+psou  = SOUR mosou 4.E6 sou ;
+chsou = CHAR 'Q' psou ;
 
 ** Procedure PERSO2
 DEBP PERSO2 t1*'TABLE' ;
@@ -70,10 +69,10 @@ DEBP PERSO2 t1*'TABLE' ;
   mosou = t1 . 'MON_MODELE' ;
 * reduction temperatures sur la source
   tp1   = t1 . 'WTABLE' . 'THER_COURANT' ;
-  tpsou = REDU tp1 masou ;
+  tsou  = REDU tp1 masou ;
 * calcul du champ de source selon temperature
-  ex1   = -1. * (((tpsou - 1000.) / 700.) ** 2) ;
-  chs   = 4.E6 * (EXP ex1) ;
+  ex1   = ((tsou - 1000.) / 700.) ** 2 ;
+  chs   = 4.E6 * (EXP (-1. * ex1)) ;
 * calcul du du second membre et chargement
   pmaj  = SOUR mosou chs ;
   chmaj = CHAR 'Q' pmaj ;
@@ -87,14 +86,14 @@ DEBP CHARTHER t1*'TABLE' tps1*'FLOTTANT' ;
   mosou = t1 . 'MON_MODELE' ;
 * reduction temperatures sur la source
   tp1   = t1 . 'WTABLE' . 'THER_COURANT' ;
-  tpsou = REDU tp1 masou ;
+  tsou = REDU tp1 masou ;
 * calcul du champ de source selon temperature
-  ex1   = -1. * (((tpsou - 1000.) / 700.) ** 2) ;
-  chs   = 4.E6 * (EXP ex1) ;
+  ex1   = ((tsou - 1000.) / 700.) ** 2 ;
+  chs   = 4.E6 * (EXP (-1. * ex1)) ;
 * calcul du second membre
   pmaj  = SOUR mosou chs ;
 * sortie du second membre pour ajout
-  t2 = TABL ;
+  t2                 = TABL ;
   t2 . 'ADDI_SECOND' = pmaj ;
 FINP t2 ;
 
@@ -105,7 +104,7 @@ tab1 . 'CARACTERISTIQUES' = macod ET macov ;
 tab1 . 'CHARGEMENT'       = chsou ;
 tab1 . 'TEMPS_CALCULES'   = PROG 0. 'PAS' (1.E5 / 50.) 1.E5 ;
 tab1 . 'PROCEDURE_PERSO2' = VRAI ;
-tab1 . 'MON_MAILLAGE'     = s2 ;
+tab1 . 'MON_MAILLAGE'     = sou ;
 TAB1 . 'MON_MODELE'       = mosou ;
 PASAPAS tab1 ;
 
@@ -120,7 +119,7 @@ REPE b1 n1 ;
   p100  = ENTI (100. * tps1 / 1.E5) ;
   te1   = tab1 . 'TEMPERATURES' . (&b1 - 1) ;
   SI itrac ;
-    TRAC te1 s1 liso 'TITR' (CHAI 'Temperature au temps' tps1 ' (' p100 '%)') ;
+    TRAC te1 mail (CONT mail) liso 'TITR' (CHAI 'Temperature au temps' tps1 ' (' p100 '%)') ;
   FINSI ;
 FIN b1 ;
 ev1   = EVOL 'ROUG' 'TEMP' tab1 'TEMPERATURES' 'T' p1 ;
@@ -148,6 +147,6 @@ FIN ;
 ***tab1 . 'CHARGEMENT'       = chsou ;
 tab1 . 'TEMPS_CALCULES'   = PROG 0. 'PAS' (1.E5 / 50.) 1.E5 ;
 tab1 . 'PROCEDURE_CHARTHER' = VRAI ;
-tab1 . 'MON_MAILLAGE'     = s2 ;
-TAB1 . 'MON_MODELE'       = mosou ;
+tab1 . 'MON_MAILLAGE'     = sou ;
+tab1 . 'MON_MODELE'       = mosou ;
 PASAPAS tab1 ;
