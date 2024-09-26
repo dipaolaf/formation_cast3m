@@ -1,3 +1,6 @@
+\fe{\subsection{Exercices}}{\subsection{Exercises}}
+\label{thermique_exo}
+
 {\setbeamerfont{framesubtitle}{size=\tiny}
 \begin{frame}{\fe{Exercice 3 : dépendance à la température}
                  {Exercise 3: temperature-dependence}}
@@ -11,7 +14,6 @@
       \node[anchor=south west,inner sep=0] (image) at (0,0)
       {\includegraphics[height=2.5cm]{images/exo/exo_3_maillage}};
       \begin{scope}[x={(image.south east)},y={(image.north west)}]
-%        \grille
         \draw (0.12,0.15) node {Source};
         \draw (0.5,0.5) node {$\lambda$~=~317~W/m/K};
         \draw (0.5,0.92) node {$h$~=~150~W/m$^2$/K};
@@ -26,6 +28,7 @@
     \hspace{0.1cm}
     \animategraphics[controls,loop,poster=last,height=3cm]{7}{images/exo/exo_3_temperature.}{01}{51} \hspace{0.2cm}
     \includegraphics[height=2.6cm]{images/exo/exo_3_evol}
+    \small
     \item<2-> \fe{\green{Objectif : rendre le problème variable !}}
                  {\green{Purpose: make the problem variable}}\\
     \begin{enumerate}
@@ -109,22 +112,43 @@
 
 \begin{frame}{\fe{Exercice 3 : dépendance à la température}
                  {Exercise 3: temperature-dependence}}
+             {\fe{Solution avec CHARTHER}{Solution with CHARTHER}}
   \footnotesize
+  \begin{itemize}
+    \small
+    \item \fe{Idem mais avec la procédure \kwv{CHARTHER}}{Idem but with the \kwv{CHARTHER} procedure}
+    \item \fe{Pas besoin de CHARGEMEnt initial}{No need for initial load (CHARGEMEnt object)}
+  \end{itemize}
+  \vspace{4.5cm}
+  \scriptsize
+  \begin{textblock*}{10cm}(0.3cm,-4cm)
+    \fe{\emph{Programme principal}}{\emph{Main program}}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=49, lastline=52]{dgibi/formation_pasapas_3_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=56, lastline=59]{dgibi/formation_pasapas_3_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=147, lastline=152]{dgibi/formation_pasapas_3_solution.dgibi}
+  \end{textblock*}
+  \begin{textblock*}{10cm}(6.cm,-4cm)
+    \fe{\emph{\violet{Procédure CHARTHER}}}{\emph{\violet{CHARTHER procedure}}}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=84, lastline=98]{dgibi/formation_pasapas_3_solution.dgibi}
+  \end{textblock*}
+\end{frame}
+
+\begin{frame}{\fe{Exercice 3 : dépendance à la température}
+                 {Exercise 3: temperature-dependence}}
   \begin{itemize}
     \item \fe{Résultats}{Results}\\
     \vspace{5cm}
     \begin{textblock*}{5cm}(0.5cm,-5cm)
       \animategraphics[controls,loop,poster=last,width=5cm]{7}{images/exo/exo_3_solu_temperature.}{01}{51}
     \end{textblock*}
+    \footnotesize
     \begin{textblock*}{5cm}(6.3cm,-6cm)
       \fe{Avec \kwv{PERSO2}}{With \kwv{PERSO2}}
       \includegraphics[width=5cm]{images/exo/exo_3_solu_evol}
     \end{textblock*}
     \begin{textblock*}{5cm}(6.3cm,-2cm)
-      \fe{Avec \kwv{CHARMECA}}{With \kwv{CHARMECA}}
+      \fe{Avec \kwv{CHARTHER}}{With \kwv{CHARTHER}}
       \includegraphics[width=5cm]{images/exo/exo_3_solu_bis_evol}
     \end{textblock*}
-%    \hspace{5cm} \fe{Avec \kwv{CHARMECA}}{With \kwv{CHARMECA}} \vspace{2mm} \\
-%    \hspace{5cm} \includegraphics[width=5cm]{images/exo/exo_3_solu_bis_evol}
   \end{itemize}
 \end{frame}

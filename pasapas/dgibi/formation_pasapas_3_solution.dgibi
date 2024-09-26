@@ -86,7 +86,7 @@ DEBP CHARTHER t1*'TABLE' tps1*'FLOTTANT' ;
   mosou = t1 . 'MON_MODELE' ;
 * reduction temperatures sur la source
   tp1   = t1 . 'WTABLE' . 'THER_COURANT' ;
-  tsou = REDU tp1 masou ;
+  tsou  = REDU tp1 masou ;
 * calcul du champ de source selon temperature
   ex1   = ((tsou - 1000.) / 700.) ** 2 ;
   chs   = 4.E6 * (EXP (-1. * ex1)) ;
@@ -145,7 +145,7 @@ FIN ;
 
 
 ***tab1 . 'CHARGEMENT'       = chsou ;
-tab1 . 'TEMPS_CALCULES'   = PROG 0. 'PAS' (1.E5 / 50.) 1.E5 ;
+
 tab1 . 'PROCEDURE_CHARTHER' = VRAI ;
 tab1 . 'MON_MAILLAGE'     = sou ;
 tab1 . 'MON_MODELE'       = mosou ;
