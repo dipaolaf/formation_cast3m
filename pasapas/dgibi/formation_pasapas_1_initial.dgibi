@@ -18,7 +18,7 @@
 
 
 ** Options de trace / Plotting options
-itrac = vrai ;
+itrac = VRAI ;
 OPTI 'TRAC' 'PSC' ;
 ipsc = EGA (VALE 'TRAC') 'PSC' ;
 

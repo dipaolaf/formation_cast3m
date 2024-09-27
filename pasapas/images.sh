@@ -24,7 +24,8 @@ for i in *.ps
 do
 # pour les fichiers ci-dessous : retrait [titre + legende + isovaleurs]
   if [ "${i}" = "exo_4_temperature.ps" ] ||
-     [ "${i}" = "exo_4_solu_temperature.ps" ]
+     [ "${i}" = "exo_4_solu_temperature.ps" ] ||
+     [ "${i}" = "exo_4_solu_bis_temperature.ps" ]
   then
     cast-post.sh -o -t -c 2 ${i}
 # pour les fichiers ci-dessous : retrait [titre + legende + isovaleurs] + epaisseur trait

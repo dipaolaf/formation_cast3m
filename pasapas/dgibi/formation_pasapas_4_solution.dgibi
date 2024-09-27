@@ -92,7 +92,6 @@ DEBP REEV_MEC t1*'TABLE' n1*'ENTIER' ;
   t1 . 'WTABLE' . 'BLOCAGES_THERMIQUES' = blt2 ;
 FINP ;
 
-
 ** Resolution avec PASAPAS
 tab1                         = TABL ;
 tab1 . 'MODELE'              = mom ET mot1 ET mot2 ;

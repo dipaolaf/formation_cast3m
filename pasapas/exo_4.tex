@@ -1,6 +1,6 @@
 {\setbeamerfont{framesubtitle}{size=\tiny}
 \begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
-                 {Exercise 4: thermo mechanicla contact}}
+                 {Exercise 4: thermo mechanical contact}}
              {\url{https://www-cast3m.cea.fr/index.php?page=exemples&exemple=formation_pasapas_4_initial}}
   \small
   \begin{itemize}
@@ -49,7 +49,7 @@
 
 {\setbeamerfont{framesubtitle}{size=\tiny}
 \begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
-                 {Exercise 4: thermo mechanicla contact}}
+                 {Exercise 4: thermo mechanical contact}}
              {\url{https://www-cast3m.cea.fr/index.php?page=exemples&exemple=formation_pasapas_4_initial}}
   \begin{itemize}
     \item \fe{Quelques objets utiles}{Some useful objects}\\
@@ -71,7 +71,7 @@
 }
 
 \begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
-                 {Exercise 4: thermo mechanicla contact}}
+                 {Exercise 4: thermo mechanical contact}}
              {\fe{Solution avec REEV\_MEC}{Solution with REEV\_MEC}}
   \footnotesize
   \begin{itemize}
@@ -95,7 +95,7 @@
 \end{frame}
 
 \begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
-                 {Exercise 4: thermo mechanicla contact}}
+                 {Exercise 4: thermo mechanical contact}}
              {\fe{Solution avec REEV\_MEC}{Solution with REEV\_MEC}}
   \begin{itemize}
     \item \fe{Résultats}{Results}
@@ -105,5 +105,48 @@
     \includegraphics[width=5.5cm]{images/exo/exo_4_solu_evol_t}\\
     \vspace{0.5cm}
     \animategraphics[controls,loop,poster=first,width=10.5cm]{12}{images/exo/exo_4_solu_temperature.}{001}{101}
+  \end{center}
+\end{frame}
+
+\begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
+                 {Exercise 4: thermo mechanical contact}}
+             {\fe{Solution (bis) avec REEV\_MEC}{Solution (bis) with REEV\_MEC}}
+  \footnotesize
+  \begin{itemize}
+    \item \fe{Transfert par convection à l'interface avec élément de \kwr{RACC}ord}
+             {Convective heat transfert at the interface with transition elements}
+    \item \fe{Utiliser un coefficient d'échange dépendant de la pression}{Use a heat transfer coefficient depending on pressure}
+    \item \fe{Utiliser un objet CHARGEME pour décrire les valeurs de pression}{Use a CHARGEME object to describe pressure values}
+    \item \fe{Mettre à jour ce chargement avec \kwv{'REEV\_MEC'}}{Update this load with \kwv{'REEV\_MEC'}}
+  \end{itemize}
+  \vspace{4.5cm}
+  \scriptsize
+  \only<1>{
+    \begin{textblock*}{10cm}(2cm,-4.5cm)
+      \fe{\emph{Programme principal}}{\emph{Main program}}
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=81, lastline=89]{dgibi/formation_pasapas_4_solution_bis.dgibi}
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=110, lastline=111]{dgibi/formation_pasapas_4_solution_bis.dgibi}
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=116, lastline=121]{dgibi/formation_pasapas_4_solution_bis.dgibi}
+    \end{textblock*}
+  }
+  \only<2>{
+    \begin{textblock*}{10cm}(3cm,-4.5cm)
+      \fe{\emph{\violet{Procédure REEV\_MEC}}}{\emph{\violet{REEV\_MEC procedure}}}
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=92, lastline=106]{dgibi/formation_pasapas_4_solution_bis.dgibi}
+    \end{textblock*}
+  }
+\end{frame}
+
+\begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
+                 {Exercise 4: thermo mechanical contact}}
+             {\fe{Solution (bis) avec REEV\_MEC}{Solution (bis) with REEV\_MEC}}
+  \begin{itemize}
+    \item \fe{Résultats}{Results}
+  \end{itemize}
+  \begin{center}
+    \includegraphics[width=5.5cm]{images/exo/exo_4_solu_bis_evol_jeu}
+    \includegraphics[width=5.5cm]{images/exo/exo_4_solu_bis_evol_t}\\
+    \vspace{0.5cm}
+    \animategraphics[controls,loop,poster=first,width=10.5cm]{12}{images/exo/exo_4_solu_bis_temperature.}{001}{101}
   \end{center}
 \end{frame}
