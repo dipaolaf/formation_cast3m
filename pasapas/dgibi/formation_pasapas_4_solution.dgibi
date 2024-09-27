@@ -1,4 +1,4 @@
-* fichier : formation_pasapas_4_initial.dgibi
+* fichier : formation_pasapas_4_solution.dgibi
 *
 *----------------------------------------------------------------------*
 *              FORMATION AVANCEE SUR LA PROCEDURE PASAPAS              *
@@ -6,10 +6,11 @@
 * Variation d'un jeu sous l'action d'une sollicitation thermique en    *
 * regime transitoire                                                   *
 *                                                                      *
-* Ce fichier constitue la mise donnee initiale du probleme et realise  *
+* Ce fichier constitue la mise donnee solution du probleme et realise  *
 * - le maillage                                                        *
 * - la definition du modele et des parametres materiaux                *
 * - la definition du chargement                                        *
+* - l'ajout de blocages thermiques (avec la procedure REEV_MEC)        *
 * - la resolution avec PASAPAS                                         *
 * - le post traitement                                                 *
 *----------------------------------------------------------------------*
@@ -73,6 +74,25 @@ qt1  = DEPI blt1 timp1 ;
 qt2  = DEPI blt2 timp4 ;
 cha2 = CHAR 'TIMP' (qt1 ET qt2) ;
 
+** Procedure REEV_MEC pour ajouter un blocage thermique lors du contact
+DEBP REEV_MEC t1*'TABLE' n1*'ENTIER' ;
+  blt2  = t1 . 'BLOCAGES_THERMIQUES' ;
+  rel1  = t1 . 'RELA_L2_L3' ;
+  u1    = t1 . 'ESTIMATION' . 'DEPLACEMENTS' ;
+* calcul du jeu courant
+  pt2   = t1 . 'POINT_2' ;
+  pt3   = t1 . 'POINT_3' ;
+  x2    = (COOR 1 pt2) + (EXTR u1 'UX' pt2) ;
+  x3    = (COOR 1 pt3) + (EXTR u1 'UX' pt3) ;
+  j1    = x3 - x2 ;
+* modification des blocages selon le jeu
+  SI (j1 < 1.E-12) ;
+    blt2  = blt2 ET rel1 ;
+  FINSI ;
+  t1 . 'WTABLE' . 'BLOCAGES_THERMIQUES' = blt2 ;
+FINP ;
+
+
 ** Resolution avec PASAPAS
 tab1                         = TABL ;
 tab1 . 'MODELE'              = mom ET mot1 ET mot2 ;
@@ -81,6 +101,12 @@ tab1 . 'BLOCAGES_MECANIQUES' = blm ;
 tab1 . 'BLOCAGES_THERMIQUES' = blt ;
 tab1 . 'CHARGEMENT'          = cha1 ET cha2 ;
 tab1 . 'TEMPS_CALCULES'      = PROG 5.E3 'PAS' 5.E3 5.E5 ;
+rel23 = RELA 'T' l2 - 'T' l3 ;
+tab1 . 'CONVERGENCE_MEC_THE' = VRAI ;
+tab1 . 'PROCEDURE_REEV_MEC'  = VRAI ;
+tab1 . 'POINT_2'             = p2 ;
+tab1 . 'POINT_3'             = p3 ;
+tab1 . 'RELA_L2_L3'          = rel23 ;
 PASAPAS tab1 ;
 
 ** Post-traitement
@@ -89,7 +115,7 @@ n1    = DIME (tab1 . 'TEMPS') ;
 liso  = PROG timp4 'PAS' ((timp1 - timp4) / 20.) timp1 ;
 conf0 = FORM ;
 SI ipsc ;
-  OPTI 'FTRA' 'exo_4_temperature.ps' ;
+  OPTI 'FTRA' 'exo_4_solu_temperature.ps' ;
 FINSI ;
 REPE b1 n1 ;
   tps1  = tab1 . 'TEMPS' . (&b1 - 1) ;
@@ -111,13 +137,13 @@ ltps  = EXTR t2vst 'ABSC' ;
 jvst  = EVOL 'VIOL' 'MANU' 'Temps' ltps 'Jeu' ljeu ;
 * Traces
 SI ipsc ;
-  OPTI 'FTRA' 'exo_4_evol_jeu.ps' ;
+  OPTI 'FTRA' 'exo_4_solu_evol_jeu.ps' ;
 FINSI ;
 SI itrac ;
   DESS jvst 'TITR' 'Jeu VS temps' ;
 FINSI ;
 SI ipsc ;
-  OPTI 'FTRA' 'exo_4_evol_t.ps' ;
+  OPTI 'FTRA' 'exo_4_solu_evol_t.ps' ;
 FINSI ;
 tleg               = TABL ;
 tleg . 'TITRE'     = TABL ;

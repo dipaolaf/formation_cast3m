@@ -23,7 +23,8 @@ echo "[2/5] Traitement des images .ps (retrait des légendes, titres ...)"
 for i in *.ps
 do
 # pour les fichiers ci-dessous : retrait [titre + legende + isovaleurs]
-  if [ "${i}" = "exo_4_temperature.ps" ]
+  if [ "${i}" = "exo_4_temperature.ps" ] ||
+     [ "${i}" = "exo_4_solu_temperature.ps" ]
   then
     cast-post.sh -o -t -c 2 ${i}
 # pour les fichiers ci-dessous : retrait [titre + legende + isovaleurs] + epaisseur trait

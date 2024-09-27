@@ -75,23 +75,22 @@
              {\fe{Solution avec REEV\_MEC}{Solution with REEV\_MEC}}
   \footnotesize
   \begin{itemize}
-    \small
-    \item \fe{Utiliser la \red{boucle de convergence thermo mécanique}}{Use the \red{thermo mechanical convergence loop}}
     \item \fe{Créer une \kwr{RELA}tion entre les températures de \kw{l2} et \kw{l3}}
              {Create a \kwr{RELA}tion between temperatures at \kw{l2} and \kw{l3}}
+    \item \fe{Utiliser la \red{boucle de convergence thermo mécanique}}{Use the \red{thermo mechanical convergence loop}}
     \item \fe{Utiliser la procédure \kwv{REEV\_MEC}}{Use procedure \kwv{REEV\_MEC}}
-    \item \fe{Calculer le jeu à l'itération courante et modifier (ou non) l'indice \kwg{'WTABLE'.'BLOCAGES\_THERMIQUE'}}
-             {Calculate the gap at current iteration and modifiy \kwg{'WTABLE'.'BLOCAGES\_THERMIQUE'} or not}
+    \item \fe{Calculer le jeu à l'itération courante et modifier (ou non) l'indice \kwg{'WTABLE'.'BLOCAGES\_THERMIQUES'}}
+             {Calculate the gap at current iteration and modifiy \kwg{'WTABLE'.'BLOCAGES\_THERMIQUES'} or not}
   \end{itemize}
   \vspace{4.5cm}
   \scriptsize
-  \begin{textblock*}{10cm}(0.3cm,-4cm)
+  \begin{textblock*}{10cm}(0.3cm,-4.5cm)
     \fe{\emph{Programme principal}}{\emph{Main program}}
-%    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=49, lastline=52]{dgibi/formation_pasapas_4_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=104, lastline=110]{dgibi/formation_pasapas_4_solution.dgibi}
   \end{textblock*}
-  \begin{textblock*}{10cm}(6.cm,-4cm)
+  \begin{textblock*}{10cm}(5.6cm,-4.5cm)
     \fe{\emph{\violet{Procédure REEV\_MEC}}}{\emph{\violet{REEV\_MEC procedure}}}
-%    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=67, lastline=81]{dgibi/formation_pasapas_4_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=78, lastline=93]{dgibi/formation_pasapas_4_solution.dgibi}
   \end{textblock*}
 \end{frame}
 
@@ -99,7 +98,12 @@
                  {Exercise 4: thermo mechanicla contact}}
              {\fe{Solution avec REEV\_MEC}{Solution with REEV\_MEC}}
   \begin{itemize}
-    \item \fe{Résultats}{Results}\\
-    \vspace{5cm}
+    \item \fe{Résultats}{Results}
   \end{itemize}
+  \begin{center}
+    \includegraphics[width=5.5cm]{images/exo/exo_4_solu_evol_jeu}
+    \includegraphics[width=5.5cm]{images/exo/exo_4_solu_evol_t}\\
+    \vspace{0.5cm}
+    \animategraphics[controls,loop,poster=first,width=10.5cm]{12}{images/exo/exo_4_solu_temperature.}{001}{101}
+  \end{center}
 \end{frame}
