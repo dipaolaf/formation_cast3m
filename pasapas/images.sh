@@ -22,12 +22,16 @@ cd images/
 echo "[2/5] Traitement des images .ps (retrait des légendes, titres ...)"
 for i in *.ps
 do
-# pour les fichiers ci-dessous : retrait titre + legende, déplacement isovaleurs, changement taille fonte + epaisseur trait
-  if [ "${i}" = "exemple_0.ps" ] ||
-     [[ "${i}" == exo_1_*.ps ]]  ||
-     [ "${i}" = "exo_2_chargement.ps" ]
+# pour les fichiers ci-dessous : retrait [titre + legende + isovaleurs]
+  if [ "${i}" = "exo_4_temperature.ps" ]
   then
-    cast-post.sh -o -t -c 2 -s 15 -l 10 ${i}
+    cast-post.sh -o -t -c 2 ${i}
+# pour les fichiers ci-dessous : retrait [titre + legende + isovaleurs] + epaisseur trait
+  elif [ "${i}" = "exemple_0.ps" ] ||
+       [[ "${i}" == exo_1_*.ps ]]  ||
+       [ "${i}" = "exo_2_chargement.ps" ]
+  then
+    cast-post.sh -o -t -c 2 -l 10 ${i}
 # pour les fichiers ci-dessous : retrait titre, déplacement isovaleurs, changement taille fonte + epaisseur trait
   elif [ "${i}" = "exemple_1.ps" ] ||
        [ "${i}" = "exemple_2.ps" ] ||

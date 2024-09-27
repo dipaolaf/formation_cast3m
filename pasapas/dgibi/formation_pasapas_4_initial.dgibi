@@ -1,0 +1,130 @@
+* fichier : formation_pasapas_4_initial.dgibi
+*
+*----------------------------------------------------------------------*
+*              FORMATION AVANCEE SUR LA PROCEDURE PASAPAS              *
+*                                                                      *
+* Variation d'un jeu sous l'action d'une sollicitation thermique en    *
+* regime transitoire                                                   *
+*                                                                      *
+* Ce fichier constitue la mise donnee initiale du probleme et realise  *
+* - le maillage                                                        *
+* - la definition du modele et des parametres materiaux                *
+* - la definition du chargement                                        *
+* - la resolution avec PASAPAS                                         *
+* - le post traitement                                                 *
+*----------------------------------------------------------------------*
+
+
+
+
+
+** Options de trace / Plotting options
+itrac = vrai ;
+OPTI 'TRAC' 'PSC' ;
+ipsc  = EGA (VALE 'TRAC') 'PSC' ;
+
+** Options generales
+OPTI 'DIME' 2 'ELEM' 'QUA4' 'MODE' 'PLAN' 'DEFO' ;
+
+** Parametres geometriques et CL
+l     = 1. ;
+ep    = 0.1 ;
+j0    = 0.01 * l ;
+timp1 = 500. ;
+timp4 = 20. ;
+
+** Maillage
+p1    = 0. 0. ;
+p2    = l 0. ;
+l12   = DROI 10 p1 p2 ;
+bar1  = l12 TRAN 1 (0. ep) ;
+l1    = bar1 COTE 4 ;
+l2    = bar1 COTE 2 ;
+bar2  = bar1 PLUS ((l + j0) 0.) ;
+l3    = bar2 COTE 4 ;
+l4    = bar2 COTE 2 ;
+p3    = bar2 POIN 'PROC' ((l + j0) 0.) ;
+p4    = bar2 POIN 'PROC' ((l + l + j0) 0.) ;
+mail  = bar1 ET bar2 ;
+
+** Modeles et materiaux
+mom   = MODE mail 'MECANIQUE' 'ELASTIQUE' 'ISOTROPE' ;
+mot1  = MODE bar1 'THERMIQUE' 'ISOTROPE' ;
+mot2  = MODE bar2 'THERMIQUE' 'ISOTROPE' ;
+mam   = MATE mom 'ALPHA' 12.E-6 'TALP' 0. 'TREF' 20. 'YOUN' 200.E9 'NU' 0.3 ;
+mat1  = MATE mot1 'K' 60. 'C' 800. 'RHO' 7800. 'TINI' timp4 ;
+mat2  = MATE mot2 'K' 80. 'C' 100. 'RHO' 7800. 'TINI' timp4 ;
+
+** Blocages mecaniques
+blm1  = BLOQ 'UY' mail ;
+blm2  = BLOQ 'UX' (l1 ET l4) ;
+relm  = RELA 'MAXI' 'UX' l2 - 'UX' l3 ;
+blm   = blm1 ET blm2 ET relm ;
+
+** Blocages thermiques
+blt1  = BLOQ 'T' l1 ;
+blt2  = BLOQ 'T' l4 ;
+blt   = blt1 ET blt2 ;
+
+** Chargements mecaniques et thermiques
+frel = DEPI relm j0 ;
+cha1 = CHAR 'DIMP' frel ;
+qt1  = DEPI blt1 timp1 ;
+qt2  = DEPI blt2 timp4 ;
+cha2 = CHAR 'TIMP' (qt1 ET qt2) ;
+
+** Resolution avec PASAPAS
+tab1                         = TABL ;
+tab1 . 'MODELE'              = mom ET mot1 ET mot2 ;
+tab1 . 'CARACTERISTIQUES'    = mam ET mat1 ET mat2 ;
+tab1 . 'BLOCAGES_MECANIQUES' = blm ;
+tab1 . 'BLOCAGES_THERMIQUES' = blt ;
+tab1 . 'CHARGEMENT'          = cha1 ET cha2 ;
+tab1 . 'TEMPS_CALCULES'      = PROG 5.E3 'PAS' 5.E3 5.E5 ;
+PASAPAS tab1 ;
+
+** Post-traitement
+ljeu  = PROG ;
+n1    = DIME (tab1 . 'TEMPS') ;
+liso  = PROG timp4 'PAS' ((timp1 - timp4) / 20.) timp1 ;
+conf0 = FORM ;
+SI ipsc ;
+  OPTI 'FTRA' 'exo_4_temperature.ps' ;
+FINSI ;
+REPE b1 n1 ;
+  tps1  = tab1 . 'TEMPS' . (&b1 - 1) ;
+  temp1 = tab1 . 'TEMPERATURES' . (&b1 - 1) ;
+  u1    = tab1 . 'DEPLACEMENTS' . (&b1 - 1) ;
+  conf1 = FORM u1 ;
+  j1    = NORM (p3 MOIN p2) ;
+  ljeu  = ljeu ET j1 ;
+  SI itrac ;
+    TRAC temp1 mail liso 'TITR' (CHAI 'Temperature au temps' tps1) ;
+  FINSI ;
+  FORM conf0 ;
+FIN b1 ;
+* Evolutions T2 et T3 VS temps
+t2vst = EVOL 'ROUG' 'TEMP' tab1 'TEMPERATURES' 'T' p2 ;
+t3vst = EVOL 'BLEU' 'TEMP' tab1 'TEMPERATURES' 'T' p3 ;
+ltps  = EXTR t2vst 'ABSC' ;
+* Evolution jeu VS temps
+jvst  = EVOL 'VIOL' 'MANU' 'Temps' ltps 'Jeu' ljeu ;
+* Traces
+SI ipsc ;
+  OPTI 'FTRA' 'exo_4_evol_jeu.ps' ;
+FINSI ;
+SI itrac ;
+  DESS jvst 'TITR' 'Jeu VS temps' ;
+FINSI ;
+SI ipsc ;
+  OPTI 'FTRA' 'exo_4_evol_t.ps' ;
+FINSI ;
+tleg               = TABL ;
+tleg . 'TITRE'     = TABL ;
+tleg . 'TITRE' . 1 = 'Point p2';
+tleg . 'TITRE' . 2 = 'Point p3' ;
+SI itrac ;
+  DESS (t2vst ET t3vst) 'TITR' 'Temperature VS temps' 'LEGE' 'NE' tleg ;
+FINSI ;
+
+FIN ;
