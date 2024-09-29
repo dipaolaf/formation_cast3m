@@ -1,0 +1,165 @@
+%%%%%%%%%%%%%%%%%
+\section{Annexes}
+\label{annexe}
+%%%%%%%%%%%%%%%%%
+
+\begin{frame}{\fe{Annexe : Paramètres de contrôle}{Annex: Control parameters}}
+  \begin{itemize}
+    \item \fe{Généralités}{General}
+  \end{itemize}
+  \tiny
+  \hspace{0.4cm}
+  \begin{tabular}{lll}
+    \kwg{'NB\_BOTH'}     & ENTIER & \fe{Nombre max. d'itérations de la boucle de convergence thermo mécanique}
+                                       {Maximum number of iterations for the thermo mechanical convergence loop}\\
+    \kwg{'MAXITERATION'} & ENTIER & \fe{Nombre max. d'itérations (\kw{49})}
+                                       {Maximum number of iterations (\kw{49})}
+  \end{tabular}
+  \normalsize
+  \begin{itemize}
+    \item \fe{Mécanique}{Mechanics}\\
+  \end{itemize}
+  \tiny
+  \hspace{0.4cm}
+  \begin{tabular}{lll}
+    \kwg{'PRECISION'}            & FLOTTANT & \fe{Critère pour comparer le résidu (\kw{1.E-4})}
+                                                 {Criterion to compare the imbalance (\kw{1.E-4})}\\
+    \kwg{'FTOL'}                 & FLOTTANT & \fe{Tolérance pour l'équilibre des efforts}
+                                                 {Tolerance for strength equilibrium}\\
+    \kwg{'MTOL'}                 & FLOTTANT & \fe{Tolérance pour l'équilibre des moments}
+                                                 {Tolerance for moments equilibrium}\\
+    \kwg{'GRANDS\_DEPLACEMENTS'} & LOGIQUE  & \fe{Configuration de référence = configuration déformée}
+                                                 {Reference configuration = deformed configuration}\\
+    \kwg{'PREDICTEUR'}           & MOT      & \fe{\kw{= 'HPP'}}{\kw{= 'HPP'}}\\
+                                 &          & \fe{Calcul en hypothèse "petits" déplacements $\rightarrow$ 1ère convergence}
+                                                 {Using "small" displacements hypothesis $\rightarrow$ 1st convergence}\\
+                                 &          & \fe{puis passage grands déplacements $\rightarrow$ 2ème convergence}
+                                                 {then use the large displacements hypothesis $\rightarrow$ 2nd convergence}\\
+    \kwg{'PRECISINTER'}          & FLOTTANT & \fe{Précision pour le problème d'intégration des lois constitutives (\kw{1.E-8})}
+                                                 {Precision for the constitutive laws integration problem (\kw{1.E-8})}\\
+    \kwg{'CONVERGENCE\_FORCEE'}  & LOGIQUE  & \fe{Utilisation, ou non, de la convergence forcée (\kw{VRAI})}
+                                                 {Forced convergence use, or not (\kw{VRAI})}\\
+    \kwg{'MAXSOUSPAS'}           & ENTIER   & \fe{Nombre max. de sous pas en convergence forcée (\kw{200})}
+                                                 {Max. number of sub steps during forced convergence (\kw{200})}\\
+    \kwg{'DELTAITER'}            & ENTIER   & \fe{Nombre de pas d'écart pour test de non convergence}
+                                                 {Number of steps over which non convergence is tested}
+  \end{tabular}
+\end{frame}
+
+\begin{frame}{\fe{Annexe : Paramètres de contrôle}{Annex: Control parameters}}
+  \begin{itemize}
+    \item \fe{Thermique}{Thermal}
+  \end{itemize}
+  \tiny
+  \hspace{0.4cm}
+  \begin{tabular}{lll}
+    \kwg{'PROCEDURE\_THERMIQUE'} & MOT      & \fe{Procédure de calcul à utiliser :}
+                                                 {Procedure to call:}\\
+                                 &          & \fe{\kw{'NONLINEAIRE'} procédure \kwo{TRANSNON}}
+                                                 {\kw{'NONLINEAIRE'} procedure \kwo{TRANSNON}}\\
+                                 &          & \fe{\kw{'LINEAIRE'} procédure \kwo{TRANSLIN}}
+                                                 {\kw{'LINEAIRE'} procedure \kwo{TRANSLIN}}\\
+                                 &          & \fe{\kw{'DUPONT'} procédure \kwo{DUPONT2}}
+                                                 {\kw{'DUPONT'} procedure \kwo{DUPONT2}}\\
+    \kwg{'RELAXATION\_THETA'}    & FLOTTANT & \fe{Coefficient de relaxation pour la $\theta$-méthode (\kw{1})}
+                                                 {Relaxation coefficient for the $\theta$-method (\kw{1})}\\
+  \end{tabular}
+  \normalsize
+  \begin{itemize}
+    \item \fe{Couplage thermo mécanique}{Thermo mechanical coupling}\\
+  \end{itemize}
+  \tiny
+  \hspace{0.4cm}
+  \begin{tabular}{lll}
+    \kwg{'CONVERGENCE\_MEC\_THE'} & LOGIQUE  & \fe{Indique que l'on souhaite ré itérer la boucle de calcul thermo mécanique}
+                                                  {Indicates that the thermo mechanical loop should be repeated}\\
+                                  &          & \fe{en cas de dépendance mutuelle (\kw{FAUX})}
+                                                  {in case of dependence (\kw{FAUX})}\\
+    \kwg{'CRITERE\_COHERENCE'}    & FLOTTANT & \fe{Précision pour la convergence thermo mécanique,}
+                                                  {Precision for the thermo mechanical convergence,}\\
+                                  &          & \fe{test sur la thermique (\kw{1.E-2})}
+                                                  {tested on thermal results (\kw{1.E-2})}\\
+    \kwg{'PROJECTION'}            & LOGIQUE  & \fe{Indique que le problème est couplé mais que les maillages en mécanique}
+                                                  {Indicates that the thermal and mechanical meshes are different}\\
+                                  &          & \fe{et en thermique sont différents (\kw{FAUX})}
+                                                  {while the problem is coupled (\kw{FAUX})}
+  \end{tabular}
+\end{frame}
+
+\begin{frame}{\fe{Annexe : Minimisation du résidu en Gibiane}{Annex: Imbalance minimization in Gibiane}}
+  \begin{textblock*}{8cm}(5.7cm,0cm)
+    \lstinputlisting[basicstyle=\ttfamily\tiny,language=gibiane, firstline=47, lastline=73]{dgibi/exemples.dgibi}
+  \end{textblock*}
+  \begin{itemize}
+    \footnotesize
+    \item \fe{Algorithme \kwo{UNPAS} simplifié\\
+              $\rightarrow$ voir la procédure \kwo{@SOLVMEC}\\~}
+             {Simplified \kwo{UNPAS} algorithm\\
+              $\rightarrow$ see the \kwo{@SOLVMEC} procedure\\~}
+  \end{itemize}
+  \vspace{6cm}
+\end{frame}
+
+\begin{frame}{\fe{Annexe : Minimisation du résidu en Gibiane}{Annex: Imbalance minimization in Gibiane}}
+  \begin{textblock*}{8cm}(5.7cm,0cm)
+    \lstinputlisting[basicstyle=\ttfamily\tiny,language=gibiane, firstline=80, lastline=106]{dgibi/exemples.dgibi}
+  \end{textblock*}
+  \begin{itemize}
+    \footnotesize
+    \item \fe{Algorithme \kwo{UNPAS} simplifié\\
+              $\rightarrow$ voir la procédure \kwo{@SOLVMEC}\\
+              grand déplacements}
+             {Simplified \kwo{UNPAS} algorithm\\
+              $\rightarrow$ see the \kwo{@SOLVMEC} procedure\
+              large displacements}
+  \end{itemize}
+  \vspace{6cm}
+\end{frame}
+
+\begin{frame}{\fe{Annexe : Critères de convergence (UNPAS)}{Annex: Convergence criteria (UNPAS)}}
+  \begin{itemize}
+    \item \fe{Normes de convergence (après le 1er \kwr{RESO})}{Convergence norms (after the 1st \kwr{RESO})}
+  \end{itemize}
+  \tiny
+  \begin{align*}
+    F_{\tx{ref}} = & \frac{\bigg|\violet{\delta\{U\}_1^1}.\{F\}_{\tx{imp}}-\red{\{\lambda\}_1^1}.\left(\{u\}_{\tx{imp}}-[A]^T.\red{\{U\}_1^0}\right)\bigg|}
+                          {\underset{\tx{ddl depl}}{\max} \Big|\violet{\delta\{U\}_1^1}\Big|+\kw{xpetit}}
+                   + \frac{\underset{\tx{ddl depl}}{\max} \Big|\violet{\delta\{U\}_1^1}\Big|.\tx{max}\Big|[B]\red{\{\sigma\}_1^0}\Big|}
+                          {\underset{\tx{ddl depl}}{\max} \Big|\violet{\delta\{U\}_1^1}\Big|+\kw{xpetit}}
+                   + \max\Big|[B]\red{\{\sigma\}_1^0}\Big|\\
+    M_{\tx{ref}} = & \frac{\bigg|\violet{\delta\{U\}_1^1}.\{F\}_{\tx{imp}}-\red{\{\lambda\}_1^1}.\left(\{u\}_{\tx{imp}}-[A]^T.\red{\{U\}_1^0}\right)\bigg|}
+                          {\underset{\tx{ddl rota}}{\max} \Big|\violet{\delta\{U\}_1^1}\Big|+\kw{xpetit}}
+                   + \frac{\underset{\tx{ddl depl}}{\max} \Big|\violet{\delta\{U\}_1^1}\Big|.\tx{max}\Big|[B]\red{\{\sigma\}_1^0}\Big|}
+                          {\underset{\tx{ddl rota}}{\max} \Big|\violet{\delta\{U\}_1^1}\Big|+\kw{xpetit}}
+                   + \kw{xpetit}
+  \end{align*}
+  \normalsize
+  \begin{itemize}
+    \item \fe{Mesures du résidu (à chaque itération de \kwo{UNPAS})}{Imbalace measure (at each iteration on \kwo{UNPAS})}
+  \end{itemize}
+  \tiny
+  \begin{align*}
+    \kw{xconv}  = & \frac{\max\biggl\{\underset{\tx{ddl depl}}{\max}\Big|\{F\}_{\tx{imp}}-[A]^T.\red{\{\lambda\}_1^{i+1}}-[B].\red{\{\sigma\}_1^{i+1}}\Big|~;~\max\bigg|[A]^T\left(\red{\{\lambda\}_1^{i+1}}-\red{\{\lambda\}_1^i}\right)\bigg|\biggl\}}
+                        {F_{\tx{ref}}}\\
+    \kw{xconvm} = & \frac{\underset{\tx{ddl rota}}{\max}\Big|\{F\}_{\tx{imp}}-[A]^T.\red{\{\lambda\}_1^{i+1}}-[B].\red{\{\sigma\}_1^{i+1}}\Big|}
+                        {M_{\tx{ref}}}
+  \end{align*}
+\end{frame}
+
+\begin{frame}{\fe{Annexe : Critères de convergence (UNPAS)}{Annex: Convergence criteria (UNPAS)}}
+  \begin{itemize}
+    \item \fe{Mesure de la variation d'incrément de déformation entre 2 itérations}
+             {Measure of strain increment variation between 2 iterations}
+  \end{itemize}
+  \begin{equation*}
+    \kw{depstdm} = \Big|\red{\Delta\{\varepsilon\}_1^{i+1}-\Delta\{\varepsilon\}_1^1}\Big|
+  \end{equation*}
+  \begin{itemize}
+    \item \fe{La convergence est atteinte si :}{Convergence is reached if:}
+    \begin{align*}
+      \kw{xconv}   & < \kwg{'PRECISION'}\\
+      \kw{xconvm}  & < \kwg{'PRECISION'}\\
+      \kw{depstdm} & < \kwg{'PRECISION'}
+    \end{align*}      
+  \end{itemize}
+\end{frame}

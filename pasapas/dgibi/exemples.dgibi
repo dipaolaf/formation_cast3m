@@ -43,3 +43,64 @@ PASAPAS tab1 ;
 
 
 
+
+fex1 = TIRE char tps1 'MECA' ;
+flx1 = TIRE char tps1 'DIMP' ;
+res0 = fex1 + fr0 - fi0 + flx1 - flx0 ;
+fref = MAXI 'ABS' (fex1 + fr0) ;
+
+
+k    = (RIGI mod mat) ET blo ;
+REPE b1 100 ;
+  ddu  = RESO k res0 ;
+  u1   = u0 + ddu ;
+  fr1  = REAC blo u1 ;
+
+  eps1 = EPSI mod u1 ;
+
+  sig1 = ... COMP eps0 eps1 ... ;
+
+
+  fi1  = BSIG mod sig1 ;
+
+  res1 = fex1 + fr1 - fi1 ;
+  cri1 = (MAXI 'ABS' res1) / fref ;
+  SI (cri1 < precis) ;
+    QUIT b1 ;
+  FINSI ;
+  u0   = u1 ;
+  res0 = res1 ;
+FIN b1 ;
+
+
+
+
+
+
+fex1 = TIRE char tps1 'MECA' ;
+flx1 = TIRE char tps1 'DIMP' ;
+res0 = fex1 + fr0 - fi0 + flx1 - flx0 ;
+fref = MAXI 'ABS' (fex1 + fr0) ;
+cof0 = FORM u0 ;
+u00  = u0 ;
+k    = (RIGI mod mat) ET blo ET (KSIG mod sig0) ;
+REPE b1 100 ;
+  ddu  = RESO k res0 ;
+  u1   = u0 + ddu ;
+  fr1  = REAC blo u1 ;
+  du   = u1 - u00 ;
+  deps = EPSI mod du ;
+  eps1 = eps0 + deps ;
+  sig1 = ... COMP eps0 eps1 ... ;
+  sig1 = PICA mod sig1 du ;
+  FORM u1 ;
+  fi1  = BSIG mod sig1 ;
+  FORM cof0 ;
+  res1 = fex1 + fr1 - fi1 ;
+  cri1 = (MAXI 'ABS' res1) / fref ;
+  SI (cri1 < precis) ;
+    QUIT b1 ;
+  FINSI ;
+  u0   = u1 ;
+  res0 = res1 ;
+FIN b1 ;
