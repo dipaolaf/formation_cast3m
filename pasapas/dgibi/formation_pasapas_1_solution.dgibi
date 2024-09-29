@@ -25,28 +25,22 @@ ipsc = EGA (VALE 'TRAC') 'PSC' ;
 
 ** Options generales / general options
 OPTI 'DIME' 2 'ELEM' 'SEG2' ;
-xpas = 0.05 ;
-
-** Parametres geometriques / Geometrical paramters
-long = 1. ;
-sec  = 1.E-2 ;
-inr1 = 1.E-4 ;
 
 ** Maillage / Mesh
 p1   = 0. 0. ;
-p2   = 0. long ;
+p2   = 0. 1. ;
 l1   = DROI 25 p1 p2 ;
 
 ** Modele et materiau / Model and material properties
 mo1  = MODE l1 'MECANIQUE' 'ELASTIQUE' 'POUT' ;
-ma1  = MATE mo1 'YOUN' 50.E6 'NU' 0.3 'SECT' sec 'INRZ' inr1 ;
+ma1  = MATE mo1 'YOUN' 50.E6 'NU' 0.3 'SECT' 1.E-2 'INRZ' 1.E-4 ;
 
 ** Blocages de la base / Clamping the base
 blo1 = BLOQ 'DEPL' 'ROTA' p1 ;
 
 ** Chargement en effort impose / Load with imposed force
 f1   = FORC (1. 0.) p2 ;
-ev1  = EVOL 'MANU' 'Temps' (PROG 0. 1.) 'Coef' (PROG 0. 3.E4) ;
+ev1  = EVOL 'MANU' 'Temps' (PROG 0. 1.) 'Coef' (PROG 0. 4.E4) ;
 cha1 = CHAR 'MECA' f1 ev1 ;
 
 ** Procedure PERSO1
@@ -88,9 +82,8 @@ tab1 . 'MODELE'              = mo1 ;
 tab1 . 'CARACTERISTIQUES'    = ma1 ;
 tab1 . 'BLOCAGES_MECANIQUES' = blo1 ;
 tab1 . 'CHARGEMENT'          = cha1 ;
-tab1 . 'TEMPS_CALCULES'      = PROG xpas 'PAS' xpas 1. ;
+tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 0.005 1. ;
 tab1 . 'GRANDS_DEPLACEMENTS' = VRAI ;
-tab1 . 'PREDICTEUR'          = 'HPP' ;
 tab1 . 'PROCEDURE_PERSO1'    = VRAI ;
 tab1 . 'MON_EVOL'            = ev1 ;
 tab1 . 'MON_POINT'           = p2 ;
@@ -128,7 +121,7 @@ SI ipsc ;
   OPTI 'FTRA' 'exo_1_solu_evol.ps' ;
 FINSI ;
 SI itrac ;
-  DESS (evux1 ET evuy1) 'TITR' 'Deplacements vs Temps' 'LEGE' 'SE' tleg 'TITY' 'Ux | Uy' ;
+  DESS (evux1 ET evuy1) 'TITR' 'Deplacements vs Temps' 'LEGE' 'SO' tleg 'TITY' 'Ux | Uy' ;
 FINSI ;
 
 FIN ;
@@ -141,8 +134,6 @@ FIN ;
 
 
 ***tab1 . 'CHARGEMENT'          = cha1 ;
-tab1 . 'GRANDS_DEPLACEMENTS' = VRAI ;
-tab1 . 'PREDICTEUR'          = 'HPP' ;
 tab1 . 'PROCEDURE_CHARMECA'  = VRAI ;
 tab1 . 'MON_EVOL'            = ev1 ;
 tab1 . 'MON_POINT'           = p2 ;

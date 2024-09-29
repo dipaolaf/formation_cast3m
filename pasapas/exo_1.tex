@@ -8,8 +8,8 @@
   \begin{itemize}
     \item \fe{Poutre en flexion}{Beam bending}\\
     \scriptsize
-    \fe{base encastrée, force \tou{perpendiculaire} à la poutre, déplacement "important"}
-       {clamped base, force \tou{perpendicular} to the beam, "large" displacement}\\
+    \fe{base encastrée, force \g{perpendiculaire} à la poutre, grands déplacements}
+       {clamped base, force \g{perpendicular} to the beam, large displacements}\\
     \begin{tikzpicture}
       \draw [-,thick] (0,0) -- (0,3);
       \draw [->, red] (0,3) -- (0.5,3) node (force) [right, red] {$F$};
@@ -19,20 +19,18 @@
       \draw [-]       (0,-0.1) -- (0.1,0);
       \draw [-]       (0.1,-0.1) -- (0.2,0);
     \end{tikzpicture}
-    \animategraphics[controls,loop,poster=last,height=3cm]{10}{images/exo/exo_1_deformee.}{01}{21}
-    \onslide<2->{
+    \animategraphics[controls,loop,poster=last,height=3cm]{20}{images/exo/exo_1_deformee.}{01}{21}
     \begin{textblock*}{10cm}(8cm,-3.5cm)
-      \includegraphics[height=3cm]{images/exo/exo_1_evol}
-    \end{textblock*}}
+      \includegraphics[height=3.5cm]{images/exo/exo_1_evol}
+    \end{textblock*}
     \normalsize
-    \onslide<3->{
-    \item \fe{\red{Problème : l'effort est calculé sur la configuration initiale et n'est pas mis à jour}}
-             {\red{Problem: the force is calculated on the initial shape and not updated}}
-    \item \fe{\green{Objectif : \g{mettre à jour la direction de l'effort} au cours du calcul}}
-             {\green{Purpose: \g{update the force direction} during the calculation}}
+    \item<2-> \fe{\red{Problème : l'effort est calculé sur la configuration initiale et n'est pas mis à jour}}
+                 {\red{Problem: the force is calculated on the initial shape and not updated}}
+    \item<2-> \fe{\green{Objectif : \g{mettre à jour la direction de l'effort} au cours du calcul}}
+                 {\green{Purpose: \g{update the force direction} during the calculation}}
     \begin{center}
       \fe{\avous{~À vous de jouer !}}{\avous{~It's up to you!}}
-    \end{center}}
+    \end{center}
   \end{itemize}
 \end{frame}
 }
@@ -67,8 +65,6 @@
              {\fe{Solution avec PERSO1}{Solution with PERSO1}}
   \footnotesize
   \begin{itemize}
-    \item \fe{Activer l'option \kwg{'GRANDS\_DEPLACEMENTS'}\\ (équilibre vérifié sur config. déformée)}
-             {Use option \kwg{'GRANDS\_DEPLACEMENTS'}\\ (equilibrium verified on the deformed shape)}
     \item \fe{Utiliser la procédure \kwv{PERSO1} \red{(1 appel / pas de temps)} pour mettre à jour la force\\
               sur la configuration déformée au \tou{début du pas (explicite)}}
              {Use procedure \kwv{PERSO1} \red{(1 call / time step)} to update the force on deformed shape\\
@@ -78,13 +74,13 @@
   \end{itemize}
   \vspace{4.5cm}
   \scriptsize
-  \begin{textblock*}{10cm}(0.3cm,-2.9cm)
+  \begin{textblock*}{10cm}(0.3cm,-4.2cm)
     \fe{\emph{Programme principal}}{\emph{Main program}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=93, lastline=97]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=87, lastline=90]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
   \begin{textblock*}{10cm}(6.3cm,-4.2cm)
     \fe{\emph{\violet{Procédure PERSO1}}}{\emph{\violet{PERSO1 procedure}}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=53, lastline=67]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=47, lastline=60]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
 \end{frame}
 
@@ -122,19 +118,19 @@
               sur la configuration déformée au \tou{début du pas (explicite)}}
              {Idem but with the \kwv{CHARMECA} procedure, to update the force on deformed shape\\
               at \tou{beginning of time step (explicit)}}
-    \item \fe{Pas besoin de CHARGEMEnt initial}{No need for initial load (CHARGEMEnt object)}
+    \item \fe{Plus besoin de CHARGEMEnt initial}{No need for initial load (CHARGEMEnt object)}
     \item \fe{\red{Plus long (1 appel / itération / pas de temps)} et \green{résultats identiques}}
              {\red{Longer (1 call / each iteration / time step)} and \green{results are identical}}
   \end{itemize}
   \vspace{4.5cm}
   \scriptsize
-  \begin{textblock*}{10cm}(0.3cm,-2.9cm)
+  \begin{textblock*}{10cm}(0.3cm,-4.3cm)
     \fe{\emph{Programme principal}}{\emph{Main program}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=143, lastline=149]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=136, lastline=140]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
   \begin{textblock*}{10cm}(6.3cm,-4.3cm)
     \fe{\emph{\violet{Procédure CHARMECA}}}{\emph{\violet{CHARMECA procedure}}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=69, lastline=83]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=63, lastline=77]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
 \end{frame}
 
@@ -150,12 +146,12 @@
   \end{itemize}
   \vspace{4.5cm}
   \scriptsize
-  \begin{textblock*}{10cm}(0.3cm,-2.9cm)
+  \begin{textblock*}{10cm}(0.3cm,-4.4cm)
     \fe{\emph{Programme principal}}{\emph{Main program}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=143, lastline=149]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=136, lastline=140]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
   \begin{textblock*}{10cm}(6.3cm,-4.4cm)
     \fe{\emph{\violet{Procédure CHARMECA}}}{\emph{\violet{CHARMECA procedure}}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=151, lastline=168]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=142, lastline=159]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
 \end{frame}
