@@ -146,31 +146,39 @@
 
 \begin{frame}{\fe{Aperçu des paramètres d'entrée}{Overview of input parameters}}
   \begin{itemize}
-    \item \fe{Généralités}{General}\\
-    \tiny
-    \begin{tabular}{lll}
+    \item \fe{Généralités}{General}
+  \end{itemize}
+  \tiny
+  \hspace{0.4cm}
+  \begin{tabular}{lll}
     \kwg{'MODELE'}           & MMODEL   & \fe{Équations à résoudre, formulation EF (\kwr{MODE})}
                                              {Equations to solve, FE formulation (\kwr{MODE})}\\
     \kwg{'CARACTERISTIQUES'} & MCHAML   & \fe{Paramètres matériau et/ou géométriques (\kwr{MATE})}
                                              {Material and/or geometrical parameters (\kwr{MATE})}\\
     \kwg{'CHARGEMENT'}       & CHARGEME & \fe{Évolution des CL et chargements au cours du calcul (\kwr{CHAR})}
-                                             {BC and loading variation during calculation (\kwr{CHAR})}\\
-    \end{tabular}
-    \normalsize
-    \item \fe{Thermique}{Thermal analysis}\\
-    \tiny
-    \begin{tabular}{lll}
+                                             {BC and loading variation during calculation (\kwr{CHAR})}
+  \end{tabular}
+  \normalsize
+  \begin{itemize}
+    \item \fe{Thermique}{Thermal analysis}
+  \end{itemize}
+  \tiny
+  \hspace{0.4cm}
+  \begin{tabular}{lll}
     \kwg{'BLOCAGES\_THERMIQUES'} & RIGIDITE & \fe{Matrice de blocage des CL de type Dirichlet (\kwr{BLOQ,RELA})}
                                                  {Stiffness matrix for Dirichlet BC (\kwr{BLOQ,RELA})}\\
-    \kwg{'CELSIUS'}              & LOGIQUE  & \fe{= VRAI si les températures sont en degrés Celsius}
-                                                 {= VRAI (true) if temperature unit is Celsius}\\
+    \kwg{'CELSIUS'}              & LOGIQUE  & \fe{\kw{= VRAI} si les températures sont en degrés Celsius}
+                                                 {\kw{= VRAI} (true) if temperature unit is Celsius}\\
     \kwg{'TEMPERATURES' . 0}     & CHPOINT  & \fe{Conditions initiales}
-                                                 {Initial conditions}\\
-    \end{tabular}
-    \normalsize
-    \item \fe{Mécanique}{Mechanics}\\
-    \tiny
-    \begin{tabular}{lll}
+                                                 {Initial conditions}
+  \end{tabular}
+  \normalsize
+  \begin{itemize}
+    \item \fe{Mécanique}{Mechanics}
+  \end{itemize}
+  \tiny
+  \hspace{0.4cm}
+  \begin{tabular}{lll}
     \kwg{'BLOCAGES\_MECANIQUES'}           & RIGIDITE & \fe{Matrice de blocage des CL de type Dirichlet (\kwr{BLOQ,RELA})}
                                                            {Stiffness matrix for Dirichlet BC (\kwr{BLOQ,RELA})}\\
     \kwg{'GRANDS\_DEPLACEMENTS'}           & LOGIQUE  & \fe{Équilibre vérifié sur les configurations déformées}
@@ -179,55 +187,60 @@
                                                            {Initial conditions}\\
     \kwg{'CONTRAINTES' . 0}                & MCHAML   & \fe{Idem}{Idem}\\
     \kwg{'VARIABLES\_INTERNES' . 0}        & MCHAML   & \fe{Idem}{Idem}\\
-    \kwg{'DEFORMATIONS\_INELASTIQUES' . 0} & MCHAML   & \fe{Idem}{Idem}\\
-    \end{tabular}
-    \normalsize
-    \item \fe{Mécanique (dynamique)}{Mechanics (dynamics)}\\
-    \tiny
-    \begin{tabular}{lll}
-    \kwg{'DYNAMIQUE'}          & LOGIQUE  & \fe{= VRAI si calcul dynamique}
-                                               {= VRAI (true) for dynamics calculations}\\
+    \kwg{'DEFORMATIONS\_INELASTIQUES' . 0} & MCHAML   & \fe{Idem}{Idem}
+  \end{tabular}
+  \normalsize
+  \begin{itemize}
+    \item \fe{Mécanique (dynamique)}{Mechanics (dynamics)}
+  \end{itemize}
+  \tiny
+  \hspace{0.4cm}
+  \begin{tabular}{lll}
+    \kwg{'DYNAMIQUE'}          & LOGIQUE  & \fe{\kw{= VRAI} si calcul dynamique}
+                                               {\kw{= VRAI} (true) for dynamics calculations}\\
     \kwg{'AMORTISSEMENT'}      & RIGIDITE & \fe{Matrice d'amortissement}
                                                {Damping matrix}\\
     \kwg{'VITESSES' . 0}       & MCHAML   & \fe{Conditions initiales}
                                                {Initial conditions}\\
-    \kwg{'ACCELERATIONS' . 0 } & CHPOINT  & Idem\\
-    \end{tabular}
-    \normalsize
-    \item \fe{Instants de calcul et sauvegarde}{Calculation and saving times}\\
-    \tiny
-    \begin{tabular}{lll}
+    \kwg{'ACCELERATIONS' . 0 } & CHPOINT  & \fe{Idem}{Idem}
+  \end{tabular}
+  \normalsize
+  \begin{itemize}
+    \item \fe{Instants de calcul et sauvegarde}{Calculation and saving times}
+  \end{itemize}
+  \tiny
+  \hspace{0.4cm}
+  \begin{tabular}{lll}
     \kwg{'TEMPS\_CALCULES'} & LISTREEL & \fe{Liste des instants de calcul (\kwr{PROG})}
                                             {List of times for which results are computed (\kwr{PROG})}\\
     \kwg{'TEMPS\_SAUVES'}   & LISTREEL & \fe{Liste des instants pour lesquels les résultats sont conservés (\kwr{PROG})}
-                                            {List of times for which results are saved (\kwr{PROG})}\\
-    \end{tabular}
-    \normalsize
-  \end{itemize}
+                                            {List of times for which results are saved (\kwr{PROG})}
+  \end{tabular}
 \end{frame}
 
 \begin{frame}{\fe{Aperçu des paramètres de sortie}{Overview of ouput parameters}}
   \begin{itemize}
-    \item \fe{Résultats}{Results}\\
-    \tiny
-    \begin{tabular}{lll}
+    \item \fe{Résultats}{Results}
+  \end{itemize}
+  \tiny
+  \hspace{0.4cm}
+  \begin{tabular}{lll}
     \kwg{'TEMPS'}                      & TABLE & \fe{Instants de calcul, identiques aux \kwg{'TEMPS\_SAUVES'}}
                                                     {Time values, identical to \kwg{'TEMPS\_SAUVES'}}\\
-    & & \\
+                                       &       & \\
     \kwg{'TEMPERATURES'}               & TABLE & \fe{Champs solutions pour chaque \kwg{'TEMPS\_SAUVES'}}
                                                     {Fields (solution) calculated for each stored time \kwg{'TEMPS\_SAUVES'}}\\
     \kwg{'PROPORTION\_PHASE'}          & TABLE & \fe{Idem}{Idem}\\
-    & & \\
+                                       &       & \\
     \kwg{'DEPLACEMENTS'}               & TABLE & \fe{Idem}{Idem}\\
     \kwg{'REACTIONS'}                  & TABLE & \fe{Idem}{Idem}\\
     \kwg{'CONTRAINTES'}                & TABLE & \fe{Idem}{Idem}\\
     \kwg{'DEFORMATIONS\_INELASTIQUES'} & TABLE & \fe{Idem}{Idem}\\
     \kwg{'VARIABLES\_INTERNES'}        & TABLE & \fe{Idem}{Idem}\\
     \kwg{'VITESSES'}                   & TABLE & \fe{Idem}{Idem}\\
-    \kwg{'ACCELERATIONS'}              & TABLE & \fe{Idem}{Idem}\\
-    \end{tabular}
-    \normalsize
-  \end{itemize}
+    \kwg{'ACCELERATIONS'}              & TABLE & \fe{Idem}{Idem}
+  \end{tabular}
+  \normalsize
 \end{frame}
 
 \begin{frame}{\fe{Exemples de post traitement}{Post processing examples}}
