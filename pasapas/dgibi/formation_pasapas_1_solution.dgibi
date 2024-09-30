@@ -140,21 +140,21 @@ tab1 . 'MON_POINT'           = p2 ;
 PASAPAS tab1 ;
 
 DEBP CHARMECA t1*'TABLE' tps1*'FLOTTANT' ;
-  pf = t1 . 'MON_POINT' ;
-  ev = t1 . 'MON_EVOL' ;
+  pf   = t1 . 'MON_POINT' ;
+  ev   = t1 . 'MON_EVOL' ;
 * angle de rotation / rotation angle
-  drs = 0. ;
+  drs  = 0. ;
   SI (EGA (TYPE zdept) 'CHPOINT') ;
-    drs = EXTR zdept 'RZ' pf ;
+    drs  = EXTR zdept 'RZ' pf ;
   FINSI ;
-  rs = (EXTR (t1 . 'CONTINUATION'
-                 . 'DEPLACEMENTS') 'RZ' pf) + drs ;
-  rsd = rs * 180. / pi ;
+  u1   = t1 . 'CONTINUATION' . 'DEPLACEMENTS' ;
+  rs   = (EXTR u1 'RZ' pf) + drs ;
+  rsd  = rs * 180. / pi ;
 * direction force
   dir1 = (COS rsd) (SIN rsd) ;
 * ajout de la force / adding the force
   val1 = IPOL tps1 ev ;
-  f1 = FORC (val1 * dir1) pf ;
-  t2 = TABLE ;
+  f1   = FORC (val1 * dir1) pf ;
+  t2   = TABLE ;
   t2 . 'ADDI_SECOND' = f1 ;
 FINP t2 ;

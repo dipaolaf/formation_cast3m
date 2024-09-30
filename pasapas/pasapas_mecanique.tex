@@ -283,8 +283,10 @@
   % Cellules (style, position, contenu)
   \fe{\node (ini)   [bstep] {Initialisations, \kwv{CHARMECA}};}
      {\node (ini)   [bstep] {Initializations, \kwv{CHARMECA}};}
-  \fe{\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Instanciations matériaux, calcul matrice de rigidité $[K]$, forces imposées $\{F\}_{\tx{imp}}$};}
-     {\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Material updating, stiffness matrix $[K]$ calculation, imposed forces $\{F\}_{\tx{imp}}$};}
+  \fe{\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Instanciations matériaux \kwo{PAS\_MODL PAS\_ETAT PAS\_MATE},\\
+                                                                     calcul matrice de rigidité $[K]$ \kwr{RIGI KSIG}, forces imposées $\{F\}_{\tx{imp}}$ \kwr{TIRE}};}
+     {\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Material updating \kwo{PAS\_MODL PAS\_ETAT PAS\_MATE},\\
+                                                                     stiffness matrix $[K]$ calculation \kwr{RIGI KSIG}, imposed forces $\{F\}_{\tx{imp}}$ \kwr{TIRE}};}
 
   \fe{\node (1r)    [bstep, below of=ini] {1er résidu};}
      {\node (1r)    [bstep, below of=ini] {1st imbalance};}
@@ -323,10 +325,10 @@
 
   \fe{\node (eq)  [rtest, below of=res, yshift=-0.2cm]  {Équilibre ?};}
      {\node (eq)  [rtest, below of=res, yshift=-0.2cm]  {Equilibrium?};}
-  \fe{\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Mesure normée du résidu $\leq$ critère ? \kwg{'PRECISION' 'FTOL' 'MTOL'}\\
-                                                                  Variation de l'incrément de déformations entre 2 itérations < critère ?};}
-     {\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Magnitude of the imbalance $\leq$ criterion? \kwg{'PRECISION' 'FTOL' 'MTOL'}\\
-                                                                  Variation of the strains increment between 2 iterations < criterion?};}
+  \fe{\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Mesure normée du résidu $<$ critère ? \kwg{'PRECISION' 'FTOL' 'MTOL'}\\
+                                                                  Variation de l'incrément de déformations entre 2 itérations $<$ critère ?};}
+     {\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Magnitude of the imbalance $<$ criterion? \kwg{'PRECISION' 'FTOL' 'MTOL'}\\
+                                                                  Variation of the strains increment between 2 iterations $<$ criterion?};}
 
   \fe{\node (nc)  [rtest, below of=eq, yshift=-0.5cm]  {Non convergence ?};}
      {\node (nc)  [rtest, below of=eq, yshift=-0.5cm]  {Non congergence?};}
@@ -339,7 +341,7 @@
                                                                 - significant increase of the imbalance over several iterations\\
                                                                 Forced convergence process};}
   \fe{\node (sauv) [bstep, below of=nc, yshift=-0.4cm] {Enregistrement résultats};}
-     {\node (sauv) [bstep, below of=nc, yshift=-0.4cm] {Save esults};}
+     {\node (sauv) [bstep, below of=nc, yshift=-0.4cm] {Save results};}
 
   \fe{\node (conv) [btest, below of=sauv, yshift=-0.2cm] {Convergence ?};}
      {\node (conv) [btest, below of=sauv, yshift=-0.2cm] {Convergence?};}

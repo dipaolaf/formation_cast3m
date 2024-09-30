@@ -83,27 +83,31 @@
   \begin{tikzpicture}[node distance=0.6cm,
     every node/.style={fill=white}, align=center]
   % Cellules (style, position, contenu)
-  \fe{\node (ini)   [bstep] {Initialisations, \kwv{CHARTHER}};}
-     {\node (ini)   [bstep] {Initializations, \kwv{CHARTHER}};}
-  \fe{\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Lecture des options, unités (°C ou K), état initial,\\
-                                                                     calcul des facteurs de forme (rayonnement) \dots};}
-     {\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Option reading, units (°C or K), initial state,\\
-                                                                     view factors (for radiation) \dots};}
+  \fe{\node (ini)   [bstep] {Initialisations\\ \kwv{CHARTHER}};}
+     {\node (ini)   [bstep] {Initializations\\ \kwv{CHARTHER}};}
+  \fe{\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Lecture des options, unités (°C ou K), état initial \kwo{PAS\_MODL},\\
+                                                                     calcul des facteurs de forme (rayonnement)  \kwo{PAS\_RAYO} \dots};}
+     {\node (ini0)  [note, right of=ini, xshift=1.5cm, anchor=west] {Option reading, units (°C or K), initial state \kwo{PAS\_MODL},\\
+                                                                     view factors (for radiation) \kwo{PAS\_RAYO} \dots};}
 
   \fe{\node (ins)   [gstep, below of=ini, yshift=-0.5cm] {État à $\green{\{T\}_0}$,$t_{\star}$\\
                                                          \kwv{PARATHER}\\
-                                                         Instanciation matériau, $[K]_{\star}$ et $[C]_{\star}$\\
-                                                         \kwv{CHARTHER}, $\{P\}_{\star}$};}
+                                                         M.à.j. matériau, $[K]_{\star}$ et $[C]_{\star}$\\
+                                                         \kwo{PAS\_RAYO}, \kwv{CHARTHER}, $\{P\}_{\star}$};}
      {\node (ins)   [gstep, below of=ini, yshift=-0.5cm] {State at $\green{\{T\}_0}$,$t_{\star}$\\
                                                           \kwv{PARATHER}\\
                                                           Material updating, $[K]_{\star}$ et $[C]_{\star}$\\
-                                                          \kwv{CHARTHER}, $\{P\}_{\star}$};}
-  \fe{\node (ins0)  [note, right of=ins, xshift=1.5cm, anchor=west] {Mise à jour variables externes, caractéristiques matériaux,\\
-                                                                     Calcul de $[K]_{\star}$ $[C]_{\star}$ et $\{P\}_{\star}$ à $\green{\{T\}_0}$ et $t_{\star}$\\
-                                                                     On définit alors l'opérateur $[L]_{\star}=\frac{1}{\Delta t}[C]_{\star}+\theta[K]_{\star}$};}
-     {\node (ins0)  [note, right of=ins, xshift=1.5cm, anchor=west] {External variables updating, material parameters,\\
-                                                                     Calculation of $[K]_{\star}$ $[C]_{\star}$ and $\{P\}_{\star}$ at $\green{\{T\}_0}$ and $t_{\star}$\\
-                                                                     We define the operator $[L]_{\star}=\frac{1}{\Delta t}[C]_{\star}+\theta[K]_{\star}$};}
+                                                          \kwo{PAS\_RAYO}, \kwv{CHARTHER}, $\{P\}_{\star}$};}
+  \fe{\node (ins0)  [note, right of=ins, xshift=1.5cm, anchor=west] {Mise à jour variables externes \kwv{PARATHER} et carac. matériaux,\\
+                                                                     Calcul de $[K]_{\star}$ \kwr{COND CONV}, $[C]_{\star}$ \kwr{CAPA} à $\green{\{T\}_0}$ et $t_{\star}$\\
+                                                                     Calcul de $\{P\}_{\star}$ \kwr{TIRE} à $\green{\{T\}_0}$ et $t_{\star}$\\
+                                                                     Ajout des termes de rayonnement \kwo{PAS\_RAYO}\\
+                                                                     On définit alors l'\g{opérateur} $[L]_{\star}=\frac{1}{\Delta t}[C]_{\star}+\theta[K]_{\star}$};}
+     {\node (ins0)  [note, right of=ins, xshift=1.5cm, anchor=west] {Updating external variables \kwv{PARATHER} and material parameters,\\
+                                                                     Calculation of $[K]_{\star}$ \kwr{COND CONV}, $[C]_{\star}$ \kwr{CAPA} at $\green{\{T\}_0}$ and $t_{\star}$\\
+                                                                     Calculation of $\{P\}_{\star}$ \kwr{TIRE} at $\green{\{T\}_0}$ and $t_{\star}$\\
+                                                                     Adding the radiative terms \kwo{PAS\_RAYO}\\
+                                                                     We define the \g{operator} $[L]_{\star}=\frac{1}{\Delta t}[C]_{\star}+\theta[K]_{\star}$};}
 
   \fe{\node (acc)  [rstep, below of=ins, yshift=-0.5cm] {Accélération convergence};}
      {\node (acc)  [rstep, below of=ins, yshift=-0.5cm] {Convergence acceleration};}
@@ -119,18 +123,18 @@
   \fe{\node (con)  [rtest, below of=res, yshift=-0.6cm] {Convergence ?};}
      {\node (con)  [rtest, below of=res, yshift=-0.6cm] {Convergence?};}
   \fe{\node (con0) [note, right of=con, xshift=1.5cm, anchor=west] {Test sur la \g{variation d'incrément de température}\\ entre 2 itérations successives\\
-                                                                    \kwr{MAX}\kwg{ 'ABS' } $\frac{\Delta \{T\}^{i+1}-\Delta \{T\}^i}{\red{\{T\}_1^{i+1}}} \leq$ \kwg{'PRECISION'}};}
+                                                                    \kwr{MAX}\kwg{ 'ABS' } $\frac{\Delta \{T\}^{i+1}-\Delta \{T\}^i}{\red{\{T\}_1^{i+1}}} <$ \kwg{'PRECISION'}};}
      {\node (con0) [note, right of=con, xshift=1.5cm, anchor=west] {Test on the \g{temperature increment variation}\\ between 2 successive iterations\\
-                                                                    \kwr{MAX}\kwg{ 'ABS' } $\frac{\Delta \{T\}^{i+1}-\Delta \{T\}^i}{\red{\{T\}_1^{i+1}}} \leq$ \kwg{'PRECISION'}};}
+                                                                    \kwr{MAX}\kwg{ 'ABS' } $\frac{\Delta \{T\}^{i+1}-\Delta \{T\}^i}{\red{\{T\}_1^{i+1}}} <$ \kwg{'PRECISION'}};}
 
   \fe{\node (maj)  [rstep, left of=res, xshift=-1.7cm] {État à $\{T\}_{\star}^{i+1}$,$t_{\star}$\\
                                                         \kwv{PARATHER}\\
-                                                        Instanciation matériau\\
-                                                        \kwv{CHARTHER}, $\{P\}_{\star}$};}
+                                                        M.à.j. matériau\\
+                                                        \kwo{PAS\_RAYO}, \kwv{CHARTHER}, $\{P\}_{\star}$};}
      {\node (maj)  [rstep, left of=res, xshift=-1.7cm] {State at $\{T\}_{\star}^{i+1}$,$t_{\star}$\\
                                                         \kwv{PARATHER}\\
-                                                        Material updating\\
-                                                        \kwv{CHARTHER}, $\{P\}_{\star}$};}
+                                                        Material updating \\
+                                                        \kwo{PAS\_RAYO}, \kwv{CHARTHER}, $\{P\}_{\star}$};}
   
       \node (per)  [gstep, below of=con, yshift=-0.3cm] {\kwv{PERSO2}};
 
@@ -151,8 +155,8 @@
   \fe{\draw[->, draw=Green] (con) -- node[xshift=0.4cm]{oui} (per);}
      {\draw[->, draw=Green] (con) -- node[xshift=0.4cm]{yes} (per);}
   \draw[->, draw=Green]   (per) -- (tim);
-  \fe{\draw[->, draw=Green] (tim.west) -- node[yshift=0.2cm]{non} ++(-2.2,0) -- ++(0,5.2) -- (ins.west);}
-     {\draw[->, draw=Green] (tim.west) -- node[yshift=0.2cm]{no}  ++(-2,0) -- ++(0,5.2) -- (ins.west);}
+  \fe{\draw[->, draw=Green] (tim.west) -- node[yshift=0.2cm]{non} ++(-2.4,0) -- ++(0,5.2) -- (ins.west);}
+     {\draw[->, draw=Green] (tim.west) -- node[yshift=0.2cm]{no}  ++(-2.4,0) -- ++(0,5.2) -- (ins.west);}
   \fe{\draw[->] (tim.east) -- node[yshift=0.2cm]{oui} (fin.west);}
      {\draw[->] (tim.east) -- node[yshift=0.2cm]{yes} (fin.west);}
   \draw[dotted]           (ini) -- (ini0);

@@ -85,8 +85,8 @@
                                                                       \kw{tab1.}\kwg{'CONVERGENCE\_MEC\_THE'}\kw{ = VRAI ;}\\ \\
                                                                       $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{'CRITERE\_COHERENCE'} $(10^{-2})$};}
 
-  \fe{\node (prep)  [gstep, below of=contm, yshift=-0.4cm] {Préparation du pas de temps suivant};}
-     {\node (prep)  [gstep, below of=contm, yshift=-0.4cm] {Next time step preparation};}
+  \fe{\node (prep)  [gstep, below of=contm, yshift=-0.32cm] {Préparation du pas de temps suivant};}
+     {\node (prep)  [gstep, below of=contm, yshift=-0.32cm] {Next time step preparation};}
   \fe{\node (prep0) [note, right of=prep, xshift=2cm, anchor=west] {Enregistrement du nouvel état au début de pas dans : \kw{tab1.}\kwg{'WTABLE'}};}
      {\node (prep0) [note, right of=prep, xshift=2cm, anchor=west] {Saving the new state as the initial time step state in: \kw{tab1.}\kwg{'WTABLE'}};}
 
@@ -97,9 +97,9 @@
   \fe{\node (sauv)  [gstep, below of=pers] {Sauvegarde des résultats};}
      {\node (sauv)  [gstep, below of=pers] {Saving results};}
   \fe{\node (sauv0) [note, right of=sauv, xshift=2cm, anchor=west] {\kwo{PAS\_RESU} : remplissage de \kwg{'CONTINUATION'} d'après \kwg{'ESTIMATION'}\\
-                                                                    écriture dans \kw{tab1} s'il s'agit d'un \kwg{'TEMPS\_SAUVE'}};}
+                                                                     \kwo{~~~~~~~~~} écriture dans \kw{tab1} s'il s'agit d'un \kwg{'TEMPS\_SAUVE'}};}
      {\node (sauv0) [note, right of=sauv, xshift=2cm, anchor=west] {\kwo{PAS\_RESU}: filling \kwg{'CONTINUATION'} according to \kwg{'ESTIMATION'}\\
-                                                                    saving in \kw{tab1} if the time belong to \kwg{'TEMPS\_SAUVE'}};}
+                                                                     \kwo{~~~~~~~~~} saving in \kw{tab1} if the time belong to \kwg{'TEMPS\_SAUVE'}};}
 
   \fe{\node (cont)  [gtest, below of=sauv, , yshift=-0.3cm]  {Fin des pas\\ de temps ?};}
      {\node (cont)  [gtest, below of=sauv, , yshift=-0.3cm]  {End of\\ time steps?};}
@@ -121,8 +121,8 @@
   \draw[->, draw=Green] (sauv) -- (cont);
   \fe{\draw[->]             (cont) -- node[yshift=0.2cm,]{oui} (end);}
      {\draw[->]             (cont) -- node[yshift=0.2cm,]{yes} (end);}
-  \fe{\draw[->, draw=Green] (cont.west) -- node[yshift=0.2cm]{non} ++(-0.6,0) -- ++(0,6.4) -- (init.west);}
-     {\draw[->, draw=Green] (cont.west) -- node[yshift=0.2cm]{no} ++(-0.6,0) -- ++(0,6.4) -- (init.west);}
+  \fe{\draw[->, draw=Green] (cont.west) -- node[yshift=0.2cm]{non} ++(-0.6,0) -- ++(0,6.32) -- (init.west);}
+     {\draw[->, draw=Green] (cont.west) -- node[yshift=0.2cm]{no} ++(-0.6,0) -- ++(0,6.32) -- (init.west);}
   \draw[dotted]         (start) -- (start0);
   \draw[dotted]         (init)  -- (init0);
   \draw[dotted]         (resot) -- (resot0);
@@ -181,7 +181,8 @@
       \kwg{'WTABLE'} \kw{.} \kwg{'CARACTERISTIQUES'}     & \fe{Champ de caractéristiques matériau}{Material properties field}\\
       etc\dots&\\
     \end{tabular}
-    \\~\\ \fe{Plus d'infos, voir les commentaires procédure \kwo{PAS\_DEFA}}
+    \footnotesize
+    \\~\\ \fe{Plus d'infos, voir les commentaires de la procédure \kwo{PAS\_DEFA}}
              {More information in the comments of the procedure \kwo{PAS\_DEFA}}
     \normalsize
   \end{itemize}
