@@ -10,6 +10,8 @@
     \scriptsize
     \fe{base encastrée, force \g{perpendiculaire} à la poutre, grands déplacements}
        {clamped base, force \g{perpendicular} to the beam, large displacements}\\
+  \end{itemize}
+  \begin{center}
     \begin{tikzpicture}
       \draw [-,thick] (0,0) -- (0,3);
       \draw [->, red] (0,3) -- (0.5,3) node (force) [right, red] {$F$};
@@ -19,12 +21,12 @@
       \draw [-]       (0,-0.1) -- (0.1,0);
       \draw [-]       (0.1,-0.1) -- (0.2,0);
     \end{tikzpicture}
-    \animategraphics[controls,loop,poster=last,height=3cm]{20}{images/exo/exo_1_deformee.}{01}{21}
-    \begin{textblock*}{10cm}(8cm,-3.5cm)
-      \includegraphics[height=3.5cm]{images/exo/exo_1_evol}
-    \end{textblock*}
-    \normalsize
-    \item<2-> \fe{\red{Problème : l'effort est calculé sur la configuration initiale et n'est pas mis à jour}}
+    \animategraphics[controls,loop,poster=last,height=3.5cm]{50}{images/exo/exo_1_deformee.}{001}{201}
+    \includegraphics[height=3.2cm]{images/exo/exo_1_evol}
+  \end{center}
+  \small
+  \begin{itemize}
+    \item<2-> \fe{\red{Problème : effort calculé sur la configuration initiale (non mis à jour)}}
                  {\red{Problem: the force is calculated on the initial shape and not updated}}
     \item<2-> \fe{\green{Objectif : \g{mettre à jour la direction de l'effort} au cours du calcul}}
                  {\green{Purpose: \g{update the force direction} during the calculation}}
@@ -88,10 +90,9 @@
              {\fe{Solution avec PERSO1}{Solution with PERSO1}}
   \small
   \begin{itemize}
-    \item \fe{Résultats}{Results}\\
-    \scriptsize
-    \fe{base encastrée, force \tou{perpendiculaire} à la poutre, déplacement "important"}
-       {clamped base, force \tou{perpendicular} to the beam, "large" displacement}\\
+    \item \fe{Résultats}{Results}
+  \end{itemize}
+  \begin{center}
     \begin{tikzpicture}
       \draw [-,thick] (0,0) -- (0,3);
       \draw [->, red] (0,3) -- (0.5,3) node (force) [right, red] {$F$};
@@ -101,13 +102,9 @@
       \draw [-]       (0,-0.1) -- (0.1,0);
       \draw [-]       (0.1,-0.1) -- (0.2,0);
     \end{tikzpicture}
-    \hspace{0.9cm}
-    \animategraphics[controls,loop,poster=last,height=3cm]{10}{images/exo/exo_1_solu_deformee.}{01}{21}
-    \begin{textblock*}{10cm}(8cm,-3.5cm)
-      \includegraphics[height=3cm]{images/exo/exo_1_solu_evol}
-    \end{textblock*}
-    \normalsize
-  \end{itemize}
+    \animategraphics[controls,loop,poster=last,height=3.5cm]{50}{images/exo/exo_1_solu_deformee.}{001}{201}
+    \includegraphics[height=3.2cm]{images/exo/exo_1_solu_evol}
+  \end{center}
 \end{frame}
 
 \begin{frame}{\fe{Exercice 1 : poutre avec force suiveuse}{Exercise 1: beam with following force}}
@@ -152,6 +149,6 @@
   \end{textblock*}
   \begin{textblock*}{10cm}(6.3cm,-4.4cm)
     \fe{\emph{\violet{Procédure CHARMECA}}}{\emph{\violet{CHARMECA procedure}}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=142, lastline=159]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=142, lastline=160]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
 \end{frame}

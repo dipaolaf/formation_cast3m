@@ -61,7 +61,7 @@ def0 = DEFO l1 (tu1 . 0) 0. ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_1_deformee.ps' ;
 FINSI ;
-box  = (-1. -0.18) ET (0.85 1.) COUL 'JAUN' ;
+box  = (-0.8 -0.18) ET (0.85 1.) COUL 'JAUN' ;
 REPE b1 (DIME tt) ;
   i1   = &b1 - 1 ;
   tps1 = tt . i1 ;
@@ -84,7 +84,7 @@ SI ipsc ;
   OPTI 'FTRA' 'exo_1_evol.ps' ;
 FINSI ;
 SI itrac ;
-  DESS (evux1 ET evuy1) 'TITR' 'Deplacements vs Temps' 'LEGE' 'SO' tleg 'TITY' 'Ux | Uy' ;
+  DESS (evux1 ET evuy1) 'TITR' 'Deplacements vs Temps' 'LEGE' 'SO' tleg 'TITY' 'DEPLACEMENT' ;
 FINSI ;
 
 FIN ;

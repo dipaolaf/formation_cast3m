@@ -121,7 +121,7 @@ SI ipsc ;
   OPTI 'FTRA' 'exo_1_solu_evol.ps' ;
 FINSI ;
 SI itrac ;
-  DESS (evux1 ET evuy1) 'TITR' 'Deplacements vs Temps' 'LEGE' 'SO' tleg 'TITY' 'Ux | Uy' ;
+  DESS (evux1 ET evuy1) 'TITR' 'Deplacements vs Temps' 'LEGE' 'SO' tleg 'TITY' 'DEPLACEMENT' ;
 FINSI ;
 
 FIN ;
@@ -147,7 +147,8 @@ DEBP CHARMECA t1*'TABLE' tps1*'FLOTTANT' ;
   SI (EGA (TYPE zdept) 'CHPOINT') ;
     drs = EXTR zdept 'RZ' pf ;
   FINSI ;
-  rs = (EXTR (t1 . 'CONTINUATION' . 'DEPLACEMENTS') 'RZ' pf) + drs ;
+  rs = (EXTR (t1 . 'CONTINUATION'
+                 . 'DEPLACEMENTS') 'RZ' pf) + drs ;
   rsd = rs * 180. / pi ;
 * direction force
   dir1 = (COS rsd) (SIN rsd) ;
