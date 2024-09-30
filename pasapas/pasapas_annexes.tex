@@ -10,8 +10,8 @@
   \tiny
   \hspace{0.4cm}
   \begin{tabular}{lll}
-    \kwg{'NB\_BOTH'}     & ENTIER & \fe{Nombre max. d'itérations de la boucle de convergence thermo mécanique}
-                                       {Maximum number of iterations for the thermo mechanical convergence loop}\\
+    \kwg{'NB\_BOTH'}     & ENTIER & \fe{Nombre max. d'itérations de la boucle de convergence thermo mécanique (\kw{10})}
+                                       {Maximum number of iterations for the thermo mechanical convergence loop (\kw{10})}\\
     \kwg{'MAXITERATION'} & ENTIER & \fe{Nombre max. d'itérations (\kw{49})}
                                        {Maximum number of iterations (\kw{49})}
   \end{tabular}
@@ -28,8 +28,8 @@
                                                  {Tolerance for strength equilibrium}\\
     \kwg{'MTOL'}                 & FLOTTANT & \fe{Tolérance pour l'équilibre des moments}
                                                  {Tolerance for moments equilibrium}\\
-    \kwg{'GRANDS\_DEPLACEMENTS'} & LOGIQUE  & \fe{Configuration de référence = configuration déformée}
-                                                 {Reference configuration = deformed configuration}\\
+    \kwg{'GRANDS\_DEPLACEMENTS'} & LOGIQUE  & \fe{Configuration de référence = configuration déformée (\kw{FAUX})}
+                                                 {Reference configuration = deformed configuration (\kw{FAUX})}\\
     \kwg{'PREDICTEUR'}           & MOT      & \fe{\kw{= 'HPP'}}{\kw{= 'HPP'}}\\
                                  &          & \fe{Calcul en hypothèse "petits" déplacements $\rightarrow$ 1ère convergence}
                                                  {Using "small" displacements hypothesis $\rightarrow$ 1st convergence}\\
@@ -39,10 +39,10 @@
                                                  {Precision for the constitutive laws integration problem (\kw{1.E-8})}\\
     \kwg{'CONVERGENCE\_FORCEE'}  & LOGIQUE  & \fe{Utilisation, ou non, de la convergence forcée (\kw{VRAI})}
                                                  {Forced convergence use, or not (\kw{VRAI})}\\
-    \kwg{'MAXSOUSPAS'}           & ENTIER   & \fe{Nombre max. de sous pas en convergence forcée (\kw{200})}
-                                                 {Max. number of sub steps during forced convergence (\kw{200})}\\
-    \kwg{'DELTAITER'}            & ENTIER   & \fe{Nombre de pas d'écart pour test de non convergence}
-                                                 {Number of steps over which non convergence is tested}
+    \kwg{'MAXSOUSPAS'}           & ENTIER   & \fe{Nombre max. de sous pas en convergence forcée (\kw{100})}
+                                                 {Max. number of sub steps during forced convergence (\kw{100})}\\
+    \kwg{'DELTAITER'}            & ENTIER   & \fe{Nombre de pas d'écart pour test de non convergence (\kw{10})}
+                                                 {Number of steps over which non convergence is tested (\kw{10})}
   \end{tabular}
 \end{frame}
 
@@ -55,8 +55,8 @@
   \begin{tabular}{lll}
     \kwg{'PROCEDURE\_THERMIQUE'} & MOT      & \fe{Procédure de calcul à utiliser :}
                                                  {Procedure to call:}\\
-                                 &          & \fe{\kw{'NONLINEAIRE'} procédure \kwo{TRANSNON}}
-                                                 {\kw{'NONLINEAIRE'} procedure \kwo{TRANSNON}}\\
+                                 &          & \fe{\kw{'NONLINEAIRE'} procédure \kwo{TRANSNON} (défaut)}
+                                                 {\kw{'NONLINEAIRE'} procedure \kwo{TRANSNON} (default)}\\
                                  &          & \fe{\kw{'LINEAIRE'} procédure \kwo{TRANSLIN}}
                                                  {\kw{'LINEAIRE'} procedure \kwo{TRANSLIN}}\\
                                  &          & \fe{\kw{'DUPONT'} procédure \kwo{DUPONT2}}
@@ -77,8 +77,8 @@
                                                   {in case of dependence (\kw{FAUX})}\\
     \kwg{'CRITERE\_COHERENCE'}    & FLOTTANT & \fe{Précision pour la convergence thermo mécanique,}
                                                   {Precision for the thermo mechanical convergence,}\\
-                                  &          & \fe{test sur la thermique (\kw{1.E-2})}
-                                                  {tested on thermal results (\kw{1.E-2})}\\
+                                  &          & \fe{test sur la thermique (\kw{= }\kwg{'PRECISION'})}
+                                                  {tested on thermal results (\kw{= }\kwg{'PRECISION'})}\\
     \kwg{'PROJECTION'}            & LOGIQUE  & \fe{Indique que le problème est couplé mais que les maillages en mécanique}
                                                   {Indicates that the thermal and mechanical meshes are different}\\
                                   &          & \fe{et en thermique sont différents (\kw{FAUX})}
