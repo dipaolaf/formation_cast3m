@@ -24,8 +24,8 @@
 
 
 ** Options de trace / Plotting options
-itrac = VRAI ;
-OPTI 'TRAC' 'PSC' ;
+itrac = FAUX ;
+***OPTI 'TRAC' 'PSC' ;
 ipsc  = EGA (VALE 'TRAC') 'PSC' ;
 
 ** Options generales

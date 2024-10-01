@@ -29,7 +29,7 @@
 
 OPTI 'REST' 'formation_debutant_1_maillage.sauv' ;
 REST ;
-itrac = faux ;
+itrac = FAUX ;
 ***OPTI 'TRAC' 'PSC' ;
 ipsc = EGA (VALE 'TRAC') 'PSC' ;
 

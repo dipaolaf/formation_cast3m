@@ -27,7 +27,7 @@
 
 OPTI 'REST' 'formation_debutant_2_thermique.sauv' ;
 REST ;
-itrac = faux ;
+itrac = FAUX ;
 ***OPTI 'TRAC' 'PSC' ;
 ipsc = EGA (VALE 'TRAC') 'PSC' ;
 
