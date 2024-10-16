@@ -296,7 +296,7 @@ DEBP VECFLU  chpo1*'CHPOINT'  model1*'MMODEL'  mater1*'MCHAML' ;
 * Changement du type / Type change
   grad2 = CHAN 'TYPE' grad1 'CARACTERISTIQUES' ;
 * Multiplication par la conductivite / Multiplication by the conductivity
-  q     = mater1 * grad2 (MOTS 'K ' 'K ' 'K ') (MOTS 'T,X' 'T,Y' 'T,Y')
+  q     = mater1 * grad2 (MOTS 'K ' 'K ' 'K ') (MOTS 'T,X' 'T,Y' 'T,Z')
                          (MOTS 'QX' 'QY' 'QZ') ;
   q     = -1. * q ;
 * Objet vecteur / Vector object
