@@ -279,20 +279,18 @@ FINSI ;
 *----------------------------------------------------------------------*
 
 ** Champ alpha(x) / Field alpha(x)
-x    = COOR 1 vol1 ;
+x    = COOR 1 mom1 ;
 xmoy = l / 2. ;
 xsig = l / 5. ;
 * Champ par points / Point field
-chpalpha = alpha * (1. + (3. *
+chealpha = alpha * (1. + (3. *
            (EXP (-1. * (((x - xmoy) / xsig) ** 2))))) ;
 SI ipsc ;
   OPTI 'FTRA' '8_alpha_variable.ps' ;
 FINSI ;
 SI itrac ;
-TRAC chpalpha vol1 are1 ;
+TRAC chealpha mom1 are1 ;
 FINSI ;
-* Champ par elements / Element field
-chealpha = CHAN 'CHAM' chpalpha mom1 ;
 * Mise a jour des parmetres materiau /
 * Updating the material parameters
 mam1b    = MATE mom1 'YOUN' you 'NU' nu
