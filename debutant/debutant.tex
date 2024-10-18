@@ -1,5 +1,9 @@
 \documentclass[xcolor={dvipsnames}]{beamer}
 
+% Variable "animation" : = 1   --> animations   (avec \animategraphics)
+%                        sinon --> images fixes (avec \includegraphics)
+\def \animation {0}
+
 % Paquets utilisés
 \usepackage{animate} % pour faire des animations
 \usepackage{listings} % pour insérer des lignes de codes avec de la coloration syntaxique
@@ -68,7 +72,6 @@
 
 
 \begin{document}
-
 
 \begin{frame}
   \titlepage

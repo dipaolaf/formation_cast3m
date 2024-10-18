@@ -79,8 +79,13 @@
     \only<4>{
       \begin{textblock*}{11cm}(1cm,0cm)
         \begin{center}
-          \animategraphics[controls,loop,poster=last,height=4cm]{3}{images/rupture_ct/rupture_ct_}{1}{8}
-          \animategraphics[controls,loop,poster=last,height=4cm]{3}{images/rupture_ct/rupture_ct_detail_}{1}{8}\\
+          \if \animation 1
+            \animategraphics[controls,loop,poster=last,height=4cm]{3}{images/rupture_ct/rupture_ct_}{1}{8}
+            \animategraphics[controls,loop,poster=last,height=4cm]{3}{images/rupture_ct/rupture_ct_detail_}{1}{8}\\
+          \else
+            \includegraphics[height=4cm]{images/rupture_ct/rupture_ct_8}
+            \includegraphics[height=4cm]{images/rupture_ct/rupture_ct_detail_8}\\
+          \fi
           \tiny{\fe{\emph{Rupture d'éprouvette CT, plasticité/endommagement, suppression d'éléments lors du calcul (S. Kebiri)}}
                    {\emph{Fracture of a CT sepcimen, plasticity/dammage, elements removal during computation (S. Kebiri)}}}
         \end{center}
@@ -108,7 +113,11 @@
     \only<6>{
       \begin{textblock*}{7cm}(5.7cm,-2cm)
         \begin{center}
-          \animategraphics[controls,loop,poster=last,width=5cm]{20}{images/fab_add/fab_add_}{001}{397}\\
+          \if \animation 1
+            \animategraphics[controls,loop,poster=last,width=5cm]{20}{images/fab_add/fab_add_}{001}{397}\\
+          \else
+            \includegraphics[width=5cm]{images/fab_add/fab_add_397}\\
+          \fi
           \tiny{\fe{\emph{Proportion de bainite lors d'une fabrication additive (C. Berthinier)}}
                    {\emph{Proportion of bainite during the additive manufacturing (C. Berthinier)}}}
         \end{center}
@@ -130,7 +139,11 @@
     \only<8>{
       \begin{textblock*}{5cm}(6.2cm,-6cm)
         \begin{center}
-          \animategraphics[controls,loop,poster=last,width=6cm]{10}{images/topoptim/topoptim.}{001}{100}\\~\\
+          \if \animation 1
+            \animategraphics[controls,loop,poster=last,width=6cm]{10}{images/topoptim/topoptim.}{001}{100}\\~\\
+          \else
+            \includegraphics[width=6cm]{images/topoptim/topoptim.100}\\~\\
+          \fi
           \includegraphics[width=5cm]{images/topoptim/toposurf}\\
           \tiny{\fe{\emph{Optimisation topologique d'un pont}}{\emph{Topology optimization of a bridge}}}
         \end{center}
@@ -178,7 +191,11 @@
 
 \begin{frame}{\fe{Comment utiliser Cast3M ?}{How to launch Cast3M?}}
   \begin{textblock*}{5cm}(7.9cm,0cm)
-    \animategraphics[autoplay,loop,poster=last,width=4.5cm]{10}{images/new_dgibi/new_dgibi-}{000}{235}
+    \if \animation 1
+      \animategraphics[autoplay,loop,poster=last,width=4.5cm]{10}{images/new_dgibi/new_dgibi-}{000}{235}
+    \else
+      \includegraphics[width=4.5cm]{images/new_dgibi/new_dgibi-235}
+    \fi
   \end{textblock*}
   \begin{enumerate}
     \item\fe{Écrire un fichier texte en Gibiane}{Write a Gibiane script in a text file}\\
@@ -203,7 +220,11 @@
 
 \begin{frame}{\fe{Comment utiliser Cast3M ?}{How to launch Cast3M?}}
   \begin{textblock*}{5cm}(7.9cm,0cm)
-    \animategraphics[autoplay,loop,poster=last,width=4.5cm]{10}{images/new_cmd/new_cmd-}{000}{179}
+    \if \animation 1
+      \animategraphics[autoplay,loop,poster=last,width=4.5cm]{10}{images/new_cmd/new_cmd-}{000}{179}
+    \else
+      \includegraphics[width=4.5cm]{images/new_cmd/new_cmd-179}
+    \fi
   \end{textblock*}
   \begin{enumerate}
     \item\fe{Écrire un fichier texte en Gibiane}{Write a Gibiane script in a text file}\\

@@ -730,7 +730,11 @@
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=389, lastline=389]{dgibi/formation_debutant_3_mecanique.dgibi}
   \end{itemize}
   \begin{textblock*}{5cm}(7cm,-1cm)
-    \animategraphics[controls,loop,poster=last,width=5cm]{10}{images/exo/9.1_contraintes.}{01}{21}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=last,width=5cm]{10}{images/exo/9.1_contraintes.}{01}{21}
+    \else
+      \includegraphics[width=5cm]{images/exo/9.1_contraintes.21}
+    \fi
   \end{textblock*}
   \vspace{3cm}
 \end{frame}
@@ -745,7 +749,11 @@
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=406, lastline=406]{dgibi/formation_debutant_3_mecanique.dgibi}
   \end{itemize}
   \begin{textblock*}{5cm}(7cm,-1cm)
-    \animategraphics[controls,loop,poster=last,width=5cm]{10}{images/exo/9.1_variables_internes.}{01}{21}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=last,width=5cm]{10}{images/exo/9.1_variables_internes.}{01}{21}
+    \else
+      \includegraphics[width=5cm]{images/exo/9.1_variables_internes.21}
+    \fi
   \end{textblock*}
   \vspace{3cm}
 \end{frame}
@@ -824,7 +832,11 @@
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=474, lastline=474]{dgibi/formation_debutant_3_mecanique.dgibi}
   \end{itemize}
   \begin{textblock*}{5cm}(7cm,-1.4cm)
-    \animategraphics[controls,loop,poster=last,width=5cm]{10}{images/exo/9.2_variables_internes.}{01}{21}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=last,width=5cm]{10}{images/exo/9.2_variables_internes.}{01}{21}
+    \else
+      \includegraphics[width=5cm]{images/exo/9.2_variables_internes.21}
+    \fi
   \end{textblock*}
   \vspace{3cm}
 \end{frame}

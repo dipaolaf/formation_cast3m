@@ -629,7 +629,11 @@
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=278, lastline=278]{dgibi/formation_debutant_2_thermique.dgibi}
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=280, lastline=280]{dgibi/formation_debutant_2_thermique.dgibi}
     \begin{textblock*}{5cm}(6.2cm,-1.4cm)
-      \animategraphics[controls,loop,poster=last,width=5.7cm]{10}{images/exo/3_temperatures.}{001}{101}
+      \if \animation 1
+        \animategraphics[controls,loop,poster=last,width=5.7cm]{10}{images/exo/3_temperatures.}{001}{101}
+      \else
+        \includegraphics[width=5.7cm]{images/exo/3_temperatures.101}
+      \fi
     \end{textblock*}
     \end{itemize}
     \vspace{3cm}
@@ -786,7 +790,11 @@
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=413, lastline=413]{dgibi/formation_debutant_2_thermique.dgibi}
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=415, lastline=415]{dgibi/formation_debutant_2_thermique.dgibi}
     \begin{textblock*}{5cm}(6.2cm,-1.3cm)
-      \animategraphics[controls,loop,poster=last,width=6cm]{10}{images/exo/5_temperatures.}{001}{101}
+      \if \animation 1
+        \animategraphics[controls,loop,poster=last,width=6cm]{10}{images/exo/5_temperatures.}{001}{101}
+      \else
+        \includegraphics[width=6cm]{images/exo/5_temperatures.101}
+      \fi
     \end{textblock*}
     \vspace{1cm}
     \item<2->\fe{Sauvegarde des données}{Saving data}
