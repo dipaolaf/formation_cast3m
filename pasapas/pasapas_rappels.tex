@@ -24,85 +24,132 @@
 \end{frame}
 
 \begin{frame}{\fe{Nombreux domaines d'application}{Wide range of applications}}
-  \small{
+  \small
   \begin{itemize}
     \item<1->\fe{\g{Mécanique des structures}}{\g{Structural mechanics}}\\
-    \footnotesize{
+    \footnotesize
     \fe{\red{Quasi-statique} (non linéarités matériau, géométrie, conditions limites)}
        {\red{Quasi-static} (non linear behavior, geometry, boundary conditions)}\\
     \onslide<1>{
-      \begin{textblock*}{5cm}(2cm,0.3cm)
-        \includegraphics[height=0.4\textheight]{images/polycristal}
+      \begin{textblock*}{4cm}(0cm,0cm)
+        \begin{center}
+          \includegraphics[height=0.4\textheight]{images/polycristal}\\
+          \tiny{\fe{\emph{Microstructure : agrégat polycristallin}}{\emph{Microstructure: polycrystalline aggregate}}}
+        \end{center}
       \end{textblock*}
-      \begin{textblock*}{5cm}(5cm,1.2cm)
-        \includegraphics[height=0.4\textheight]{images/ressort}
+      \begin{textblock*}{4cm}(3.4cm,0.8cm)
+        \begin{center}
+          \includegraphics[height=0.4\textheight]{images/tube}\\
+          \tiny{\fe{\emph{Composant : liaison d'un tube}}{\emph{Component: connection on a tube}}}
+        \end{center}
       \end{textblock*}
-      \begin{textblock*}{5cm}(8cm,2.1cm)
-        \includegraphics[height=0.4\textheight]{images/galatee}
+      \begin{textblock*}{5cm}(7.2cm,1.6cm)
+        \begin{center}
+          \includegraphics[height=0.4\textheight]{images/galatee}\\
+          \tiny{\fe{\emph{Batiment en béton armé (S. Durand)}}{\emph{Reinforced concrete building (S. Durand)}}}
+        \end{center}
       \end{textblock*}
-      \begin{textblock*}{5cm}(9.4cm,5.6cm)
-        \tiny{\emph{(S. Durand)}}
-      \end{textblock*}}
+      }
     \onslide<2->\fe{\orange{Contact/frottement}, \green{Flambage}}
                     {\orange{Contact/friction}, \green{Buckling}}\\
     \onslide<2>{
-      \begin{textblock*}{5cm}(1cm,0.3cm)
-        \includegraphics[height=0.25\textheight]{images/sac_a_dos.15}
+      \begin{textblock*}{10cm}(1cm,0.2cm)
+        \begin{center}
+          \includegraphics[height=0.25\textheight]{images/sac_a_dos.15}
+          \includegraphics[height=0.25\textheight]{images/sac_a_dos.32}
+          \includegraphics[height=0.25\textheight]{images/sac_a_dos.41}\\
+          \tiny{\fe{\emph{Attachement d'un clip (contact + plasticité)}}{\emph{Locking a clip buckle (contact + plasticity)}}}
+        \end{center}
       \end{textblock*}
-      \begin{textblock*}{5cm}(4.8cm,0.3cm)
-        \includegraphics[height=0.25\textheight]{images/sac_a_dos.32}
-      \end{textblock*}
-    \begin{textblock*}{5cm}(8.5cm,0.3cm)
-        \includegraphics[height=0.25\textheight]{images/sac_a_dos.41}
-      \end{textblock*}}
+      }
     \onslide<3->\fe{\blue{Dynamique} (temporelle, modale, interaction fluide structure)}
-                    {\blue{Dynamic} (temporal, modal, fluid structure interaction)}\\
+                   {\blue{Dynamic} (temporal, modal, fluid structure interaction)}\\
     \onslide<3>{
-      \begin{textblock*}{5cm}(1cm,0.3cm)
-        \includegraphics[height=0.2\textheight]{images/cymbale_mode_1}
+      \begin{textblock*}{10cm}(1cm,0.2cm)
+        \begin{center}
+          \includegraphics[height=0.2\textheight]{images/cymbale_mode_1}
+          \includegraphics[height=0.2\textheight]{images/cymbale_mode_2}
+          \includegraphics[height=0.2\textheight]{images/cymbale_mode_4}\\
+          \tiny{\fe{\emph{Premiers modes propres d'une cymbale}}{\emph{First eigenmodes of a cymbal}}}
+        \end{center}
       \end{textblock*}
-      \begin{textblock*}{5cm}(4.8cm,0.3cm)
-        \includegraphics[height=0.2\textheight]{images/cymbale_mode_2}
+      }
+    \onslide<4->{\fe{\violet{Rupture} (XFEM, propagation dynamique, zones cohésives)}
+                    {\violet{Fracture} (XFEM, dynamic propagation, cohesive zones models)}}\\
+    \only<4>{
+      \begin{textblock*}{11cm}(1cm,0cm)
+        \begin{center}
+          \if \animation 1
+            \animategraphics[controls,loop,poster=last,height=4cm]{3}{images/rupture_ct/rupture_ct_}{1}{8}
+            \animategraphics[controls,loop,poster=last,height=4cm]{3}{images/rupture_ct/rupture_ct_detail_}{1}{8}\\
+          \else
+            \includegraphics[height=4cm]{images/rupture_ct/rupture_ct_8}
+            \includegraphics[height=4cm]{images/rupture_ct/rupture_ct_detail_8}\\
+          \fi
+          \tiny{\fe{\emph{Rupture d'éprouvette CT, plasticité/endommagement, suppression d'éléments lors du calcul (S. Kebiri)}}
+                   {\emph{Fracture of a CT sepcimen, plasticity/dammage, elements removal during computation (S. Kebiri)}}}
+        \end{center}
       \end{textblock*}
-      \begin{textblock*}{5cm}(8.5cm,0.3cm)
-        \includegraphics[height=0.2\textheight]{images/cymbale_mode_4}
-      \end{textblock*}}
-    \onslide<4->\fe{\violet{Rupture} (XFEM, propagation dynamique, zones cohésives)}
-                   {\violet{Fracture} (XFEM, dynamic propagation, cohesive zones models)}\\
-    \onslide<4>{
-      \begin{textblock*}{12cm}(1.5cm,0.3cm)
-        \includegraphics[height=0.25\textheight]{images/rousselier_03}
-        \includegraphics[height=0.25\textheight]{images/rousselier_04}
-        \includegraphics[height=0.25\textheight]{images/rousselier_05}\\
-        \includegraphics[height=0.25\textheight]{images/rousselier_06}
-        \includegraphics[height=0.25\textheight]{images/rousselier_07}
-        \includegraphics[height=0.25\textheight]{images/rousselier_08}
-      \end{textblock*}
-      \begin{textblock*}{5cm}(8cm,4.7cm)
-        \tiny{\emph{(S. Kebiri)}}
-      \end{textblock*}}
-    \onslide<5>{
-      \begin{textblock*}{12cm}(3.5cm,1.3cm)
-        \includegraphics[height=0.4\textheight]{images/te_temperature}\hspace{1cm}
-        \includegraphics[height=0.4\textheight]{images/te_sigma}
-      \end{textblock*}}
-    \onslide<6>{
-      \begin{textblock*}{12cm}(6.5cm,1.2cm)
-        \includegraphics[height=0.4\textheight]{images/metallurgie}
-      \end{textblock*}
-      \begin{textblock*}{5cm}(8cm,4.7cm)
-        \tiny{\emph{(C. Berthinier)}}
-      \end{textblock*}}}
+      }
+    \small
     \item<5->\fe{\g{Thermique}}{\g{Thermal analysis}}\\
-    \footnotesize{
-      \fe{Conduction, convection, rayonnement, changement de phase}
-       {Conduction, convection, radiation, phase transition}}
-    \item<6->\fe{\g{Mécanique des fluides}}{\g{Fluid mechanics}}
-    \item<6->\fe{\g{Diffusion} multi espèces (loi de Fick)}{Multi species \g{diffusion} (Fick's law)}
-    \item<6->\fe{Magnétostatique}{Magneto-statics}
-    \item<6->\fe{Métallurgie}{Metallurgy}
-    \item<6->\fe{Couplage thermo-hygro-mécanique}{Thermo-hygro-mechanics coupling}
-  \end{itemize}}
+    \footnotesize
+    \onslide<5->{\fe{Conduction, convection, advection, rayonnement, changement de phase}
+                    {Conduction, convection, advection, radiation, phase transition}}\\
+    \onslide<5>{
+      \begin{textblock*}{10cm}(1cm,0.1cm)
+        \begin{center}
+          \includegraphics[height=0.4\textheight]{images/te_temperature}\hspace{1cm}
+          \includegraphics[height=0.4\textheight]{images/te_sigma}\\
+          \tiny{\fe{\emph{Thermo mécanique d'un té de tuyauterie}}{\emph{Thermo mechanical analysis of a pipe tee}}}
+        \end{center}
+      \end{textblock*}
+      }
+    \small
+    \item<6-> \fe{\g{Mécanique des fluides}}{\g{Fluid mechanics}}
+    \item<6-> \fe{\g{Diffusion} multi espèces (loi de Fick)}{Multi species \g{diffusion} (Fick's law)}\\
+    \item<6-> \fe{Fabrication additive, Métallurgie}{Additive manufacturing, Metallurgy}\\
+    \footnotesize
+    \only<6>{
+      \begin{textblock*}{7cm}(5.7cm,-2cm)
+        \begin{center}
+          \if \animation 1
+            \animategraphics[controls,loop,poster=last,width=5cm]{20}{images/fab_add/fab_add_}{001}{397}\\
+          \else
+            \includegraphics[width=5cm]{images/fab_add/fab_add_397}\\
+          \fi
+          \tiny{\fe{\emph{Proportion de bainite lors d'une fabrication additive (C. Berthinier)}}
+                   {\emph{Proportion of bainite during the additive manufacturing (C. Berthinier)}}}
+        \end{center}
+      \end{textblock*}
+      }
+    \onslide<7>{
+      \begin{textblock*}{5cm}(6.5cm,-1.5cm)
+        \begin{center}
+          \includegraphics[width=5cm]{images/soudage}\\
+          \tiny{\fe{\emph{Simulation magnéto thermo hydrodynamique du soudage TIG (arc plasma + bain) (C. Nahed)}}
+                   {\emph{Magneto thermo hydro dynamic simulation of TIG welding (plasma arc + weld pool) (C. Nahed)}}}
+        \end{center}
+      \end{textblock*}
+      }
+    \small
+    \item<8-> \fe{Magnétostatique}{Magneto-statics}
+    \item<8-> \fe{Couplage thermo-hygro-mécanique}{Thermo-hygro-mechanics coupling}
+    \item<8-> \fe{Optimisation topologique}{Topology optimization}
+    \only<8>{
+      \begin{textblock*}{5cm}(6.2cm,-6cm)
+        \begin{center}
+          \if \animation 1
+            \animategraphics[controls,loop,poster=last,width=6cm]{10}{images/topoptim/topoptim.}{001}{100}\\~\\
+          \else
+            \includegraphics[width=6cm]{images/topoptim/topoptim.100}\\~\\
+          \fi
+          \includegraphics[width=5cm]{images/topoptim/toposurf}\\
+          \tiny{\fe{\emph{Optimisation topologique d'un pont}}{\emph{Topology optimization of a bridge}}}
+        \end{center}
+      \end{textblock*}
+      }
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{\fe{Présentation de PASAPAS}{The PASAPAS procedure}}
