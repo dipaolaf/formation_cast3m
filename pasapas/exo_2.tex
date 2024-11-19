@@ -7,7 +7,11 @@
     \item \fe{Plaque en traction \textcolor{green}{(déplacements imposés)}}
              {Plate under tension \textcolor{green}{(imposed displacements)}}\\
     \includegraphics[height=3cm]{images/exo/exo_2_chargement} \hspace{0.2cm}
-    \animategraphics[controls,loop,poster=last,height=3.5cm]{7}{images/exo/exo_2_sigma.}{01}{11} \hspace{0.2cm}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=last,height=3.5cm]{7}{images/exo/exo_2_sigma.}{01}{11} \hspace{0.2cm}
+    \else
+      \includegraphics[height=3.5cm]{images/exo/exo_2_sigma.11} \hspace{0.2cm}
+    \fi
     \includegraphics[height=3cm]{images/exo/exo_2_evol}
     \item<2-> \fe{\green{Objectif : \g{supprimer les éléments} au cours du calcul}\\
                   On utilisera un critère de rupture simple sur la 1ère contrainte principale :
@@ -78,7 +82,11 @@
   \begin{itemize}
     \item \fe{Résultats}{Results}\\
     \hspace{1cm}
-    \animategraphics[controls,loop,poster=last,height=4.5cm]{7}{images/exo/exo_2_solu_sigma.}{01}{47} \hspace{1.5cm}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=last,height=4.5cm]{7}{images/exo/exo_2_solu_sigma.}{01}{47} \hspace{1.5cm}
+    \else
+      \includegraphics[height=4.5cm]{images/exo/exo_2_solu_sigma.47} \hspace{1.5cm}
+    \fi
     \includegraphics[height=3.5cm]{images/exo/exo_2_solu_evol}
     \item \fe{Modèle peu robuste\\ résultats très sensibles à la discrétisation espace/temps}
              {Undependable model\\ results quite sensitive to time/space discretization}
@@ -113,7 +121,11 @@
   \begin{itemize}
     \item \fe{Résultats}{Results}\\
     \hspace{1cm}
-    \animategraphics[controls,loop,poster=last,height=4.5cm]{7}{images/exo/exo_2_solu_bis_sigma.}{01}{47} \hspace{1.5cm}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=last,height=4.5cm]{7}{images/exo/exo_2_solu_bis_sigma.}{01}{47} \hspace{1.5cm}
+    \else
+      \includegraphics[height=4.5cm]{images/exo/exo_2_solu_bis_sigma.47} \hspace{1.5cm}
+    \fi
     \includegraphics[height=3.5cm]{images/exo/exo_2_solu_bis_evol}
     \item \fe{Modèle peu robuste\\ résultats très sensibles à la discrétisation espace/temps}
              {Undependable model\\ results quite sensitive to time/space discretization}

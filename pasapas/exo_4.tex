@@ -33,7 +33,11 @@
       \draw [->,thick,blue] (2*\lbar+\gap-0.4,\hbar+0.2) node[anchor=east] {$T_{\tx{imp}}=20$°C} -- (2*\lbar+\gap,0.5*\hbar);
     \end{tikzpicture}\\
     \vspace{0.5cm}
-    \animategraphics[controls,loop,poster=first,width=10cm]{12}{images/exo/exo_4_temperature.}{001}{101}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=first,width=10cm]{12}{images/exo/exo_4_temperature.}{001}{101}
+    \else
+      \includegraphics[width=10cm]{images/exo/exo_4_temperature.101}
+    \fi
   \end{center}
   \begin{itemize}
     \item<2-> \fe{\green{Objectif : ajouter le \g{contact thermique} entre \kw{l2} et \kw{l3},\\
@@ -104,7 +108,11 @@
     \includegraphics[width=5.5cm]{images/exo/exo_4_solu_evol_jeu}
     \includegraphics[width=5.5cm]{images/exo/exo_4_solu_evol_t}\\
     \vspace{0.5cm}
-    \animategraphics[controls,loop,poster=first,width=10.5cm]{12}{images/exo/exo_4_solu_temperature.}{001}{101}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=first,width=10.5cm]{12}{images/exo/exo_4_solu_temperature.}{001}{101}
+    \else
+      \includegraphics[width=10.5cm]{images/exo/exo_4_solu_temperature.101}
+    \fi
   \end{center}
 \end{frame}
 
@@ -152,6 +160,10 @@
     \includegraphics[width=5.5cm]{images/exo/exo_4_solu_bis_evol_jeu}
     \includegraphics[width=5.5cm]{images/exo/exo_4_solu_bis_evol_t}\\
     \vspace{0.5cm}
-    \animategraphics[controls,loop,poster=first,width=10.5cm]{12}{images/exo/exo_4_solu_bis_temperature.}{001}{101}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=first,width=10.5cm]{12}{images/exo/exo_4_solu_bis_temperature.}{001}{101}
+    \else
+      \includegraphics[width=10.5cm]{images/exo/exo_4_solu_bis_temperature.101}
+    \fi
   \end{center}
 \end{frame}

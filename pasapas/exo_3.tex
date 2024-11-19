@@ -26,7 +26,11 @@
       \end{scope}
     \end{tikzpicture}
     \hspace{0.1cm}
-    \animategraphics[controls,loop,poster=last,height=3cm]{7}{images/exo/exo_3_temperature.}{01}{51} \hspace{0.2cm}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=last,height=3cm]{7}{images/exo/exo_3_temperature.}{01}{51} \hspace{0.2cm}
+    \else
+      \includegraphics[height=3cm]{images/exo/exo_3_temperature.51} \hspace{0.2cm}
+    \fi
     \includegraphics[height=2.6cm]{images/exo/exo_3_evol}
     \small
     \item<2-> \fe{\green{Objectif : rendre le problème \g{variable} !}}
@@ -139,8 +143,12 @@
     \item \fe{Résultats}{Results}\\
     \vspace{5cm}
     \begin{textblock*}{5cm}(0.5cm,-5cm)
-      \animategraphics[controls,loop,poster=last,width=5cm]{7}{images/exo/exo_3_solu_temperature.}{01}{51}
-    \end{textblock*}
+      \if \animation 1
+        \animategraphics[controls,loop,poster=last,width=5cm]{7}{images/exo/exo_3_solu_temperature.}{01}{51}
+      \else
+        \includegraphics[width=5cm]{images/exo/exo_3_solu_temperature.51}
+      \fi
+      \end{textblock*}
     \footnotesize
     \begin{textblock*}{5cm}(6.3cm,-6cm)
       \fe{Avec \kwv{PERSO2}}{With \kwv{PERSO2}}

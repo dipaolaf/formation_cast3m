@@ -1,9 +1,13 @@
 \documentclass[xcolor={dvipsnames}]{beamer}
 
+% Variable "animation" : = 1   --> animations   (avec \animategraphics)
+%                        sinon --> images fixes (avec \includegraphics)
+\def \animation {0}
+
 % Paquets utilisés
 \usepackage{animate} % pour faire des animations
 \usepackage{listings} % pour insérer des lignes de codes avec de la coloration syntaxique
-\usepackage[audience=french]{beameraudience}  % pour écrire la présentation en 2 langues
+\usepackage[audience=english]{beameraudience}  % pour écrire la présentation en 2 langues
 \usepackage{textpos} % pour positionner des figure où l'on veut
 \usepackage{tikz} % pour faire de jolies figures
 \usepackage{pifont} % pour avoir des symboles sympa
@@ -104,7 +108,7 @@
 \begin{frame}{\fe{Sommaire}{Summary}}
   \begin{itemize}
     \item \fe{\hyperlink{rappels}{Rappels sur Cast3M et PASAPAS}}
-             {\hyperlink{rappels}{Reminders reminders on Cast3M and PASAPAS}}
+             {\hyperlink{rappels}{Reminders on Cast3M and PASAPAS}}
     \item \fe{\hyperlink{pasapas}{Fonctionnement de PASAPAS}}
              {\hyperlink{pasapas}{How works PASAPAS}}
     \item \fe{\hyperlink{util_proc}{Procédures utilisateur}}
@@ -112,13 +116,13 @@
     \item \fe{\hyperlink{mecanique_theorie}{\blue{Solveur mécanique quasi-statique} - procédure UNPAS}\\
               \hyperlink{mecanique_exo}{$\rightarrow$ exercice 1~: \blue{force suiveuse}\\
                                         $\rightarrow$ exercice 2~: \blue{rupture par suppression d'éléments}}}
-             {\hyperlink{mecanique_theorie}{\blue{Mechanical static equilibrium} - procedure UNPAS}\\
+             {\hyperlink{mecanique_theorie}{\blue{Quasi-static mechanical solver} - procedure UNPAS}\\
               \hyperlink{mecanique_exo}{$\rightarrow$ exercice 1: \blue{following force}\\
                                         $\rightarrow$ exercice 2: \blue{fracture by elements removal}}}
     \item \fe{\hyperlink{thermique_theorie}{\red{Solveur thermique transitoire} - procédure TRANSNON}\\
               \hyperlink{thermique_exo}{$\rightarrow$ exercice 3~: \red{source de chaleur variable}\\
                                         $\rightarrow$ exercice 4~: contact \red{thermo} \blue{mécanique}}}
-             {\hyperlink{thermique_theorie}{\red{Thermal equilibrium} - procedure TRANSNON}\\
+             {\hyperlink{thermique_theorie}{\red{Transient thermal solver} - procedure TRANSNON}\\
               \hyperlink{thermique_exo}{$\rightarrow$ exercice 3: \red{variable heat source}\\
                                         $\rightarrow$ exercice 4: \red{thermo} \blue{mechanical} contact}}
     \item \hyperlink{annexe}{Annexes}

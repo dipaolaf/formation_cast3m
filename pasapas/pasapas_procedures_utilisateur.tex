@@ -141,7 +141,11 @@
       \end{tikzpicture}
     \end{textblock*}
     \begin{textblock*}{6cm}(8.5cm,3.5cm)
-      \animategraphics[controls,loop,poster=last,width=3.6cm]{10}{images/exemple/exemple_1.}{01}{21}
+      \if \animation 1
+        \animategraphics[controls,loop,poster=last,width=3.6cm]{10}{images/exemple/exemple_1.}{01}{21}
+      \else
+        \includegraphics[width=3.6cm]{images/exemple/exemple_1.21}
+      \fi
     \end{textblock*}
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=32, lastline=61]{dgibi/exemple_perso1.dgibi}
     \item[]
@@ -166,7 +170,11 @@
       \end{tikzpicture}
     \end{textblock*}
     \begin{textblock*}{6cm}(8.5cm,3.5cm)
-      \animategraphics[controls,loop,poster=last,width=3.6cm]{10}{images/exemple/exemple_2.}{01}{21}
+      \if \animation 1
+        \animategraphics[controls,loop,poster=last,width=3.6cm]{10}{images/exemple/exemple_2.}{01}{21}
+      \else
+        \includegraphics[width=3.6cm]{images/exemple/exemple_2.21}
+      \fi
     \end{textblock*}
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=68, lastline=97]{dgibi/exemple_perso1.dgibi}
     \item[]

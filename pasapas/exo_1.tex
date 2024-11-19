@@ -21,7 +21,11 @@
       \draw [-]       (0,-0.1) -- (0.1,0);
       \draw [-]       (0.1,-0.1) -- (0.2,0);
     \end{tikzpicture}
-    \animategraphics[controls,loop,poster=last,height=3.5cm]{50}{images/exo/exo_1_deformee.}{001}{201}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=last,height=3.5cm]{50}{images/exo/exo_1_deformee.}{001}{201}
+    \else
+      \includegraphics[height=3.5cm]{images/exo/exo_1_deformee.201}
+    \fi
     \includegraphics[height=3.2cm]{images/exo/exo_1_evol}
   \end{center}
   \small
@@ -102,7 +106,11 @@
       \draw [-]       (0,-0.1) -- (0.1,0);
       \draw [-]       (0.1,-0.1) -- (0.2,0);
     \end{tikzpicture}
-    \animategraphics[controls,loop,poster=last,height=3.5cm]{50}{images/exo/exo_1_solu_deformee.}{001}{201}
+    \if \animation 1
+      \animategraphics[controls,loop,poster=last,height=3.5cm]{50}{images/exo/exo_1_solu_deformee.}{001}{201}
+    \else
+      \includegraphics[height=3.5cm]{images/exo/exo_1_solu_deformee.201}
+    \fi
     \includegraphics[height=3.2cm]{images/exo/exo_1_solu_evol}
   \end{center}
 \end{frame}
