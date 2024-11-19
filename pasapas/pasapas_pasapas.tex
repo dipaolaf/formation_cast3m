@@ -43,10 +43,10 @@
      {\node (start)  [bstep] {Initializations,\\ \kwv{PERSO1}, \kwv{REEV\_MEC}, \kwv{REEV\_THE}};}
   \fe{\node (start0) [note, right of=start, xshift=2cm, anchor=west] {\kwo{PAS\_DEFA} (lecture des options),\\
                                                                       \kwo{PAS\_INIT PAS\_ETAT PAS\_MATE} (initialisations matériaux, inconnues,\\
-                                                                      chargements, variables temporaires), remplissage de \kw{tab1.}\kwg{'WTABLE'}};}
+                                                                      chargements, variables temporaires), remplissage de \kw{tab1.}\kwg{WTABLE}};}
      {\node (start0) [note, right of=start, xshift=2cm, anchor=west] {\kwo{PAS\_DEFA} (reading options),\\
                                                                       \kwo{PAS\_INIT PAS\_DEFA PAS\_MATE} (initializations materials, unknowns,\\
-                                                                      loading, temporary variables), filling \kw{tab1.}\kwg{'WTABLE'}};}
+                                                                      loading, temporary variables), filling \kw{tab1.}\kwg{WTABLE}};}
 
   \fe{\node (init)  [gstep, below of=start, yshift=-0.1cm] {Initialisation du pas de temps};}
      {\node (init)  [gstep, below of=start, yshift=-0.1cm] {Time step initialization};}
@@ -57,10 +57,10 @@
      {\node (resot) [rstep, below of=init] {\g{Thermal solving}};}
   \fe{\node (resot0) [note, right of=resot, xshift=2cm, anchor=west] {\kwo{TRANSNON} Solveur thermique sur le pas de temps\\
                                                                       (aussi dispo : \kwo{TRANSLIN}, \kwo{DUPONT2})\\
-                                                                      Écriture des résultats dans \kw{tab1.}\kwg{'ESTIMATION'}};}
+                                                                      Écriture des résultats dans \kw{tab1.}\kwg{ESTIMATION}};}
      {\node (resot0) [note, right of=resot, xshift=2cm, anchor=west] {\kwo{TRANSNON} Thermal solver on the time step\\
                                                                       (also available: \kwo{TRANSLIN}, \kwo{DUPONT2})\\
-                                                                      Saving results in \kw{tab1.}\kwg{'ESTIMATION'}};}
+                                                                      Saving results in \kw{tab1.}\kwg{ESTIMATION}};}
 
   \node (rthe)  [rstep, below of=resot] {\kwv{REEV\_THE}};
   \fe{\node (rthe0) [note, right of=rthe, xshift=2cm, anchor=west] {Appel à la procédure \kwv{REEV\_THE} (si demandé)};}
@@ -69,9 +69,9 @@
   \fe{\node (resom) [rstep, below of=rthe]  {\g{Résolution Mécanique}};}
      {\node (resom) [rstep, below of=rthe]  {\g{Mechanical solving}};}
   \fe{\node (resom0) [note, right of=resom, xshift=2cm, anchor=west] {\kwo{UNPAS} Solveur mécanique sur le pas de temps\\
-                                                                      Écriture des résultats dans \kw{tab1.}\kwg{'ESTIMATION'}};}
+                                                                      Écriture des résultats dans \kw{tab1.}\kwg{ESTIMATION}};}
      {\node (resom0) [note, right of=resom, xshift=2cm, anchor=west] {\kwo{UNPAS} Mechanical solver on the time step\\
-                                                                       Saving results in \kw{tab1.}\kwg{'ESTIMATION'}};}
+                                                                       Saving results in \kw{tab1.}\kwg{ESTIMATION}};}
 
   \node (rmec)  [rstep, below of=resom] {\kwv{REEV\_MEC}};
   \fe{\node (rmec0) [note, right of=rmec, xshift=2cm, anchor=west] {Appel à la procédure \kwv{REEV\_MEC} (si demandé)};}
@@ -79,16 +79,16 @@
 
   \node (contm) [rtest, below of=rmec, yshift=-0.3cm]  {Convergence ?};
   \fe{\node (contm0) [note, right of=contm, xshift=2cm, anchor=west] {Test de stationnarité, à activer avec :\\
-                                                                      \kw{tab1.}\kwg{'CONVERGENCE\_MEC\_THE'}\kw{ = VRAI ;}\\ \\
-                                                                      $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{'CRITERE\_COHERENCE'} $(10^{-2})$};}
+                                                                      \kw{tab1.}\kwg{CONVERGENCE\_MEC\_THE}\kw{ = VRAI ;}\\ \\
+                                                                      $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{CRITERE\_COHERENCE} $(10^{-2})$};}
      {\node (contm0) [note, right of=contm, xshift=2cm, anchor=west] {Stationarity test, to be activated with:\\
-                                                                      \kw{tab1.}\kwg{'CONVERGENCE\_MEC\_THE'}\kw{ = VRAI ;}\\ \\
-                                                                      $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{'CRITERE\_COHERENCE'} $(10^{-2})$};}
+                                                                      \kw{tab1.}\kwg{CONVERGENCE\_MEC\_THE}\kw{ = VRAI ;}\\ \\
+                                                                      $\frac{\max \|T_i-T_{i-1}\|}{\max \|T_i\|} \le$ \kw{tab1.}\kwg{CRITERE\_COHERENCE} $(10^{-2})$};}
 
   \fe{\node (prep)  [gstep, below of=contm, yshift=-0.32cm] {Préparation du pas de temps suivant};}
      {\node (prep)  [gstep, below of=contm, yshift=-0.32cm] {Next time step preparation};}
-  \fe{\node (prep0) [note, right of=prep, xshift=2cm, anchor=west] {Enregistrement du nouvel état au début de pas dans : \kw{tab1.}\kwg{'WTABLE'}};}
-     {\node (prep0) [note, right of=prep, xshift=2cm, anchor=west] {Saving the new state as the initial time step state in: \kw{tab1.}\kwg{'WTABLE'}};}
+  \fe{\node (prep0) [note, right of=prep, xshift=2cm, anchor=west] {Enregistrement du nouvel état au début de pas dans : \kw{tab1.}\kwg{WTABLE}};}
+     {\node (prep0) [note, right of=prep, xshift=2cm, anchor=west] {Saving the new state as the initial time step state in: \kw{tab1.}\kwg{WTABLE}};}
 
   \node (pers)  [gstep, below of=prep]  {\kwv{PERSO1}};
   \fe{\node (pers0) [note, right of=pers, xshift=2cm, anchor=west] {Appel à la procédure \kwv{PERSO1} (si demandé)};}
@@ -96,10 +96,10 @@
 
   \fe{\node (sauv)  [gstep, below of=pers] {Sauvegarde des résultats};}
      {\node (sauv)  [gstep, below of=pers] {Saving results};}
-  \fe{\node (sauv0) [note, right of=sauv, xshift=2cm, anchor=west] {\kwo{PAS\_RESU} : remplissage de \kwg{'CONTINUATION'} d'après \kwg{'ESTIMATION'}\\
-                                                                     \kwo{~~~~~~~~~} écriture dans \kw{tab1} s'il s'agit d'un \kwg{'TEMPS\_SAUVE'}};}
-     {\node (sauv0) [note, right of=sauv, xshift=2cm, anchor=west] {\kwo{PAS\_RESU}: filling \kwg{'CONTINUATION'} according to \kwg{'ESTIMATION'}\\
-                                                                     \kwo{~~~~~~~~~} saving in \kw{tab1} if the time belong to \kwg{'TEMPS\_SAUVE'}};}
+  \fe{\node (sauv0) [note, right of=sauv, xshift=2cm, anchor=west] {\kwo{PAS\_RESU} : remplissage de \kwg{CONTINUATION} d'après \kwg{ESTIMATION}\\
+                                                                    \kwo{~~~~~~~~~} écriture dans \kw{tab1} s'il s'agit d'un \kwg{TEMPS\_SAUVE}};}
+     {\node (sauv0) [note, right of=sauv, xshift=2cm, anchor=west] {\kwo{PAS\_RESU}: filling \kwg{CONTINUATION} according to \kwg{ESTIMATION}\\
+                                                                    \kwo{~~~~~~~~~} saving in \kw{tab1} if the time belong to \kwg{TEMPS\_SAUVE}};}
 
   \fe{\node (cont)  [gtest, below of=sauv, , yshift=-0.3cm]  {Fin des pas\\ de temps ?};}
      {\node (cont)  [gtest, below of=sauv, , yshift=-0.3cm]  {End of\\ time steps?};}
@@ -138,7 +138,7 @@
 
 \begin{frame}{\fe{Accès aux données de PASAPAS}{Acces to PASAPAS data}}
   \begin{itemize}
-    \item \kw{tab1.}\kwg{'ESTIMATION'}\\
+    \item \kw{tab1.}\kwg{ESTIMATION}\\
     \footnotesize
     \fe{contient les résultats calculés par \kwo{TRANSNON} et \kwo{UNPAS}\\
         mais non convergées dans la \red{boucle de stationnarité thermo mécanique}}
@@ -146,7 +146,7 @@
         but not converged for the \red{thermo mechanical stationarity loop}}
     \lstinputlisting[language=gibiane, firstline=18, lastline=22]{dgibi/exemples.dgibi}
     \normalsize
-    \item \kw{tab1.}\kwg{'CONTINUATION'}\\
+    \item \kw{tab1.}\kwg{CONTINUATION}\\
     \footnotesize
     \fe{contient les résultats calculés et convergés (pour la \red{boucle thermo mécanique})\\
         cet indice est mis à jour à la fin du pas de temps !\\
@@ -161,7 +161,7 @@
 
 \begin{frame}{\fe{Accès aux données de PASAPAS}{Acces to PASAPAS data}}
   \begin{itemize}
-    \item \kw{tab1.}\kwg{'WTABLE'}\\
+    \item \kw{tab1.}\kwg{WTABLE}\\
     \footnotesize
     \fe{Variables utiles à \kwo{PASAPAS} (options choisies, modèles, caractéristiques instanciées,\\
         chargements instanciés, résultats intermédiaires, \dots)}
@@ -170,15 +170,15 @@
     \fe{Quelques indices :}{Some indexes}
     \scriptsize
     \begin{tabular}{ll}
-      \kwg{'WTABLE'} \kw{.} \kwg{'CHARGEMENT'}           & \fe{Chargement}{Loading}\\
-      \kwg{'WTABLE'} \kw{.} \kwg{'THER\_COURANT'}        & \fe{Température à la dernière itération}{Value of temperature at last iteration}\\
-                                                         & \fe{(au cours d'un pas)}{(during a time step)}\\
-      \kwg{'WTABLE'} \kw{.} \kwg{'BLOCAGES\_MECANIQUES'} & \fe{Matrice de blocage mécanique}{Mechanical constraint matrix}\\
-      \kwg{'WTABLE'} \kw{.} \kwg{'BLOCAGES\_THERMIQUES'} & \fe{Matrice de blocage thermique}{Thermal constraint matrix}\\
-      \kwg{'WTABLE'} \kw{.} \kwg{'FOR'}                  & \fe{Configuration au début du pas}{Configuration at the time step beginning}\\
-      \kwg{'WTABLE'} \kw{.} \kwg{'FOR0'}                 & \fe{Configuration initiale}{Initial configuration}\\
-      \kwg{'WTABLE'} \kw{.} \kwg{'MODELE'}               & \fe{Modèles}{Modeles}\\
-      \kwg{'WTABLE'} \kw{.} \kwg{'CARACTERISTIQUES'}     & \fe{Champ de caractéristiques matériau}{Material properties field}\\
+      \kwg{WTABLE} \kw{.} \kwg{CHARGEMENT}           & \fe{Chargement}{Loading}\\
+      \kwg{WTABLE} \kw{.} \kwg{THER\_COURANT}        & \fe{Température à la dernière itération}{Value of temperature at last iteration}\\
+                                                     & \fe{(au cours d'un pas)}{(during a time step)}\\
+      \kwg{WTABLE} \kw{.} \kwg{BLOCAGES\_MECANIQUES} & \fe{Matrice de blocage mécanique}{Mechanical constraint matrix}\\
+      \kwg{WTABLE} \kw{.} \kwg{BLOCAGES\_THERMIQUES} & \fe{Matrice de blocage thermique}{Thermal constraint matrix}\\
+      \kwg{WTABLE} \kw{.} \kwg{FOR}                  & \fe{Configuration au début du pas}{Configuration at the time step beginning}\\
+      \kwg{WTABLE} \kw{.} \kwg{FOR0}                 & \fe{Configuration initiale}{Initial configuration}\\
+      \kwg{WTABLE} \kw{.} \kwg{MODELE}               & \fe{Modèles}{Modeles}\\
+      \kwg{WTABLE} \kw{.} \kwg{CARACTERISTIQUES}     & \fe{Champ de caractéristiques matériau}{Material properties field}\\
       etc\dots&\\
     \end{tabular}
     \footnotesize

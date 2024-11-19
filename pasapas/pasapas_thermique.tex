@@ -14,13 +14,13 @@
     \scriptsize
     \fe{\begin{tabular}{lll}
           équation de la chaleur & $\rho c_p \frac{\partial T}{\partial t}+\tx{div}\underbrace{(-\lambda \tx{grad}T)}_{\phi}-q=0$ & sur $V$ \\
-          flux imposé            & $\phi.n = \phi_{\tx{imp}} + \underbrace{h(T_f-T_{\infty})}_{convection}
+          flux imposé            & $\phi.n = \phi_{\tx{imp}} + \underbrace{h(T_f-T)}_{convection}
                                                              + \underbrace{\varepsilon\sigma(T^4_{\infty}-T^4)}_{rayonnement}$    & sur $\partial V_{\phi}$ \\
           température imposée    & $T = T_{\tx{imp}}$                                                                             & sur $\partial V_{T}$ \\
         \end{tabular}}
        {\begin{tabular}{lll}
         heat equation            & $\rho c_p \frac{\partial T}{\partial t}+\tx{div}\underbrace{(-\lambda \tx{grad}T)}_{\phi}-q=0$ & on $V$ \\
-        imposed heat flow        & $\phi.n = \phi_{\tx{imp}} + \underbrace{h(T_f-T_{\infty})}_{convection}
+        imposed heat flow        & $\phi.n = \phi_{\tx{imp}} + \underbrace{h(T_f-T)}_{convection}
                                                              + \underbrace{\varepsilon\sigma(T^4_{\infty}-T^4)}_{radiation}$      & on $\partial V_{\phi}$ \\
         température imposée      & $T = T_{\tx{imp}}$                                                                             & on $\partial V_{T}$ \\
     \end{tabular}}
@@ -70,7 +70,7 @@
     \item[] \fe{$\theta$ est le \g{coefficient de relaxation} de ce schéma, entre 0 et 1}
                {$\theta$ is the \g{relaxation coefficient} of this scheme, between 0 and 1}\\
     \begin{tabular}{ll}
-      $\theta$               & \fe{réglable via l'indice \kwg{'RELAXATION\_THETA'}}{adjustable via index \kwg{'RELAXATION\_THETA'}}\\
+      $\theta$               & \fe{réglable via l'indice \kwg{RELAXATION\_THETA}}{adjustable via index \kwg{RELAXATION\_THETA}}\\
       $\theta = 0$           & \fe{schéma explicite}{explicit scheme}\\
       $\theta = \frac{1}{2}$ & \fe{schéma implicite de Crank-Nicolson}{implicit Crank-Nicolson scheme}\\
       $\theta = 1$           & \fe{schéma implicite complet (par défaut)}{full implicit scheme (default)}
@@ -123,9 +123,9 @@
   \fe{\node (con)  [rtest, below of=res, yshift=-0.6cm] {Convergence ?};}
      {\node (con)  [rtest, below of=res, yshift=-0.6cm] {Convergence?};}
   \fe{\node (con0) [note, right of=con, xshift=1.5cm, anchor=west] {Test sur la \g{variation d'incrément de température}\\ entre 2 itérations successives\\
-                                                                    \kwr{MAX}\kwg{ 'ABS' } $\frac{\Delta \{T\}^{i+1}-\Delta \{T\}^i}{\red{\{T\}_1^{i+1}}} <$ \kwg{'PRECISION'}};}
+                                                                    \kwr{MAX}~\kwg{ABS} $\frac{\Delta \{T\}^{i+1}-\Delta \{T\}^i}{\red{\{T\}_1^{i+1}}} <$ \kwg{PRECISION}};}
      {\node (con0) [note, right of=con, xshift=1.5cm, anchor=west] {Test on the \g{temperature increment variation}\\ between 2 successive iterations\\
-                                                                    \kwr{MAX}\kwg{ 'ABS' } $\frac{\Delta \{T\}^{i+1}-\Delta \{T\}^i}{\red{\{T\}_1^{i+1}}} <$ \kwg{'PRECISION'}};}
+                                                                    \kwr{MAX}~\kwg{ABS} $\frac{\Delta \{T\}^{i+1}-\Delta \{T\}^i}{\red{\{T\}_1^{i+1}}} <$ \kwg{PRECISION}};}
 
   \fe{\node (maj)  [rstep, left of=res, xshift=-1.7cm] {État à $\{T\}_{\star}^{i+1}$,$t_{\star}$\\
                                                         \kwv{PARATHER}\\

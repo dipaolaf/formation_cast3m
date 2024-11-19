@@ -252,7 +252,7 @@
       &\\
       $\left[\red{\{U\}_1^{i=0}~\{\lambda\}_1^{i=0}~\{\sigma\}_1^{i=0}}\right] = \left[\green{\{U\}_0~\{\lambda\}_0~\{\sigma\}_0^{\white{0}}}\right]$ & \fe{initialisation de la solution}{solution initialization} \vspace{1mm}\\
       $\red{\{F\}_{\tx{reac},1}^{i=0}} = -[A]^T\red{\{\lambda\}_1^{i=0}}$                                           & \fe{initialisation des réactions \kwr{REAC}}{reactions initialization \kwr{REAC}} \vspace{1mm}\\
-      $F_{\tx{ref}} = \|\{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i=0}}\|$                                       & \fe{norme de convergence \kwr{MAXI}\kwg{ 'ABS'}}{convergence norm \kwr{MAXI}\kwg{ 'ABS'}} \vspace{1mm}\\
+      $F_{\tx{ref}} = \|\{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i=0}}\|$                                       & \fe{norme de convergence \kwr{MAXI}~\kwg{ABS}}{convergence norm \kwr{MAXI}~\kwg{ABS}} \vspace{1mm}\\
       $\{R\}_1^{i=0} = \{F\}_{\tx{imp},1}+\red{\{F\}_{\tx{reac},1}^{i=0}}-[B]\red{\{\sigma\}_1^{i=0}}$              & \fe{premier résidu \kwr{BSIG}}{first imbalance (residual) \kwr{BSIG}}\\
       &
     \end{tabular}
@@ -325,9 +325,9 @@
 
   \fe{\node (eq)  [rtest, below of=res, yshift=-0.2cm]  {Équilibre ?};}
      {\node (eq)  [rtest, below of=res, yshift=-0.2cm]  {Equilibrium?};}
-  \fe{\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Mesure normée du résidu $<$ critère ? \kwg{'PRECISION' 'FTOL' 'MTOL'}\\
+  \fe{\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Mesure normée du résidu $<$ critère ? \kwg{PRECISION} \kwg{FTOL} \kwg{MTOL}\\
                                                                   Variation de l'incrément de déformations entre 2 itérations $<$ critère ?};}
-     {\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Magnitude of the imbalance $<$ criterion? \kwg{'PRECISION' 'FTOL' 'MTOL'}\\
+     {\node (eq0) [note, right of=eq, xshift=1.5cm, anchor=west] {Magnitude of the imbalance $<$ criterion? \kwg{PRECISION} \kwg{FTOL} \kwg{MTOL}\\
                                                                   Variation of the strains increment between 2 iterations $<$ criterion?};}
 
   \fe{\node (nc)  [rtest, below of=eq, yshift=-0.5cm]  {Non convergence ?};}

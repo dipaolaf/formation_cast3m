@@ -64,7 +64,7 @@
     \normalsize
     \item \fe{Quelques indices utiles de la table}{Some useful table indices}\\
     \footnotesize
-    \kwg{'WTABLE'.'BLOCAGES\_THERMIQUES'} \fe{CL thermiques courrantes}{current thermal BC}\\
+    \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_THERMIQUES} \fe{CL thermiques courrantes}{current thermal BC}\\
     \normalsize
   \end{itemize}
 \end{frame}
@@ -79,8 +79,8 @@
              {Create a \kwr{RELA}tion between temperatures at \kw{l2} and \kw{l3}}
     \item \fe{Utiliser la \red{boucle de convergence thermo mécanique}}{Use the \red{thermo mechanical convergence loop}}
     \item \fe{Utiliser la procédure \kwv{REEV\_MEC}}{Use procedure \kwv{REEV\_MEC}}
-    \item \fe{Calculer le jeu à l'itération courante et modifier (ou non) l'indice \kwg{'WTABLE'.'BLOCAGES\_THERMIQUES'}}
-             {Calculate the gap at current iteration and modifiy \kwg{'WTABLE'.'BLOCAGES\_THERMIQUES'} or not}
+    \item \fe{Calculer le jeu à l'itération courante et modifier (ou non) l'indice \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_THERMIQUES}}
+             {Calculate the gap at current iteration and modifiy \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_THERMIQUES} or not}
   \end{itemize}
   \vspace{4.5cm}
   \scriptsize
@@ -113,11 +113,14 @@
              {\fe{Solution (bis) avec REEV\_MEC}{Solution (bis) with REEV\_MEC}}
   \footnotesize
   \begin{itemize}
-    \item \fe{Transfert par convection à l'interface avec élément de \kwr{RACC}ord}
-             {Convective heat transfert at the interface with transition elements}
-    \item \fe{Utiliser un coefficient d'échange dépendant de la pression}{Use a heat transfer coefficient depending on pressure}
-    \item \fe{Utiliser un objet CHARGEME pour décrire les valeurs de pression}{Use a CHARGEME object to describe pressure values}
-    \item \fe{Mettre à jour ce chargement avec \kwv{'REEV\_MEC'}}{Update this load with \kwv{'REEV\_MEC'}}
+    \item \fe{Transfert par convection à l'interface avec des éléments de \kwr{RACC}ord\\
+              \scriptsize coefficient d'échange dépendant de la pression \footnotesize}
+             {Convective heat transfert at the interface with transition elements\\
+             \scriptsize coefficient depending on pressure \footnotesize}
+    \item \fe{Utiliser un objet CHARGEMEnt pour décrire la valeur de pression\\
+              \scriptsize et mettre à jour ce chargement avec \kwv{REEV\_MEC} \footnotesize}
+             {Use a CHARGEME object to describe pressure value\\
+             \scriptsize and update this load with \kwv{REEV\_MEC} \footnotesize}
   \end{itemize}
   \vspace{4.5cm}
   \scriptsize

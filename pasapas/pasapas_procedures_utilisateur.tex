@@ -24,7 +24,7 @@
         ~~~it can be used to update the next one (boundary conditions, material \dots)}}
     \normalsize
     \item \fe{\g{\blue{Observer la syntaxe de la procédure}}\\
-              dans le code de \kwv{PASAPAS} \dots~ou bien voir le tableau suivant}
+              dans le code de \kwo{PASAPAS} \dots~ou bien voir le tableau suivant}
              {\g{\blue{Analyze the procedure syntax}}\\
               in the \kwv{PASAPAS} code \dots~or see table on next slide}
   \end{enumerate}
@@ -48,36 +48,36 @@
   \fe{\begin{tabular}{lllp{3cm}}
         \g{Procédure}             & \g{Indice dans la table PASAPAS}           & \g{Syntaxe}                                 & \g{Rôle possible} \\
         \hline\\
-        \kwv{PERSO1}              & \kwg{'PROCEDURE\_PERSO1'~~}\kw{ = VRAI ;}  & \kwv{PERSO1 }\kw{tab1 ;}                    & Mise à jour du problème après calcul du pas mécanique\\
+        \kwv{PERSO1}              & \kwg{PROCEDURE\_PERSO1}~~\kw{ = VRAI ;}  & \kwv{PERSO1 }\kw{tab1 ;}                    & Mise à jour du problème après calcul du pas mécanique\\
                                   &                                            &                                             & \\
-        \kwv{REEV\_MEC}           & \kwg{'PROCEDURE\_REEV\_MEC'}\kw{ = VRAI ;} & \kwv{REEV\_MEC }\kw{tab1 n1 ;}              & Idem, mais dans la \red{boucle thermo mécanique}\\
+        \kwv{REEV\_MEC}           & \kwg{PROCEDURE\_REEV\_MEC}\kw{ = VRAI ;} & \kwv{REEV\_MEC }\kw{tab1 n1 ;}              & Idem, mais dans la \red{boucle thermo mécanique}\\
                                   &                                            &                                             & \\
-        \kwv{CHARMECA}            & \kwg{'PROCEDURE\_CHARMECA'}\kw{ = VRAI ;}  & \kw{tab2 = }\kwv{CHARMECA}\kw{ tab1 tps1 ;} & Ajout chargements mécaniques pendant \kwo{UNPAS}\\
+        \kwv{CHARMECA}            & \kwg{PROCEDURE\_CHARMECA}\kw{ = VRAI ;}  & \kw{tab2 = }\kwv{CHARMECA}\kw{ tab1 tps1 ;} & Ajout chargements mécaniques pendant \kwo{UNPAS}\\
                                   &                                            &                                             & \\
-        \kwv{PERSO2}              & \kwg{'PROCEDURE\_PERSO2'~~}\kw{ = VRAI ;}  & \kwv{PERSO2 }\kw{tab1 ;}                    & Mise à jour du problème après calcul du pas thermique\\
+        \kwv{PERSO2}              & \kwg{PROCEDURE\_PERSO2}~~\kw{ = VRAI ;}  & \kwv{PERSO2 }\kw{tab1 ;}                    & Mise à jour du problème après calcul du pas thermique\\
                                   &                                            &                                             & \\
-        \kwv{REEV\_THE}           & \kwg{'PROCEDURE\_REEV\_THE'}\kw{ = VRAI ;} & \kwv{REEV\_THE }\kw{tab1 n1 ;}              & Idem, mais dans la \red{boucle thermo mécanique}\\
+        \kwv{REEV\_THE}           & \kwg{PROCEDURE\_REEV\_THE}\kw{ = VRAI ;} & \kwv{REEV\_THE }\kw{tab1 n1 ;}              & Idem, mais dans la \red{boucle thermo mécanique}\\
                                   &                                            &                                             & \\
-        \kwv{CHARTHER}            & \kwg{'PROCEDURE\_CHARTHER'}\kw{ = VRAI ;}  & \kw{tab2 = }\kwv{CHARTHER}\kw{ tab1 tps1 ;} & Ajout chargements thermiques pendant \kwo{TRANSNON}\\
+        \kwv{CHARTHER}            & \kwg{PROCEDURE\_CHARTHER}\kw{ = VRAI ;}  & \kw{tab2 = }\kwv{CHARTHER}\kw{ tab1 tps1 ;} & Ajout chargements thermiques pendant \kwo{TRANSNON}\\
                                   &                                            &                                             & \\
-        \kwv{PARATHER}            & \kwg{'PROCEDURE\_PARATHER'}\kw{ = VRAI ;}  & \kwv{PARATHER}\kw{ tab1 tps1 ;}             & Mise à jour variables externes des caractéristiques thermiques\\
+        \kwv{PARATHER}            & \kwg{PROCEDURE\_PARATHER}\kw{ = VRAI ;}  & \kwv{PARATHER}\kw{ tab1 tps1 ;}             & Mise à jour variables externes des caractéristiques thermiques\\
       \end{tabular}}
      {\begin{tabular}{lllp{3.2cm}}
         \g{Procedure}             & \g{Index in PASAPAS table}                 & \g{Syntax}                                  & \g{Possible function} \\
         \hline\\
-        \kwv{PERSO1}              & \kwg{'PROCEDURE\_PERSO1'~~}\kw{ = VRAI ;}  & \kwv{PERSO1 }\kw{tab1 ;}                    & Updates the problem after the mechanical calculation step\\
+        \kwv{PERSO1}              & \kwg{PROCEDURE\_PERSO1}~~\kw{ = VRAI ;}  & \kwv{PERSO1 }\kw{tab1 ;}                    & Updates the problem after the mechanical calculation step\\
                                   &                                            &                                             & \\
-        \kwv{REEV\_MEC}           & \kwg{'PROCEDURE\_REEV\_MEC'}\kw{ = VRAI ;} & \kwv{REEV\_MEC }\kw{tab1 n1 ;}              & Ditto, but in the \red{thermo mechanical loop}\\
+        \kwv{REEV\_MEC}           & \kwg{PROCEDURE\_REEV\_MEC}\kw{ = VRAI ;} & \kwv{REEV\_MEC }\kw{tab1 n1 ;}              & Ditto, but in the \red{thermo mechanical loop}\\
                                   &                                            &                                             & \\
-        \kwv{CHARMECA}            & \kwg{'PROCEDURE\_CHARMECA'}\kw{ = VRAI ;}  & \kw{tab2 = }\kwv{CHARMECA}\kw{ tab1 tps1 ;} & Mechanical loads addition during \kwo{UNPAS} iterations\\
+        \kwv{CHARMECA}            & \kwg{PROCEDURE\_CHARMECA}\kw{ = VRAI ;}  & \kw{tab2 = }\kwv{CHARMECA}\kw{ tab1 tps1 ;} & Mechanical loads addition during \kwo{UNPAS} iterations\\
                                   &                                            &                                             & \\
-        \kwv{PERSO2}              & \kwg{'PROCEDURE\_PERSO2'~~}\kw{ = VRAI ;}  & \kwv{PERSO2 }\kw{tab1 ;}                    & Updates the problem after the thermal calculation step\\
+        \kwv{PERSO2}              & \kwg{PROCEDURE\_PERSO2}~~\kw{ = VRAI ;}  & \kwv{PERSO2 }\kw{tab1 ;}                    & Updates the problem after the thermal calculation step\\
                                   &                                            &                                             & \\
-        \kwv{REEV\_THE}           & \kwg{'PROCEDURE\_REEV\_THE'}\kw{ = VRAI ;} & \kwv{REEV\_THE }\kw{tab1 n1 ;}              & Ditto, but in the \red{thermo mechanical loop}\\
+        \kwv{REEV\_THE}           & \kwg{PROCEDURE\_REEV\_THE}\kw{ = VRAI ;} & \kwv{REEV\_THE }\kw{tab1 n1 ;}              & Ditto, but in the \red{thermo mechanical loop}\\
                                   &                                            &                                             & \\
-        \kwv{CHARTHER}            & \kwg{'PROCEDURE\_CHARTHER'}\kw{ = VRAI ;}  & \kw{tab2 = }\kwv{CHARTHER}\kw{ tab1 tps1 ;} & Thermal loads addition during \kwo{TRANSNON} iterations\\
+        \kwv{CHARTHER}            & \kwg{PROCEDURE\_CHARTHER}\kw{ = VRAI ;}  & \kw{tab2 = }\kwv{CHARTHER}\kw{ tab1 tps1 ;} & Thermal loads addition during \kwo{TRANSNON} iterations\\
                                   &                                            &                                             & \\
-        \kwv{PARATHER}            & \kwg{'PROCEDURE\_PARATHER'}\kw{ = VRAI ;}  & \kwv{PARATHER}\kw{ tab1 tps1 ;}             & Updating of the external variables of thermal parameters\\
+        \kwv{PARATHER}            & \kwg{PROCEDURE\_PARATHER}\kw{ = VRAI ;}  & \kwv{PARATHER}\kw{ tab1 tps1 ;}             & Updating of the external variables of thermal parameters\\
       \end{tabular}}
   \fe{Avec :}{With:}
   \begin{tabular}{llll}
@@ -95,13 +95,13 @@
     \item \fe{\kwo{CHARMECA} et \kwo{CHARTHER} doivent sortir une table, avec 2 indices possibles :}
              {\kwo{CHARMECA} and \kwo{CHARTHER} output is a table with 2 possible indexes:}
       \begin{tabular}{lp{7cm}}
-        \kwg{'ADDI\_MATRICE'} & \fe{qui contient les matrices de RIGIDITE que l'on veut ajouter au 1er membre}
-                                   {contains the stiffness matrices (RIGIDITE type object) to be added to the 1st member}\\
-        \kwg{'ADDI\_SECOND'}  & \fe{qui contient les CHPOINT que l'on veut ajouter au 2nd membre (forces nodales, \dots)}
-                                   {contains the CHPOINT to be added to the 2nd member (nodal forces, \dots)}
+        \kwg{ADDI\_MATRICE} & \fe{qui contient les matrices de RIGIDITE que l'on veut ajouter au 1er membre}
+                                 {contains the stiffness matrices (RIGIDITE type object) to be added to the 1st member}\\
+        \kwg{ADDI\_SECOND}  & \fe{qui contient les CHPOINT que l'on veut ajouter au 2nd membre (forces nodales, \dots)}
+                                 {contains the CHPOINT to be added to the 2nd member (nodal forces, \dots)}
       \end{tabular}
-    \item \fe{En grands déplacements (option \kwg{'GRANDS\_DEPLACEMENTS'})\\ \kwo{CHARMECA} est appelée sur la configuration déformée}
-             {For large displacements (\kwg{'GRANDS\_DEPLACEMENTS'} option)\\ \kwo{CHARMECA} is called on the deformed shape}
+    \item \fe{En grands déplacements (option \kwg{GRANDS\_DEPLACEMENTS})\\ \kwo{CHARMECA} est appelée sur la configuration déformée}
+             {For large displacements (\kwg{GRANDS\_DEPLACEMENTS} option)\\ \kwo{CHARMECA} is called on the deformed shape}
   \end{itemize}
 \end{frame}
 

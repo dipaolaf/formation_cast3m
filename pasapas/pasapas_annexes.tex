@@ -10,10 +10,10 @@
   \tiny
   \hspace{0.4cm}
   \begin{tabular}{lll}
-    \kwg{'NB\_BOTH'}     & ENTIER & \fe{Nombre max. d'itérations de la boucle de convergence thermo mécanique (\kw{10})}
-                                       {Maximum number of iterations for the thermo mechanical convergence loop (\kw{10})}\\
-    \kwg{'MAXITERATION'} & ENTIER & \fe{Nombre max. d'itérations (\kw{49})}
-                                       {Maximum number of iterations (\kw{49})}
+    \kwg{NB\_BOTH}     & ENTIER & \fe{Nombre max. d'itérations de la boucle de convergence thermo mécanique (\kw{10})}
+                                     {Maximum number of iterations for the thermo mechanical convergence loop (\kw{10})}\\
+    \kwg{MAXITERATION} & ENTIER & \fe{Nombre max. d'itérations (\kw{49})}
+                                     {Maximum number of iterations (\kw{49})}
   \end{tabular}
   \normalsize
   \begin{itemize}
@@ -22,27 +22,27 @@
   \tiny
   \hspace{0.4cm}
   \begin{tabular}{lll}
-    \kwg{'PRECISION'}            & FLOTTANT & \fe{Critère pour comparer le résidu (\kw{1.E-4})}
-                                                 {Criterion to compare the imbalance (\kw{1.E-4})}\\
-    \kwg{'FTOL'}                 & FLOTTANT & \fe{Tolérance pour l'équilibre des efforts}
-                                                 {Tolerance for strength equilibrium}\\
-    \kwg{'MTOL'}                 & FLOTTANT & \fe{Tolérance pour l'équilibre des moments}
-                                                 {Tolerance for moments equilibrium}\\
-    \kwg{'GRANDS\_DEPLACEMENTS'} & LOGIQUE  & \fe{Configuration de référence = configuration déformée (\kw{FAUX})}
-                                                 {Reference configuration = deformed configuration (\kw{FAUX})}\\
-    \kwg{'PREDICTEUR'}           & MOT      & \fe{\kw{= 'HPP'}}{\kw{= 'HPP'}}\\
-                                 &          & \fe{Calcul en hypothèse "petits" déplacements $\rightarrow$ 1ère convergence}
-                                                 {Using "small" displacements hypothesis $\rightarrow$ 1st convergence}\\
-                                 &          & \fe{puis passage grands déplacements $\rightarrow$ 2ème convergence}
-                                                 {then use the large displacements hypothesis $\rightarrow$ 2nd convergence}\\
-    \kwg{'PRECISINTER'}          & FLOTTANT & \fe{Précision pour le problème d'intégration des lois constitutives (\kw{1.E-8})}
-                                                 {Precision for the constitutive laws integration problem (\kw{1.E-8})}\\
-    \kwg{'CONVERGENCE\_FORCEE'}  & LOGIQUE  & \fe{Utilisation, ou non, de la convergence forcée (\kw{VRAI})}
-                                                 {Forced convergence use, or not (\kw{VRAI})}\\
-    \kwg{'MAXSOUSPAS'}           & ENTIER   & \fe{Nombre max. de sous pas en convergence forcée (\kw{100})}
-                                                 {Max. number of sub steps during forced convergence (\kw{100})}\\
-    \kwg{'DELTAITER'}            & ENTIER   & \fe{Nombre de pas d'écart pour test de non convergence (\kw{10})}
-                                                 {Number of steps over which non convergence is tested (\kw{10})}
+    \kwg{PRECISION}            & FLOTTANT & \fe{Critère pour comparer le résidu (\kw{1.E-4})}
+                                               {Criterion to compare the imbalance (\kw{1.E-4})}\\
+    \kwg{FTOL}                 & FLOTTANT & \fe{Tolérance pour l'équilibre des efforts}
+                                               {Tolerance for strength equilibrium}\\
+    \kwg{MTOL}                 & FLOTTANT & \fe{Tolérance pour l'équilibre des moments}
+                                               {Tolerance for moments equilibrium}\\
+    \kwg{GRANDS\_DEPLACEMENTS} & LOGIQUE  & \fe{Configuration de référence = configuration déformée (\kw{FAUX})}
+                                               {Reference configuration = deformed configuration (\kw{FAUX})}\\
+    \kwg{PREDICTEUR}           & MOT      & \fe{\kw{= }\kwg{HPP}}{\kw{= }\kwg{HPP}}\\
+                               &          & \fe{Calcul en hypothèse "petits" déplacements $\rightarrow$ 1ère convergence}
+                                               {Using "small" displacements hypothesis $\rightarrow$ 1st convergence}\\
+                               &          & \fe{puis passage grands déplacements $\rightarrow$ 2ème convergence}
+                                               {then use the large displacements hypothesis $\rightarrow$ 2nd convergence}\\
+    \kwg{PRECISINTER}          & FLOTTANT & \fe{Précision pour le problème d'intégration des lois constitutives (\kw{1.E-8})}
+                                               {Precision for the constitutive laws integration problem (\kw{1.E-8})}\\
+    \kwg{CONVERGENCE\_FORCEE}  & LOGIQUE  & \fe{Utilisation, ou non, de la convergence forcée (\kw{VRAI})}
+                                               {Forced convergence use, or not (\kw{VRAI})}\\
+    \kwg{MAXSOUSPAS}           & ENTIER   & \fe{Nombre max. de sous pas en convergence forcée (\kw{100})}
+                                               {Max. number of sub steps during forced convergence (\kw{100})}\\
+    \kwg{DELTAITER}            & ENTIER   & \fe{Nombre de pas d'écart pour test de non convergence (\kw{10})}
+                                               {Number of steps over which non convergence is tested (\kw{10})}
   \end{tabular}
 \end{frame}
 
@@ -53,16 +53,16 @@
   \tiny
   \hspace{0.4cm}
   \begin{tabular}{lll}
-    \kwg{'PROCEDURE\_THERMIQUE'} & MOT      & \fe{Procédure de calcul à utiliser :}
-                                                 {Procedure to call:}\\
-                                 &          & \fe{\kw{'NONLINEAIRE'} procédure \kwo{TRANSNON} (défaut)}
-                                                 {\kw{'NONLINEAIRE'} procedure \kwo{TRANSNON} (default)}\\
-                                 &          & \fe{\kw{'LINEAIRE'} procédure \kwo{TRANSLIN}}
-                                                 {\kw{'LINEAIRE'} procedure \kwo{TRANSLIN}}\\
-                                 &          & \fe{\kw{'DUPONT'} procédure \kwo{DUPONT2}}
-                                                 {\kw{'DUPONT'} procedure \kwo{DUPONT2}}\\
-    \kwg{'RELAXATION\_THETA'}    & FLOTTANT & \fe{Coefficient de relaxation pour la $\theta$-méthode (\kw{1})}
-                                                 {Relaxation coefficient for the $\theta$-method (\kw{1})}\\
+    \kwg{PROCEDURE\_THERMIQUE} & MOT      & \fe{Procédure de calcul à utiliser :}
+                                               {Procedure to call:}\\
+                               &          & \fe{\kw{= }\kwg{NONLINEAIRE} procédure \kwo{TRANSNON} (défaut)}
+                                               {\kw{= }\kwg{NONLINEAIRE} procedure \kwo{TRANSNON} (default)}\\
+                               &          & \fe{\kw{= }\kwg{LINEAIRE} procédure \kwo{TRANSLIN}}
+                                               {\kw{= }\kwg{LINEAIRE} procedure \kwo{TRANSLIN}}\\
+                               &          & \fe{\kw{= }\kwg{DUPONT} procédure \kwo{DUPONT2}}
+                                               {\kw{= }\kwg{DUPONT} procedure \kwo{DUPONT2}}\\
+    \kwg{RELAXATION\_THETA}    & FLOTTANT & \fe{Coefficient de relaxation pour la $\theta$-méthode (\kw{1})}
+                                               {Relaxation coefficient for the $\theta$-method (\kw{1})}\\
   \end{tabular}
   \normalsize
   \begin{itemize}
@@ -71,18 +71,18 @@
   \tiny
   \hspace{0.4cm}
   \begin{tabular}{lll}
-    \kwg{'CONVERGENCE\_MEC\_THE'} & LOGIQUE  & \fe{Indique que l'on souhaite ré itérer la boucle de calcul thermo mécanique}
-                                                  {Indicates that the thermo mechanical loop should be repeated}\\
-                                  &          & \fe{en cas de dépendance mutuelle (\kw{FAUX})}
-                                                  {in case of dependence (\kw{FAUX})}\\
-    \kwg{'CRITERE\_COHERENCE'}    & FLOTTANT & \fe{Précision pour la convergence thermo mécanique,}
-                                                  {Precision for the thermo mechanical convergence,}\\
-                                  &          & \fe{test sur la thermique (\kw{= }\kwg{'PRECISION'})}
-                                                  {tested on thermal results (\kw{= }\kwg{'PRECISION'})}\\
-    \kwg{'PROJECTION'}            & LOGIQUE  & \fe{Indique que le problème est couplé mais que les maillages en mécanique}
-                                                  {Indicates that the thermal and mechanical meshes are different}\\
-                                  &          & \fe{et en thermique sont différents (\kw{FAUX})}
-                                                  {while the problem is coupled (\kw{FAUX})}
+    \kwg{CONVERGENCE\_MEC\_THE} & LOGIQUE  & \fe{Indique que l'on souhaite ré itérer la boucle de calcul thermo mécanique}
+                                                {Indicates that the thermo mechanical loop should be repeated}\\
+                                &          & \fe{en cas de dépendance mutuelle (\kw{FAUX})}
+                                                {in case of dependence (\kw{FAUX})}\\
+    \kwg{CRITERE\_COHERENCE}    & FLOTTANT & \fe{Précision pour la convergence thermo mécanique,}
+                                                {Precision for the thermo mechanical convergence,}\\
+                                &          & \fe{test sur la thermique (\kw{= }\kwg{PRECISION})}
+                                                {tested on thermal results (\kw{= }\kwg{PRECISION})}\\
+    \kwg{PROJECTION}            & LOGIQUE  & \fe{Indique que le problème est couplé mais que les maillages en mécanique}
+                                                {Indicates that the thermal and mechanical meshes are different}\\
+                                &          & \fe{et en thermique sont différents (\kw{FAUX})}
+                                                {while the problem is coupled (\kw{FAUX})}
   \end{tabular}
 \end{frame}
 
@@ -155,11 +155,12 @@
     \kw{depstdm} = \Big|\red{\Delta\{\varepsilon\}_1^{i+1}-\Delta\{\varepsilon\}_1^i}\Big|
   \end{equation*}
   \begin{itemize}
-    \item \fe{La convergence est atteinte si :}{Convergence is reached if:}
-    \begin{align*}
-      \kw{xconv}   & < \kwg{'PRECISION'}\\
-      \kw{xconvm}  & < \kwg{'PRECISION'}\\
-      \kw{depstdm} & < \kwg{'PRECISION'}
-    \end{align*}      
+    \item \fe{La convergence est atteinte si :}{Convergence is reached if:}\\
+    \center
+    \begin{tabular}{rl}
+      \kw{xconv}   & $<$~~\kwg{PRECISION}\\
+      \kw{xconvm}  & $<$~~\kwg{PRECISION}\\
+      \kw{depstdm} & $<$~~\kwg{PRECISION}
+    \end{tabular}
   \end{itemize}
 \end{frame}

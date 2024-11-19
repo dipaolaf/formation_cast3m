@@ -37,9 +37,9 @@
     \normalsize
     \item \fe{Quelques indices utiles de la table}{Some useful table indices}\\
     \small
-    \kwg{'ESTIMATION'.'CONTRAINTES'} \fe{dernier champ de contraintes convergé}{last converged stress field}
-    \kwg{'WTABLE'.'MODELE'} \fe{modèle courant}{current model}\\
-    \kwg{'WTABLE'.'CARACTERISTIQUES'} \fe{paramètres matériau}{material properties}
+    \kwg{ESTIMATION}\kw{.}\kwg{CONTRAINTES} \fe{dernier champ de contraintes convergé}{last converged stress field}
+    \kwg{WTABLE}\kw{.}\kwg{MODELE} \fe{modèle courant}{current model}\\
+    \kwg{WTABLE}\kw{.}\kwg{CARACTERISTIQUES} \fe{paramètres matériau}{material properties}
     \normalsize
   \end{itemize}
 \end{frame}
@@ -52,11 +52,11 @@
   \begin{itemize}
     \small
     \item \fe{Utiliser la procédure \kwv{PERSO1}}{Use procedure \kwv{PERSO1}}
-    \item \fe{Extraire le modèle et les contraintes dans \kwg{'ESTIMATION'}}{Extract the model and stress field in \kwg{'ESTIMATION'}}
+    \item \fe{Extraire le modèle et les contraintes dans \kwg{ESTIMATION}}{Extract the model and stress field in \kwg{ESTIMATION}}
     \item \fe{Calculer la contrainte principale $\sigma_I$}{Compute the 1st principal stress $\sigma_I$}
     \item \fe{Extraire les éléments "intacts"}{Extract the "intact" elements}
-    \item \fe{Réduire le modèle sur ce maillage et écraser \kwg{'WTABLE'.'MODELE'}}
-             {Reduce the model on this mesh and overwrite \kwg{'WTABLE'.'MODELE'}}
+    \item \fe{Réduire le modèle sur ce maillage et écraser \kwg{WTABLE}\kw{.}\kwg{MODELE}}
+             {Reduce the model on this mesh and overwrite \kwg{WTABLE}\kw{.}\kwg{MODELE}}
     \item \fe{Réduire les pas de temps}{Reduce time steps}
   \end{itemize}
   \vspace{4.5cm}
@@ -91,8 +91,8 @@
   \footnotesize
   \begin{itemize}
     \item \fe{Idem mais sur les \g{\red{blocages}}}{Idem but on the \g{\red{boundary conditions}}}
-    \item \fe{Écraser \kwg{'WTABLE'.'BLOCAGES\_MECANIQUES'}}{Overwrite \kwg{'WTABLE'.'BLOCAGES\_MECANIQUES'}}
-    \item \fe{Activer l'option \kwg{'GRANDS\_DEPLACEMENTS'}}{Use option \kwg{'GRANDS\_DEPLACEMENTS'}}
+    \item \fe{Écraser \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_MECANIQUES}}{Overwrite \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_MECANIQUES}}
+    \item \fe{Activer l'option \kwg{GRANDS\_DEPLACEMENTS}}{Use option \kwg{GRANDS\_DEPLACEMENTS}}
   \end{itemize}
   \vspace{4.5cm}
   \scriptsize
