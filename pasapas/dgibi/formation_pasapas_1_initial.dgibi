@@ -9,7 +9,7 @@
 * - le maillage                                                        *
 * - la definition du modele et des parametres materiaux                *
 * - la definition du chargement sur la configuration initiale          *
-* - la resolution avec PASAPAS en hypothese petites perturbations      *
+* - la resolution avec PASAPAS en hypothese grands deplacements        *
 * - le post traitement du deplacement de la poutre                     *
 *----------------------------------------------------------------------*
 
@@ -39,7 +39,7 @@ blo1 = BLOQ 'DEPL' 'ROTA' p1 ;
 
 ** Chargement en effort impose / Load with imposed force
 f1   = FORC (1. 0.) p2 ;
-ev1  = EVOL 'MANU' 'Temps' (PROG 0. 1.) 'Coef' (PROG 0. 4.E4) ;
+ev1  = EVOL 'MANU' 'Temps' (PROG 0. 1.) 'Coef' (PROG 0. 2.E4) ;
 cha1 = CHAR 'MECA' f1 ev1 ;
 
 ** Resolution
@@ -48,7 +48,7 @@ tab1 . 'MODELE'              = mo1 ;
 tab1 . 'CARACTERISTIQUES'    = ma1 ;
 tab1 . 'BLOCAGES_MECANIQUES' = blo1 ;
 tab1 . 'CHARGEMENT'          = cha1 ;
-tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 0.005 1. ;
+tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 0.05 1. ;
 tab1 . 'GRANDS_DEPLACEMENTS' = VRAI ;
 PASAPAS tab1 ;
 
@@ -61,7 +61,7 @@ def0 = DEFO l1 (tu1 . 0) 0. ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_1_deformee.ps' ;
 FINSI ;
-box  = (-0.8 -0.18) ET (0.85 1.) COUL 'JAUN' ;
+box  = (-0.5 -0.1) ET (0.85 1.) COUL 'JAUN' ;
 REPE b1 (DIME tt) ;
   i1   = &b1 - 1 ;
   tps1 = tt . i1 ;
@@ -73,18 +73,14 @@ REPE b1 (DIME tt) ;
     TRAC (def0 ET def1) 'TITR' (CHAI 'Deformee au temps ' tps1) ;
   FINSI ;
 FIN b1 ;
-* evolution temporelle des deplacements / time evolution of displacements
-tleg               = TABL ;
-tleg . 'TITRE'     = TABL ;
-tleg . 'TITRE' . 1 = 'Ux' ;
-tleg . 'TITRE' . 2 = 'Uy' ;
-evux1 = EVOL 'ROUG' 'TEMP' tab1 'DEPLACEMENTS' 'UX' p2 ;
-evuy1 = EVOL 'BLEU' 'TEMP' tab1 'DEPLACEMENTS' 'UY' p2 ;
+* evolution temporelle de la rotation / time evolution of rotation
+evrz = EVOL 'ROUG' 'TEMP' tab1 'DEPLACEMENTS' 'RZ' p2 ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_1_evol.ps' ;
 FINSI ;
 SI itrac ;
-  DESS (evux1 ET evuy1) 'TITR' 'Deplacements vs Temps' 'LEGE' 'SO' tleg 'TITY' 'DEPLACEMENT' ;
+  DESS evrz 'TITR' 'Rotation en p2 vs Temps' 'TITY' 'ROTATION (RAD)' ;
 FINSI ;
 
 FIN ;
+

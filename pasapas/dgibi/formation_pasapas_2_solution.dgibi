@@ -3,7 +3,7 @@
 *----------------------------------------------------------------------*
 *              FORMATION AVANCEE SUR LA PROCEDURE PASAPAS              *
 *                                                                      *
-* Rupture d'une plaque trouee en traction                              *
+* Rupture d'une eprouvette entaillee en traction                       *
 * Comportement elastique lineaire                                      *
 *                                                                      *
 * Ce fichier constitue la mise donnee solution du probleme et realise  *
@@ -26,59 +26,53 @@ itrac = FAUX ;
 ipsc  = EGA (VALE 'TRAC') 'PSC' ;
 
 ** Options generales / General options
-OPTI 'DIME' 2 'ELEM' 'QUA8' 'MODE' 'PLAN' 'DEFO' ;
+OPTI 'DIME' 2 'ELEM' 'TRI6' 'MODE' 'PLAN' 'CONT' ;
 
-** Parametres geometriques / Geometrical parameters
-l1    = 1. ;
-r1    = 0.15 ;
-
-** Maillage / Mesh
-dens1 = R1 / 15. ;
-dens2 = l1 / 15. ;
-p0    = 0. 0. ;
-p1    = r1 0. ;
-p2    = 0. r1 ;
-p3    = l1 0. ;
-p4    = l1 l1 ;
-p5    = 0. l1 ;
-CER   = CERC 20 p1 p0 p2 ;
-lid   = DROI 10 p3 p4 ;
-lih   = DROI 10 p4 p5 ;
-s1    = REGL cer (lid ET lih) 'DINI' dens1 'DFIN' dens2 ;
-lig   = s1 COTE 2 ;
-lib   = s1 COTE 4 ;
-cs1   = CONT s1 ;
+OPTI 'DENS' 0.1 ;
+p1   = 0.   0. ;
+p2   = 1. 0. ;
+p3   = 1.   1. ;
+p4   = 0.55 1. ;
+p7   = 0.45 1. ;
+p8   = 0. 1. ;
+OPTI 'DENS' 0.005 ;
+pc   = 0.5 0.5 ;
+p5   = pc PLUS ( 0.005 -0.0025) ;
+p6   = pc PLUS (-0.005 -0.0025) ;
+con  = DROI p1 p2 DROI p3 DROI p4 DROI p5 CERC pc p6 DROI p7 DROI p8 DROI p1 ;
+s1   = SURF con ;
+l1   = con ELEM 'COMP' p8 p1 ;
+l2   = con ELEM 'COMP' p2 p3 ;
 
 ** Modele et materiau / Model and material properties
-mo    = MODE s1 'MECANIQUE' 'ELASTIQUE' ;
-ma    = MATE mo 'YOUN' 200.E9 'NU' 0.3 ;
+mo   = MODE s1 'MECANIQUE' ;
+ma   = MATE mo 'YOUN' 210.E9 'NU' 0.3 ;
 
-** Blocages mecaniques
-bl1   = BLOQ 'UY' lib ;
-bl2   = BLOQ 'UX' lig ;
-bl3   = BLOQ 'UY' lih ;
+** Blocages mecaniques / mechanical 
+bl1   = BLOQ 'UX' l1 ;
+bl2   = BLOQ 'UX' l2 ;
+bl3   = BLOQ 'UY' (p1 ET p2) ;
 bl    = bl1 ET bl2 ET bl3 ;
 
 ** Chargement en deplacement impose / Load with imposed displacement
-umax  = l1 / 20. ;
-f1    = DEPI bl3 umax ;
+u2    = DEPI bl2 0.025 ;
 ev1   = EVOL 'MANU' (PROG 0. 1.) (PROG 0. 1.) ;
-cha   = CHAR 'DIMP' f1 ev1 ;
+cha   = CHAR 'DIMP' u2 ev1 ;
 SI ipsc ;
-***  OPTI 'FTRA' 'exo_2_chargement.ps' ;
+  OPTI 'FTRA' 'exo_2_chargement.ps' ;
 FINSI ;
 SI itrac ;
-***  TRAC (VECT f1 ' ' 'FLX' 'VERT') ((RIGI mo ma) ET bl1 ET bl2) ;
+  TRAC (VECT u2 'FLX' ' ' 'VERT') ((RIGI mo ma) ET bl1 ET bl3) ;
 FINSI ;
 
 ** Procedure PERSO1
 DEBP PERSO1 t1*'TABLE' ;
   mo1   = t1 . 'WTABLE' . 'MODELE' ;
-  sg1   = t1 . 'ESTIMATION' . 'CONTRAINTES' ;
-  sgp1  = PRIN sg1 mo1 ;
-  sgi   = EXCO 'SI11' sgp1 ;
-  sg11  = CHAN 'GRAVITE' sgi mo1 ;
-  s2    = sg11 ELEM 'INFERIEUR' 2.2E10 ;
+  sig   = t1 . 'ESTIMATION' . 'CONTRAINTES' ;
+  sigp  = PRIN sig mo1 ;
+  sigp1 = EXCO 'SI11' sigp ;
+  sigp1 = CHAN 'GRAVITE' sigp1 mo1 ;
+  s2    = sigp1 ELEM 'INFERIEUR' 10.E9 ;
   mo2   = REDU mo1 s2 ;
   t1 . 'WTABLE' . 'MODELE' = mo2 ;
 FINP ;
@@ -89,14 +83,13 @@ tab1 . 'MODELE'              = mo ;
 tab1 . 'CARACTERISTIQUES'    = ma ;
 tab1 . 'BLOCAGES_MECANIQUES' = bl ;
 tab1 . 'CHARGEMENT'          = cha ;
-tab1 . 'TEMPS_CALCULES' =
-  PROG 0.1 'PAS' 0.1 0.6 'PAS' 0.01 1. ;
+tab1 . 'TEMPS_CALCULES'      = PROG 0.1 'PAS' 0.05 1. ;
 tab1 . 'PROCEDURE_PERSO1'    = VRAI ;
 PASAPAS tab1 ;
 
 ** Post-traitement
-liso  = PROG 0. 'PAS' 4.E9 4.E10 ;
-box   = (-0.05 -0.3) ET (1. 1.4) ;
+liso  = PROG 0. 'PAS' 0.5E9 20.E9 ;
+*box   = (0. -0.2) ET (1. 1.4) ;
 nt1   = DIME (tab1 . 'TEMPS') ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_2_solu_sigma.ps' ;
@@ -104,30 +97,20 @@ FINSI ;
 REPE b1 nt1 ;
 * contraintes / stresses
   sg1   = tab1 . 'CONTRAINTES' . (&b1 - 1) ;
-  sp1   = EXCO 'SI11' (PRIN sg1 mo) ;
+* modele / model
+  msh1  = EXTR sg1 'MAIL' ;
+  mo1   = REDU mo msh1 ;
+* contraintes principales / principal stresses
+  sp1   = EXCO 'SI11' (PRIN sg1 mo1) ;
 * deplacements / displacements
   u1    = tab1 . 'DEPLACEMENTS' . (&b1 - 1) ;
-* reactions
-  r1    = tab1 . 'REACTIONS' . (&b1 - 1) ;
-  vec1  = VECT r1 5.E-10 'FORC' 'VIOL' ;
-* deformees / deformed shape
-  def1  = DEFO s1 u1 2. vec1 sp1 mo ;
+* deformee / deformed shape
+  def1  = DEFO s1 u1 5. ;
 * traces / plot
   SI itrac ;
-    TRAC def1 cs1 liso 'BOIT' box ;
+    TRAC sp1 mo1 def1 con liso ;
   FINSI ;
 FIN b1 ;
-* courbe force vs deplacement / force vs displacement curve
-evu   = EVOL 'TEMP' tab1 'DEPLACEMENTS' 'UY' p5 ;
-evf   = -1. * (@GLOBAL tab1 bl1 evu 'FY') ;
-evfu  = EVOL 'ROUG' 'MANU' 'Deplac. UY'  (EXTR evu 'ORDO')
-                           'Reaction FY' (EXTR evf 'ORDO') ;
-SI ipsc ;
-  OPTI 'FTRA' 'exo_2_solu_evol.ps' ;
-FINSI ;
-SI itrac ;
-  DESS evfu ;
-FINSI ;
-
 
 FIN ;
+

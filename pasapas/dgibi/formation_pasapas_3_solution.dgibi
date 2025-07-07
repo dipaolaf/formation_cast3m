@@ -8,7 +8,7 @@
 *                                                                      *
 * Ce fichier constitue la mise donnee solution du probleme et realise  *
 * - le maillage                                                        *
-* - la definition du modele et des parametres materiaux variables      *
+* - la definition du modele et des parametres materiaux                *
 * - la definition du chargement (convection + source variable)         *
 * - la resolution avec PASAPAS                                         *
 * - le post traitement                                                 *
@@ -24,129 +24,112 @@ itrac = FAUX ;
 ipsc  = EGA (VALE 'TRAC') 'PSC' ;
 
 ** Options generales
-OPTI 'DIME' 2 'ELEM' 'QUA8' ;
+OPTI 'DIME' 3 'ELEM' 'CUB8' 'DENS' 0.0015 ;
 
 ** Maillage
-p1    = 0. 0. ;
-p2    = 1. 0. ;
-l12   = DROI 20 p1 p2 ;
-mail  = l12 TRAN 20 (0. 1.) ;
-ptx   = (mail COOR 1) POIN 'EGINFE' 0.25001 ;
-pty   = (ptx  COOR 2) POIN 'EGINFE' 0.25001 ;
-sou   = mail ELEM 'APPU' 'STRI' pty ;
-nsou  = DIFF mail sou ;
-lext  = (mail COTE 2) ET (mail COTE 3) ;
-p2    = mail 'POIN' 'PROC' (1. 1.) ;
+l1    = 0.05 ;
+l2    = 0.02 ;
+e1    = 0.002 ;
+l3    = (l1 - l2) / 2. ;
+lig1  = DROI (0. 0. 0.) (l3 0. 0.) DROI ((l1 - l3) 0. 0.) DROI (l1 0. 0.) ;
+sur1  = lig1 TRAN (0. l3 0.) TRAN (0. l2 0.) TRAN (0. l3 0.) ;
+sub   = sur1 VOLU 2 'TRAN' (0. 0. e1) COUL 'GRIS' ;
+sur2  = sub FACE 2 ;
+x     = COOR 1 sur2 ;
+ptx   = x POIN 'COMPRIS' (0.5 * (l1 - l2)) (0.5 * (l1 + l2)) ;
+y     = COOR 2 ptx ;
+pty   = y POIN 'COMPRIS' (0.5 * (l1 - l2)) (0.5 * (l1 + l2)) ;
+sur3  = sur2 ELEM 'APPUYE' 'STRICTEMENT' pty ;
+sur2  = DIFF sur2 sur3 ;
+sou   = sur3 VOLU 2 'TRAN' (0. 0. e1) COUL 'ROUG' ;
+sur4  = sou FACE 2 ;
+msh   = sub ET sou ;
+are   = ARET msh COUL 'DEFA' ;
+SI ipsc ;
+  OPTI 'FTRA' 'exo_3_maillage.ps' ;
+FINSI ;
 SI itrac ;
-  SI ipsc ;
-***    OPTI 'FTRA' 'exo_3_maillage.ps' ;
-  FINSI ;
-***  TRAC 'FACE' ((sou COUL 'ORAN') ET (nsou COUL 'CYAN')) ((CONT sou) ET (CONT nsou))  ;
+  TRAC 'ARET' msh are 'FACE' ;
 FINSI ;
 
-** Modeles et materiaux
-mocod = MODE mail 'THERMIQUE' 'CONDUCTION' ;
-lt    = PROG 0. 1.E6 ;
-lk    = (0.3 * lt) + 200. ;
-evlam = EVOL 'MANU' 'T' lt 'K' lk ;
-macod = MATE mocod 'K' evlam 'C' 128.
-                   'RHO' 19300. 'TINI' 20. ;
-* convection
-mocov = MODE lext 'THERMIQUE' 'CONVECTION' ;
-ltps  = PROG 0. 1.E5 ;
-lh    = PROG 10. 200. ;
-evh   = EVOL 'MANU' 'TEMP' ltps 'H' lh ;
-macov = MATE mocov 'H' evh 'TC' 20. ;
+** Modeles et materiaux (conduction et convection)
+mosub = MODE sub 'THERMIQUE' 'CONDUCTION' ;
+masub = MATE mosub 'K' 0.32 'C' 962. 'RHO' 1900. 'TINI' 25. ;
+mosou = MODE sou 'THERMIQUE' 'CONDUCTION' ;
+masou = MATE mosou 'K' 36. 'C' 800. 'RHO' 3300. 'TINI' 25. ;
+mohsu = MODE (sur1 ET sur2) 'THERMIQUE' 'CONVECTION' ;
+mahsu = MATE mohsu 'H' 17.26 'TC' 25. ;
+mohso = MODE sur4 'THERMIQUE' 'CONVECTION' ;
+mahso = MATE mohso 'H' 27.3 'TC' 25. ;
 
-** Chargement (source)
-mosou = REDU mocod sou ;
-psou  = SOUR mosou 4.E6 sou ;
-chsou = CHAR 'Q' psou ;
+** Chargement (source uniforme et constante)
+q0    = 1. / (MESU sou) ;
+chq0  = MANU 'CHPO' sou 'Q' q0 ;
+qsou  = SOUR mosou chq0 ;
+chsou = CHAR 'Q' qsou ;
 
-** Procedure PERSO2
-DEBP PERSO2 t1*'TABLE' ;
-  masou = t1 . 'MON_MAILLAGE' ;
-  mosou = t1 . 'MON_MODELE' ;
-* reduction temperatures sur la source
-  tp1   = t1 . 'WTABLE' . 'THER_COURANT' ;
-  tsou  = REDU tp1 masou ;
-* calcul du champ de source selon temperature
-  ex1   = ((tsou - 1000.) / 700.) ** 2 ;
-  chs   = 4.E6 * (EXP (-1. * ex1)) ;
-* calcul du du second membre et chargement
-  pmaj  = SOUR mosou chs ;
-  chmaj = CHAR 'Q' pmaj ;
-* modification du chargement dans la table
-  t1 . 'WTABLE' . 'CHARGEMENT' = chmaj ;
-FINP ;
+** Evolution de la source avec la temperature (loi d'Arrhenius)
+lte   = PROG 0. 'PAS' 10. 2000. ;
+ea    = 0.15 * 1.6E-19 ;
+k     = 1.38E-23 ;
+lq    = q0 * (EXP (-1. * ea / (k * (lte + 273.15)))) / (EXP (-1. * ea / (k * (25. + 273.15)))) ;
+evq   = EVOL 'VERT' 'MANU' 'T' lte 'Q' lq ;
+SI ipsc ;
+  OPTI 'FTRA' 'exo_3_arrhenius.ps' ;
+FINSI ;
+SI itrac ;
+  DESS evq 'GRIL' 'TIRC' 'GRIS' ;
+FINSI ;
 
 ** Procedure CHARTHER
 DEBP CHARTHER t1*'TABLE' tps1*'FLOTTANT' ;
-  masou = t1 . 'MON_MAILLAGE' ;
-  mosou = t1 . 'MON_MODELE' ;
-* reduction temperatures sur la source
-  tp1   = t1 . 'WTABLE' . 'THER_COURANT' ;
-  tsou  = REDU tp1 masou ;
-* calcul du champ de source selon temperature
-  ex1   = ((tsou - 1000.) / 700.) ** 2 ;
-  chs   = 4.E6 * (EXP (-1. * ex1)) ;
-* calcul du second membre
-  pmaj  = SOUR mosou chs ;
-* sortie du second membre pour ajout
-  t2                 = TABL ;
-  t2 . 'ADDI_SECOND' = pmaj ;
+  te    = t1 . 'WTABLE' . 'THER_COURANT' ;
+  tes   = REDU te sou ;
+  chq0  = IPOL tes evq ;
+  qsou  = SOUR mosou chq0 ;
+  t2    = TABL ;
+  t2 . 'ADDI_SECOND' = qsou ;
 FINP t2 ;
 
-**Resolution avec PASAPAS
+** Resolution avec PASAPAS (sans mise a jour de la source)
+tab0                      = TABL ;
+tab0 . 'MODELE'           = mosub ET mosou ET mohsu ET mohso ;
+tab0 . 'CARACTERISTIQUES' = masub ET masou ET mahsu ET mahso ;
+tab0 . 'CHARGEMENT'       = chsou ;
+tab0 . 'TEMPS_CALCULES'   = PROG 0. 'PAS' 30. 600. ;
+PASAPAS tab0 ;
+
+** Resolution avec PASAPAS
 tab1                      = TABL ;
-tab1 . 'MODELE'           = mocod ET mocov ;
-tab1 . 'CARACTERISTIQUES' = macod ET macov ;
-tab1 . 'CHARGEMENT'       = chsou ;
-tab1 . 'TEMPS_CALCULES'   = PROG 0. 'PAS' (1.E5 / 50.) 1.E5 ;
-tab1 . 'PROCEDURE_PERSO2' = VRAI ;
-tab1 . 'MON_MAILLAGE'     = sou ;
-TAB1 . 'MON_MODELE'       = mosou ;
+tab1 . 'MODELE'           = mosub ET mosou ET mohsu ET mohso ;
+tab1 . 'CARACTERISTIQUES' = masub ET masou ET mahsu ET mahso ;
+***tab1 . 'CHARGEMENT'       = chsou ;
+tab1 . 'TEMPS_CALCULES'   = PROG 0. 'PAS' 10. 600. ;
+tab1 . 'PROCEDURE_CHARTHER' = VRAI ;
 PASAPAS tab1 ;
 
 ** Post-traitement
-n1    = DIME (tab1 . 'TEMPS_CALCULES') ;
-liso  = PROG 20. 'PAS' ((1800. - 20.) / 20.) 1800. ;
+tmax  = MAXI (PECHE tab1 'TEMPERATURES' 600.) ;
+liso  = PROG 25. 'PAS' ((tmax - 25.) / 20.) tmax ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_3_solu_temperature.ps' ;
 FINSI ;
-REPE b1 n1 ;
+REPE b1 (DIME (tab1 . 'TEMPS')) ;
   tps1  = tab1 . 'TEMPS' . (&b1 - 1) ;
-  p100  = ENTI (100. * tps1 / 1.E5) ;
+  p100  = ENTI (100. * tps1 / 600.) ;
   te1   = tab1 . 'TEMPERATURES' . (&b1 - 1) ;
   SI itrac ;
-    TRAC te1 mail (CONT mail) liso 'TITR' (CHAI 'Temperature au temps' tps1 ' (' p100 '%)') ;
+    TRAC te1 msh are liso 'TITR' (CHAI 'Temperature au temps' ' ' (ENTI tps1) ' (' p100 '%)') ;
   FINSI ;
 FIN b1 ;
-ev1   = EVOL 'ROUG' 'TEMP' tab1 'TEMPERATURES' 'T' p1 ;
-ev2   = EVOL 'BLEU' 'TEMP' tab1 'TEMPERATURES' 'T' p2 ;
-tl    = TABL ;
-tl . 'TITRE' = TABL ;
-tl . 'TITRE' . 1 = 'Coin inf. gauche' ;
-tl . 'TITRE' . 2 = 'Coin sup. droite' ;
+SI ipsc ;
+  OPTI 'FTRA' 'exo_3_solu_evol.ps' ;
+FINSI ;
+pt1   = sou POIN 'PROC' (0. 0. 0.003) ;
+ev0   = EVOL 'BLEU' 'TEMP' tab0 'TEMPERATURES' 'T' pt1 ;
+ev1   = EVOL 'ROUG' 'TEMP' tab1 'TEMPERATURES' 'T' pt1 ;
 SI itrac ;
-  SI ipsc ;
-    OPTI 'FTRA' 'exo_3_solu_evol.ps' ;
-  FINSI ;
-  DESS (ev1 ET ev2) 'LEGE' 'SE' tl 'TITR' 'Temperature vs Temps' 'YBOR' 0. 2000. ;
+  DESS (ev0 ET ev1) 'GRIL' 'TIRC' 'GRIS' 'XBOR' 0. 600. 'XGRA' 100. 'YBOR' 0. 300. 'YGRA' 30. ;
 FINSI ;
 
 FIN ;
-
-
-
-
-
-
-
-
-***tab1 . 'CHARGEMENT'       = chsou ;
-
-tab1 . 'PROCEDURE_CHARTHER' = VRAI ;
-tab1 . 'MON_MAILLAGE'     = sou ;
-tab1 . 'MON_MODELE'       = mosou ;
-PASAPAS tab1 ;

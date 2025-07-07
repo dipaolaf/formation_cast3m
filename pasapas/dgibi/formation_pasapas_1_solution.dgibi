@@ -9,7 +9,7 @@
 * - le maillage                                                        *
 * - la definition du modele et des parametres materiaux                *
 * - la definition du chargement sur la configuration deformee avec la  *
-*   procedure CHARMECA (ou bien PERSO1)                                *
+*   procedure PERSO1 (ou bien CHARMECA)                                *
 * - la resolution avec PASAPAS en hypothese grands deplacements        *
 * - le post traitement du deplacement de la poutre                     *
 *----------------------------------------------------------------------*
@@ -40,38 +40,30 @@ blo1 = BLOQ 'DEPL' 'ROTA' p1 ;
 
 ** Chargement en effort impose / Load with imposed force
 f1   = FORC (1. 0.) p2 ;
-ev1  = EVOL 'MANU' 'Temps' (PROG 0. 1.) 'Coef' (PROG 0. 4.E4) ;
+ev1  = EVOL 'MANU' 'Temps' (PROG 0. 1.) 'Coef' (PROG 0. 2.E4) ;
 cha1 = CHAR 'MECA' f1 ev1 ;
 
 ** Procedure PERSO1
 DEBP PERSO1 t1*'TABLE' ;
-  pf   = t1 . 'MON_POINT' ;
-  ev   = t1 . 'MON_EVOL' ;
 * angle de rotation / rotation angle
   u1   = t1 . 'ESTIMATION' . 'DEPLACEMENTS' ;
-  rs   = EXTR u1 'RZ' pf ;
-  rsd  = rs * 180. / pi ;
-* direction force
-  dir1 = (COS rsd) (SIN rsd) ;
+  rs   = (EXTR u1 'RZ' p2) * 180. / pi ;
+* force unitaire sur p2 / unit force on p2
+  f1   = FORC ((COS rs) (SIN rs)) p2 ;
 * ecrasement du chargement / load overwrite
-  f1   = FORC dir1 pf ;
-  cha2 = CHAR 'MECA' f1 ev ;
+  cha2 = CHAR 'MECA' f1 ev1 ;
   t1 . 'WTABLE' . 'CHARGEMENT' = cha2 ;
 FINP ;
 
 ** Procedure CHARMECA
 DEBP CHARMECA t1*'TABLE' tps1*'FLOTTANT' ;
-  pf   = t1 . 'MON_POINT' ;
-  ev   = t1 . 'MON_EVOL' ;
 * angle de rotation / rotation angle
   u1   = t1 . 'ESTIMATION' . 'DEPLACEMENTS' ;
-  rs   = EXTR u1 'RZ' pf ;
-  rsd  = rs * 180. / pi ;
-* direction force
-  dir1 = (COS rsd) (SIN rsd) ;
+  rs   = (EXTR u1 'RZ' p2) * 180. / pi ;
+* force sur p2 / force on p2
+  val1 = IPOL tps1 ev1 ;
+  f1   = FORC (val1 * ((COS rs) (SIN rs))) p2 ;
 * ajout de la force / adding the force
-  val1 = IPOL tps1 ev ;
-  f1   = FORC (val1 * dir1) pf ;
   t2   = TABLE ;
   t2 . 'ADDI_SECOND' = f1 ;
 FINP t2 ;
@@ -82,11 +74,9 @@ tab1 . 'MODELE'              = mo1 ;
 tab1 . 'CARACTERISTIQUES'    = ma1 ;
 tab1 . 'BLOCAGES_MECANIQUES' = blo1 ;
 tab1 . 'CHARGEMENT'          = cha1 ;
-tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 0.005 1. ;
+tab1 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 0.05 1. ;
 tab1 . 'GRANDS_DEPLACEMENTS' = VRAI ;
 tab1 . 'PROCEDURE_PERSO1'    = VRAI ;
-tab1 . 'MON_EVOL'            = ev1 ;
-tab1 . 'MON_POINT'           = p2 ;
 PASAPAS tab1 ;
 
 ** Post-traitement / Post-processing
@@ -110,51 +100,14 @@ REPE b1 (DIME tt) ;
     TRAC (def0 ET def1) 'TITR' (CHAI 'Deformee au temps ' tps1) ;
   FINSI ;
 FIN b1 ;
-* evolution temporelle des deplacements / time evolution of displacements
-tleg               = TABL ;
-tleg . 'TITRE'     = TABL ;
-tleg . 'TITRE' . 1 = 'Ux' ;
-tleg . 'TITRE' . 2 = 'Uy' ;
-evux1 = EVOL 'ROUG' 'TEMP' tab1 'DEPLACEMENTS' 'UX' p2 ;
-evuy1 = EVOL 'BLEU' 'TEMP' tab1 'DEPLACEMENTS' 'UY' p2 ;
+* evolution temporelle de la rotation / time evolution of rotation
+evrz = EVOL 'ROUG' 'TEMP' tab1 'DEPLACEMENTS' 'RZ' p2 ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_1_solu_evol.ps' ;
 FINSI ;
 SI itrac ;
-  DESS (evux1 ET evuy1) 'TITR' 'Deplacements vs Temps' 'LEGE' 'SO' tleg 'TITY' 'DEPLACEMENT' ;
+  DESS evrz 'TITR' 'Rotation en p2 vs Temps' 'TITY' 'ROTATION (RAD)' ;
 FINSI ;
 
 FIN ;
 
-
-
-
-
-
-
-
-***tab1 . 'CHARGEMENT'          = cha1 ;
-tab1 . 'PROCEDURE_CHARMECA'  = VRAI ;
-tab1 . 'MON_EVOL'            = ev1 ;
-tab1 . 'MON_POINT'           = p2 ;
-PASAPAS tab1 ;
-
-DEBP CHARMECA t1*'TABLE' tps1*'FLOTTANT' ;
-  pf   = t1 . 'MON_POINT' ;
-  ev   = t1 . 'MON_EVOL' ;
-* angle de rotation / rotation angle
-  drs  = 0. ;
-  SI (EGA (TYPE zdept) 'CHPOINT') ;
-    drs  = EXTR zdept 'RZ' pf ;
-  FINSI ;
-  u1   = t1 . 'CONTINUATION' . 'DEPLACEMENTS' ;
-  rs   = (EXTR u1 'RZ' pf) + drs ;
-  rsd  = rs * 180. / pi ;
-* direction force
-  dir1 = (COS rsd) (SIN rsd) ;
-* ajout de la force / adding the force
-  val1 = IPOL tps1 ev ;
-  f1   = FORC (val1 * dir1) pf ;
-  t2   = TABLE ;
-  t2 . 'ADDI_SECOND' = f1 ;
-FINP t2 ;
