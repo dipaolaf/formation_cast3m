@@ -13,12 +13,12 @@
                    {Local equations of the static equilibrium}\\
     \scriptsize
     \fe{\begin{tabular}{lll}
-          équilibre            & $\tx{div}(\tod{\sigma})+f_{\tx{imp}}=0$ & sur $\partial V$ \\
+          équilibre            & $\tx{div}(\tod{\sigma})+f_{\tx{imp}}=0$ & sur $V$ \\
           efforts imposés      & $\tod{\sigma}.n=t_{\tx{imp}}$           & sur $\partial V_t$ \\
           déplacements imposés & $u=u_{\tx{imp}}$                        & sur $\partial V_u$ \\
         \end{tabular}}
        {\begin{tabular}{lll}
-        equilibrium           & $\tx{div}(\tod{\sigma})+f_{\tx{imp}}=0$ & on $\partial V$ \\
+        equilibrium           & $\tx{div}(\tod{\sigma})+f_{\tx{imp}}=0$ & on $V$ \\
         imposed forces        & $\tod{\sigma}.n=t_{\tx{imp}}$           & on $\partial V_t$ \\
         imposed displacements & $u=u_{\tx{imp}}$                        & on $\partial V_u$ \\
       \end{tabular}}
@@ -166,7 +166,7 @@
 
 
 \begin{frame}{\fe{Solveur mécanique}{Mechanical solver}}
-             {\fe{Décomposition incrémentale 1/2}{Incremental décomposition 1/2}}
+             {\fe{Décomposition incrémentale 1/2}{Incremental decomposition 1/2}}
   \begin{itemize}
     \item<1-> \fe{Calcul d'un pas de temps entre $t_0$ et $t_1$}
                  {Computation on a time step between $t_0$ and $t_1$}
@@ -207,7 +207,7 @@
 \end{frame}
 
 \begin{frame}{\fe{Solveur mécanique}{Mechanical solver}}
-             {\fe{Décomposition incrémentale 2/2}{Incremental décomposition 2/2}}
+             {\fe{Décomposition incrémentale 2/2}{Incremental decomposition 2/2}}
   \begin{itemize}
     \item<1-> \fe{Décomposition incrémentale de l'équilibre}
                  {Incremental decomposition of equilibrium}
