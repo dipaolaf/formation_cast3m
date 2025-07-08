@@ -2,7 +2,7 @@
 
 % Variable "animation" : = 1   --> animations   (avec \animategraphics)
 %                        sinon --> images fixes (avec \includegraphics)
-\def \animation {0}
+\def \animation {1}
 
 % Paquets utilisés
 \usepackage{animate} % pour faire des animations
@@ -60,11 +60,11 @@
 \justfor{french}{
   \title{Cast3M~: la procédure PASAPAS}
   \subtitle{et les procédures utilisateurs}
-  \date{Janvier 2025}}
+  \date{Juillet 2025}}
 \justfor{english}{
   \title{Cast3M: the PASAPAS procedure}
   \subtitle{and the user procedures}
-  \date{January 2025}}
+  \date{July 2025}}
 \author{François Di Paola}
 \institute{CEA Saclay,\\
 \url{https://www-cast3m.cea.fr}}
@@ -117,11 +117,13 @@
               \hyperlink{mecanique_exo}{$\rightarrow$ exercice 1: \blue{following force}\\
                                         $\rightarrow$ exercice 2: \blue{fracture by elements removal}}}
     \item \fe{\hyperlink{thermique_theorie}{\red{Solveur thermique transitoire} - procédure TRANSNON}\\
-              \hyperlink{thermique_exo}{$\rightarrow$ exercice 3~: \red{source de chaleur variable}\\
-                                        $\rightarrow$ exercice 4~: contact \red{thermo} \blue{mécanique}}}
+              \hyperlink{thermique_exo}{$\rightarrow$ exercice 3~: \red{source dépendante de la température}}}
              {\hyperlink{thermique_theorie}{\red{Transient thermal solver} - procedure TRANSNON}\\
-              \hyperlink{thermique_exo}{$\rightarrow$ exercice 3: \red{variable heat source}\\
-                                        $\rightarrow$ exercice 4: \red{thermo} \blue{mechanical} contact}}
+              \hyperlink{thermique_exo}{$\rightarrow$ exercice 3: \red{temperature-dependent heat source}}}
+    \item \fe{Exemple de couplage\\
+              \hyperlink{thermique_exo}{$\rightarrow$ exercice 4~: contact \red{thermo} \blue{mécanique}}}
+             {Coupling example\\
+              \hyperlink{thermique_exo}{$\rightarrow$ exercice 4: \red{thermo} \blue{mechanical} contact}}
     \item \hyperlink{annexe}{Annexes}
   \end{itemize}
 \end{frame}

@@ -1,6 +1,6 @@
 {\setbeamerfont{framesubtitle}{size=\tiny}
-\begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
-                 {Exercise 4: thermo mechanical contact}}
+\begin{frame}{\fe{Exercice 4 : couplage thermo mécanique}
+                 {Exercise 4: thermo mechanical coupling}}
              {\url{https://www-cast3m.cea.fr/index.php?page=exemples&exemple=formation_pasapas_4_initial}}
   \small
   \begin{itemize}
@@ -52,54 +52,65 @@
 }
 
 {\setbeamerfont{framesubtitle}{size=\tiny}
-\begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
-                 {Exercise 4: thermo mechanical contact}}
+\begin{frame}{\fe{Exercice 4 : couplage thermo mécanique}
+                 {Exercise 4: thermo mechanical coupling}}
              {\url{https://www-cast3m.cea.fr/index.php?page=exemples&exemple=formation_pasapas_4_initial}}
   \begin{itemize}
     \item \fe{Quelques objets utiles}{Some useful objects}\\
     \footnotesize
-    \kw{p2 p3} \fe{points à gauche et à droite du jeu}{points on the left/right of the gap}\\
-    \kw{l2 l3} \fe{lignes à gauche et droite du jeu}{lines on the left/right of the gap}\\
+    \begin{tabular}{ll}
+      \kw{p2 p3} & \fe{points à gauche et à droite du jeu}{points on the left/right of the gap}\\
+      \kw{l2 l3} & \fe{lignes à gauche et droite du jeu}{lines on the left/right of the gap}\\
+      \kw{j0}    & \fe{valeur initial du jeu}{initial value of the gap}
+    \end{tabular}
     \normalsize
     \item \fe{Quelques opérateurs utiles}{Some useful operators}\\
     \footnotesize
-    \kwr{COOR} \fe{obtenir les coordonnées de points}{get points coordinates}\\
-    \kwr{RELA} \fe{imposer une relation linéaire entre degrés de liberté}{impose a linear relation between degrees of freedom}\\
+    \begin{tabular}{ll}
+      \kwr{RELA} & \fe{pour imposer une relation linéaire entre degrés de liberté}
+                      {to impose a linear relation between degrees of freedom}\\
+      \kwr{EXTR} & \fe{pour extraire la valeur du déplacement un un point}
+                      {to get the displacement value of a point}
+    \end{tabular}
     \normalsize
     \item \fe{Quelques indices utiles de la table}{Some useful table indices}\\
     \footnotesize
-    \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_THERMIQUES} \fe{CL thermiques courrantes}{current thermal BC}\\
+    \begin{tabular}{ll}
+      \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_THERMIQUES} & \fe{CL thermiques courrantes}{current thermal BC}
+    \end{tabular}
     \normalsize
   \end{itemize}
 \end{frame}
 }
 
-\begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
-                 {Exercise 4: thermo mechanical contact}}
+\begin{frame}{\fe{Exercice 4 : couplage thermo mécanique}
+                 {Exercise 4: thermo mechanical coupling}}
              {\fe{Solution avec REEV\_MEC}{Solution with REEV\_MEC}}
   \footnotesize
   \begin{itemize}
     \item \fe{Créer une \kwr{RELA}tion entre les températures de \kw{l2} et \kw{l3}}
              {Create a \kwr{RELA}tion between temperatures at \kw{l2} and \kw{l3}}
-    \item \fe{Utiliser la \red{boucle de convergence thermo mécanique}}{Use the \red{thermo mechanical convergence loop}}
+    \item \fe{Activer la \red{boucle de convergence thermo mécanique}}{Use the \red{thermo mechanical convergence loop}}
     \item \fe{Utiliser la procédure \kwv{REEV\_MEC}}{Use procedure \kwv{REEV\_MEC}}
-    \item \fe{Calculer le jeu à l'itération courante et modifier (ou non) l'indice \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_THERMIQUES}}
-             {Calculate the gap at current iteration and modifiy \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_THERMIQUES} or not}
+    \item \fe{Calculer le jeu courant et modifier l'indice \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_THERMIQUES}}
+             {Calculate the current gap and modifiy \kwg{WTABLE}\kw{.}\kwg{BLOCAGES\_THERMIQUES}}
+    \item[]
   \end{itemize}
   \vspace{4.5cm}
   \scriptsize
-  \begin{textblock*}{10cm}(0.3cm,-4.5cm)
+  \begin{textblock*}{10cm}(0.7cm,-4.6cm)
     \fe{\emph{Programme principal}}{\emph{Main program}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=103, lastline=110]{dgibi/formation_pasapas_4_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=78, lastline=78]{dgibi/formation_pasapas_4_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=99, lastline=101]{dgibi/formation_pasapas_4_solution.dgibi}
   \end{textblock*}
-  \begin{textblock*}{10cm}(5.6cm,-4.5cm)
+  \begin{textblock*}{10cm}(4.2cm,-2.8cm)
     \fe{\emph{\violet{Procédure REEV\_MEC}}}{\emph{\violet{REEV\_MEC procedure}}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=78, lastline=93]{dgibi/formation_pasapas_4_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=81, lastline=89]{dgibi/formation_pasapas_4_solution.dgibi}
   \end{textblock*}
 \end{frame}
 
-\begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
-                 {Exercise 4: thermo mechanical contact}}
+\begin{frame}{\fe{Exercice 4 : couplage thermo mécanique}
+                 {Exercise 4: thermo mechanical coupling}}
              {\fe{Solution avec REEV\_MEC}{Solution with REEV\_MEC}}
   \begin{itemize}
     \item \fe{Résultats}{Results}
@@ -116,18 +127,18 @@
   \end{center}
 \end{frame}
 
-\begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
-                 {Exercise 4: thermo mechanical contact}}
+\begin{frame}{\fe{Exercice 4 : couplage thermo mécanique}
+                 {Exercise 4: thermo mechanical coupling}}
              {\fe{Solution (bis) avec REEV\_MEC}{Solution (bis) with REEV\_MEC}}
   \footnotesize
   \begin{itemize}
     \item \fe{Transfert par convection à l'interface avec des éléments de \kwr{RACC}ord\\
-              \scriptsize coefficient d'échange dépendant de la pression \footnotesize}
+              \scriptsize coefficient d'échange dépendant de la force de contact \footnotesize}
              {Convective heat transfert at the interface with transition elements\\
-             \scriptsize coefficient depending on pressure \footnotesize}
-    \item \fe{Utiliser un objet CHARGEMEnt pour décrire la valeur de pression\\
+             \scriptsize coefficient depending on contact force \footnotesize}
+    \item \fe{Utiliser un objet CHARGEMEnt pour décrire la force de contact\\
               \scriptsize et mettre à jour ce chargement avec \kwv{REEV\_MEC} \footnotesize}
-             {Use a CHARGEME object to describe pressure value\\
+             {Use a CHARGEME object to describe contact force value\\
              \scriptsize and update this load with \kwv{REEV\_MEC} \footnotesize}
   \end{itemize}
   \vspace{4.5cm}
@@ -137,21 +148,19 @@
       \fe{\emph{Programme principal}}{\emph{Main program}}
       \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=82, lastline=85]{dgibi/formation_pasapas_4_solution_bis.dgibi}
       \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=88, lastline=89]{dgibi/formation_pasapas_4_solution_bis.dgibi}
-      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=110, lastline=111]{dgibi/formation_pasapas_4_solution_bis.dgibi}
-      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=114, lastline=114]{dgibi/formation_pasapas_4_solution_bis.dgibi}
-      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=116, lastline=121]{dgibi/formation_pasapas_4_solution_bis.dgibi}
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=101, lastline=110]{dgibi/formation_pasapas_4_solution_bis.dgibi}
     \end{textblock*}
   }
   \only<2>{
-    \begin{textblock*}{10cm}(3cm,-4.3cm)
+    \begin{textblock*}{10cm}(2cm,-4.3cm)
       \fe{\emph{\violet{Procédure REEV\_MEC}}}{\emph{\violet{REEV\_MEC procedure}}}
-      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=92, lastline=106]{dgibi/formation_pasapas_4_solution_bis.dgibi}
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=92, lastline=98]{dgibi/formation_pasapas_4_solution_bis.dgibi}
     \end{textblock*}
   }
 \end{frame}
 
-\begin{frame}{\fe{Exercice 4 : contact thermo mécanique}
-                 {Exercise 4: thermo mechanical contact}}
+\begin{frame}{\fe{Exercice 4 : couplage thermo mécanique}
+                 {Exercise 4: thermo mechanical coupling}}
              {\fe{Solution (bis) avec REEV\_MEC}{Solution (bis) with REEV\_MEC}}
   \begin{itemize}
     \item \fe{Résultats}{Results}

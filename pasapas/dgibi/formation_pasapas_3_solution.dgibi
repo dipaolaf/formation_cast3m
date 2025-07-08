@@ -3,7 +3,7 @@
 *----------------------------------------------------------------------*
 *              FORMATION AVANCEE SUR LA PROCEDURE PASAPAS              *
 *                                                                      *
-* Chauffage d'une plaque par une source de chaleur variable            *
+* Chauffage d'une plaque par une source de chaleur                     *
 * dependante de la temperature                                         *
 *                                                                      *
 * Ce fichier constitue la mise donnee solution du probleme et realise  *
@@ -23,10 +23,10 @@ itrac = FAUX ;
 ***OPTI 'TRAC' 'PSC' ;
 ipsc  = EGA (VALE 'TRAC') 'PSC' ;
 
-** Options generales
+** Options generales / General options
 OPTI 'DIME' 3 'ELEM' 'CUB8' 'DENS' 0.0015 ;
 
-** Maillage
+** Maillage / Mesh
 l1    = 0.05 ;
 l2    = 0.02 ;
 e1    = 0.002 ;
@@ -52,7 +52,7 @@ SI itrac ;
   TRAC 'ARET' msh are 'FACE' ;
 FINSI ;
 
-** Modeles et materiaux (conduction et convection)
+** Modele et materiau / Model and material properties
 mosub = MODE sub 'THERMIQUE' 'CONDUCTION' ;
 masub = MATE mosub 'K' 0.32 'C' 962. 'RHO' 1900. 'TINI' 25. ;
 mosou = MODE sou 'THERMIQUE' 'CONDUCTION' ;
@@ -62,36 +62,37 @@ mahsu = MATE mohsu 'H' 17.26 'TC' 25. ;
 mohso = MODE sur4 'THERMIQUE' 'CONVECTION' ;
 mahso = MATE mohso 'H' 27.3 'TC' 25. ;
 
-** Chargement (source uniforme et constante)
+** Chargement / Load (source = 1W)
 q0    = 1. / (MESU sou) ;
 chq0  = MANU 'CHPO' sou 'Q' q0 ;
 qsou  = SOUR mosou chq0 ;
 chsou = CHAR 'Q' qsou ;
 
-** Evolution de la source avec la temperature (loi d'Arrhenius)
-lte   = PROG 0. 'PAS' 10. 2000. ;
+** Evolution source vs temperature
+lte   = PROG 0. 'PAS' 10. 1000. ;
 ea    = 0.15 * 1.6E-19 ;
-k     = 1.38E-23 ;
-lq    = q0 * (EXP (-1. * ea / (k * (lte + 273.15)))) / (EXP (-1. * ea / (k * (25. + 273.15)))) ;
+kb    = 1.38E-23 ;
+lq    = q0 * (EXP (-1. * ea / (kb * (lte + 273.)))) /
+             (EXP (-1. * ea / (kb * (25. + 273.)))) ;
 evq   = EVOL 'VERT' 'MANU' 'T' lte 'Q' lq ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_3_arrhenius.ps' ;
 FINSI ;
 SI itrac ;
-  DESS evq 'GRIL' 'TIRC' 'GRIS' ;
+  DESS (evq / q0) 'GRIL' 'TIRC' 'GRIS' 'TITX' 'T (degres C)' 'TITY' 'Q(T)/Q0' ;
 FINSI ;
 
 ** Procedure CHARTHER
 DEBP CHARTHER t1*'TABLE' tps1*'FLOTTANT' ;
   te    = t1 . 'WTABLE' . 'THER_COURANT' ;
-  tes   = REDU te sou ;
-  chq0  = IPOL tes evq ;
-  qsou  = SOUR mosou chq0 ;
+  tesou = REDU te sou ;
+  chq   = IPOL tesou evq ;
+  qsou  = SOUR mosou chq ;
   t2    = TABL ;
   t2 . 'ADDI_SECOND' = qsou ;
 FINP t2 ;
 
-** Resolution avec PASAPAS (sans mise a jour de la source)
+** Resolution
 tab0                      = TABL ;
 tab0 . 'MODELE'           = mosub ET mosou ET mohsu ET mohso ;
 tab0 . 'CARACTERISTIQUES' = masub ET masou ET mahsu ET mahso ;
@@ -99,18 +100,17 @@ tab0 . 'CHARGEMENT'       = chsou ;
 tab0 . 'TEMPS_CALCULES'   = PROG 0. 'PAS' 30. 600. ;
 PASAPAS tab0 ;
 
-** Resolution avec PASAPAS
+** Resolution
 tab1                      = TABL ;
 tab1 . 'MODELE'           = mosub ET mosou ET mohsu ET mohso ;
 tab1 . 'CARACTERISTIQUES' = masub ET masou ET mahsu ET mahso ;
-***tab1 . 'CHARGEMENT'       = chsou ;
 tab1 . 'TEMPS_CALCULES'   = PROG 0. 'PAS' 10. 600. ;
+***tab1 . 'CHARGEMENT'       = chsou ;
 tab1 . 'PROCEDURE_CHARTHER' = VRAI ;
 PASAPAS tab1 ;
 
-** Post-traitement
-tmax  = MAXI (PECHE tab1 'TEMPERATURES' 600.) ;
-liso  = PROG 25. 'PAS' ((tmax - 25.) / 20.) tmax ;
+** Post-traitement / Post-processing
+liso  = PROG 20. 'PAS' 20. 600. ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_3_solu_temperature.ps' ;
 FINSI ;
@@ -133,3 +133,4 @@ SI itrac ;
 FINSI ;
 
 FIN ;
+

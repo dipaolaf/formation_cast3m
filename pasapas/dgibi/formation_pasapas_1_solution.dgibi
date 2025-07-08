@@ -23,7 +23,7 @@ itrac = FAUX ;
 ***OPTI 'TRAC' 'PSC' ;
 ipsc = EGA (VALE 'TRAC') 'PSC' ;
 
-** Options generales / general options
+** Options generales / General options
 OPTI 'DIME' 2 'ELEM' 'SEG2' ;
 
 ** Maillage / Mesh
@@ -45,25 +45,19 @@ cha1 = CHAR 'MECA' f1 ev1 ;
 
 ** Procedure PERSO1
 DEBP PERSO1 t1*'TABLE' ;
-* angle de rotation / rotation angle
   u1   = t1 . 'ESTIMATION' . 'DEPLACEMENTS' ;
   rs   = (EXTR u1 'RZ' p2) * 180. / pi ;
-* force unitaire sur p2 / unit force on p2
   f1   = FORC ((COS rs) (SIN rs)) p2 ;
-* ecrasement du chargement / load overwrite
   cha2 = CHAR 'MECA' f1 ev1 ;
   t1 . 'WTABLE' . 'CHARGEMENT' = cha2 ;
 FINP ;
 
 ** Procedure CHARMECA
 DEBP CHARMECA t1*'TABLE' tps1*'FLOTTANT' ;
-* angle de rotation / rotation angle
   u1   = t1 . 'ESTIMATION' . 'DEPLACEMENTS' ;
   rs   = (EXTR u1 'RZ' p2) * 180. / pi ;
-* force sur p2 / force on p2
   val1 = IPOL tps1 ev1 ;
   f1   = FORC (val1 * ((COS rs) (SIN rs))) p2 ;
-* ajout de la force / adding the force
   t2   = TABLE ;
   t2 . 'ADDI_SECOND' = f1 ;
 FINP t2 ;

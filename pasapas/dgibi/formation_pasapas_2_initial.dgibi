@@ -26,6 +26,7 @@ ipsc  = EGA (VALE 'TRAC') 'PSC' ;
 ** Options generales / General options
 OPTI 'DIME' 2 'ELEM' 'TRI6' 'MODE' 'PLAN' 'CONT' ;
 
+** Maillage / Mesh
 OPTI 'DENS' 0.1 ;
 p1   = 0.   0. ;
 p2   = 1. 0. ;
@@ -46,7 +47,7 @@ l2   = con ELEM 'COMP' p2 p3 ;
 mo   = MODE s1 'MECANIQUE' ;
 ma   = MATE mo 'YOUN' 210.E9 'NU' 0.3 ;
 
-** Blocages mecaniques / mechanical 
+** Blocages mecaniques / mechanical blocking
 bl1   = BLOQ 'UX' l1 ;
 bl2   = BLOQ 'UX' l2 ;
 bl3   = BLOQ 'UY' (p1 ET p2) ;
@@ -72,7 +73,7 @@ tab1 . 'CHARGEMENT'          = cha ;
 tab1 . 'TEMPS_CALCULES'      = PROG 0.1 'PAS' 0.05 1. ;
 PASAPAS tab1 ;
 
-** Post-traitement
+** Post-traitement / Post-processing
 liso  = PROG 0. 'PAS' 0.5E9 20.E9 ;
 *box   = (0. -0.2) ET (1. 1.4) ;
 nt1   = DIME (tab1 . 'TEMPS') ;

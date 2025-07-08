@@ -22,7 +22,7 @@ itrac = FAUX ;
 ***OPTI 'TRAC' 'PSC' ;
 ipsc = EGA (VALE 'TRAC') 'PSC' ;
 
-** Options generales / general options
+** Options generales / General options
 OPTI 'DIME' 2 'ELEM' 'SEG2' ;
 
 ** Maillage / Mesh

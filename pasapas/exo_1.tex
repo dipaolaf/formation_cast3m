@@ -22,9 +22,9 @@
       \draw [-]       (0.1,-0.1) -- (0.2,0);
     \end{tikzpicture}
     \if \animation 1
-      \animategraphics[controls,loop,poster=last,height=3.5cm]{50}{images/exo/exo_1_deformee.}{001}{201}
+      \animategraphics[controls,loop,poster=last,height=3.5cm]{10}{images/exo/exo_1_deformee.}{01}{21}
     \else
-      \includegraphics[height=3.5cm]{images/exo/exo_1_deformee.201}
+      \includegraphics[height=3.5cm]{images/exo/exo_1_deformee.21}
     \fi
     \includegraphics[height=3.2cm]{images/exo/exo_1_evol}
   \end{center}
@@ -47,21 +47,27 @@
   \begin{itemize}
     \item \fe{Quelques objets utiles}{Some useful objects}\\
     \small
-    \kw{p2 } \fe{point au sommet de la poutre, où est appliqué la force}{point at the top of the beam, where the force is prescribed}\\
-    \kw{ev1} \fe{évolution de l'amplitude de la force à appliquer vs. temps}{force magnitude to be applied as a function of time}
+    \begin{tabular}{ll}
+      \kw{p2 } & \fe{point au sommet de la poutre, où est appliqué la force}{point at the top of the beam, where the force is prescribed}\\
+      \kw{ev1} & \fe{évolution de l'amplitude de la force à appliquer vs. temps}{force magnitude to be applied as a function of time}
+     \end{tabular}
     \normalsize
     \item \fe{Quelques opérateurs utiles}{Some useful operators}\\
     \small
-    \kwr{EXTR} \fe{pour extraire des valeurs d'un champ}{to extract values from a field}\\
-    \kwr{COS SIN} \fe{pour faire un peu de trigonométrie}{for a bit of trigonometry}\\
-    \kwr{IPOL} \fe{pour interpoler l'amplitude de la force à l'instant de calcul}
-                  {to interpolate the force magnitude at the current time step}\\
-    \kwr{FORC} \fe{pour appliquer une force ponctuelle}{to apply a point force}
+    \begin{tabular}{ll}
+      \kwr{EXTR}    & \fe{pour extraire une valeur d'un champ (rotation \kwg{RZ})}{to extract a value from a field rotation \kwg{RZ}}\\
+      \kwr{COS SIN} & \fe{pour faire un peu de trigonométrie}{for a bit of trigonometry}\\
+      \kwr{IPOL}    & \fe{pour interpoler l'amplitude de la force à l'instant de calcul}
+                         {to interpolate the force magnitude at the current time step}\\
+      \kwr{FORC}    & \fe{pour appliquer une force ponctuelle}{to apply a point force}
+    \end{tabular}
     \normalsize
     \item \fe{Quelques indices utiles de la table}{Some useful table indices}\\
     \small
-    \kwg{ESTIMATION}\kw{.}\kwg{DEPLACEMENTS} \fe{dernier champ de déplacement convergé}{last converged displacement field}
-    \kwg{WTABLE}\kw{.}\kwg{CHARGEMENT} \fe{chargement courant}{current load}
+    \begin{tabular}{ll}
+      \kwg{ESTIMATION}\kw{.}\kwg{DEPLACEMENTS} & \fe{champ de dépl./rotations courant}{current displ./rotations field}\\
+      \kwg{WTABLE}\kw{.}\kwg{CHARGEMENT}       & \fe{chargement courant}{current load}
+    \end{tabular}
     \normalsize
   \end{itemize}
 \end{frame}
@@ -82,11 +88,11 @@
   \scriptsize
   \begin{textblock*}{10cm}(0.4cm,-4.2cm)
     \fe{\emph{Programme principal}}{\emph{Main program}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=87, lastline=90]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=73, lastline=74]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
-  \begin{textblock*}{10cm}(6.2cm,-4.2cm)
+  \begin{textblock*}{10cm}(5.8cm,-4.2cm)
     \fe{\emph{\violet{Procédure PERSO1}}}{\emph{\violet{PERSO1 procedure}}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=47, lastline=60]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=47, lastline=53]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
 \end{frame}
 
@@ -107,9 +113,9 @@
       \draw [-]       (0.1,-0.1) -- (0.2,0);
     \end{tikzpicture}
     \if \animation 1
-      \animategraphics[controls,loop,poster=last,height=3.5cm]{50}{images/exo/exo_1_solu_deformee.}{001}{201}
+      \animategraphics[controls,loop,poster=last,height=3.5cm]{10}{images/exo/exo_1_solu_deformee.}{01}{21}
     \else
-      \includegraphics[height=3.5cm]{images/exo/exo_1_solu_deformee.201}
+      \includegraphics[height=3.5cm]{images/exo/exo_1_solu_deformee.21}
     \fi
     \includegraphics[height=3.2cm]{images/exo/exo_1_solu_evol}
   \end{center}
@@ -120,43 +126,22 @@
   \footnotesize
   \begin{itemize}
     \item \fe{Idem mais avec la procédure \kwv{CHARMECA}, pour mettre à jour la force\\
-              sur la configuration déformée au \tou{début du pas (explicite)}}
+              sur la configuration déformée à la \tou{fin du pas (implicite)}}
              {Idem but with the \kwv{CHARMECA} procedure, to update the force on deformed shape\\
-              at \tou{beginning of time step (explicit)}}
+              at the \tou{end of time step (implicit)}}
     \item \fe{Plus besoin de CHARGEMEnt initial}{No need for initial load (CHARGEMEnt object)}
-    \item \fe{\red{Plus long (1 appel / itération / pas de temps)} et \green{résultats identiques}}
-             {\red{Longer (1 call / each iteration / time step)} and \green{results are identical}}
+    \item \fe{\red{Plus long (1 appel / itération / pas de temps)} mais \green{plus précis}}
+             {\red{Longer (1 call / each iteration / time step)} but \green{more precise}}
+    \item \fe{Attention : peut être instable !}{Warning: may be unstable!}
   \end{itemize}
   \vspace{4.5cm}
   \scriptsize
   \begin{textblock*}{10cm}(0.3cm,-4.3cm)
     \fe{\emph{Programme principal}}{\emph{Main program}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=136, lastline=140]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=73, lastline=74]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
-  \begin{textblock*}{10cm}(6.2cm,-4.3cm)
+  \begin{textblock*}{10cm}(5.8cm,-4.3cm)
     \fe{\emph{\violet{Procédure CHARMECA}}}{\emph{\violet{CHARMECA procedure}}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=63, lastline=77]{dgibi/formation_pasapas_1_solution.dgibi}
-  \end{textblock*}
-\end{frame}
-
-\begin{frame}{\fe{Exercice 1 : poutre avec force suiveuse}{Exercise 1: beam with following force}}
-             {\fe{Solution (ter) avec CHARMECA}{Solution (ter) with CHARMECA}}
-  \footnotesize
-  \begin{itemize}
-    \item \fe{Idem mais avec la procédure \kwv{CHARMECA}, pour mettre à jour la force\\
-              sur la configuration déformée à la \tou{fin du pas (implicite)}}
-             {Idem but with the \kwv{CHARMECA} procedure, to update the force on deformed shape\\
-              at the \tou{end of time step (implicit)}}
-    \item \fe{Attention : peut être instable !}{Watch out: can become unstable!}
-  \end{itemize}
-  \vspace{4.5cm}
-  \scriptsize
-  \begin{textblock*}{10cm}(0.3cm,-4.4cm)
-    \fe{\emph{Programme principal}}{\emph{Main program}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=136, lastline=140]{dgibi/formation_pasapas_1_solution.dgibi}
-  \end{textblock*}
-  \begin{textblock*}{10cm}(6cm,-4.4cm)
-    \fe{\emph{\violet{Procédure CHARMECA}}}{\emph{\violet{CHARMECA procedure}}}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=142, lastline=160]{dgibi/formation_pasapas_1_solution.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=56, lastline=63]{dgibi/formation_pasapas_1_solution.dgibi}
   \end{textblock*}
 \end{frame}

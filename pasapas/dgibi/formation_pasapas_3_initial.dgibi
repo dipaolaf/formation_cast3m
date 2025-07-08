@@ -23,10 +23,10 @@ itrac = FAUX ;
 ***OPTI 'TRAC' 'PSC' ;
 ipsc  = EGA (VALE 'TRAC') 'PSC' ;
 
-** Options generales
+** Options generales / General options
 OPTI 'DIME' 3 'ELEM' 'CUB8' 'DENS' 0.0015 ;
 
-** Maillage
+** Maillage / Mesh
 l1    = 0.05 ;
 l2    = 0.02 ;
 e1    = 0.002 ;
@@ -52,7 +52,7 @@ SI itrac ;
   TRAC 'ARET' msh are 'FACE' ;
 FINSI ;
 
-** Modeles et materiaux (conduction et convection)
+** Modele et materiau / Model and material properties
 mosub = MODE sub 'THERMIQUE' 'CONDUCTION' ;
 masub = MATE mosub 'K' 0.32 'C' 962. 'RHO' 1900. 'TINI' 25. ;
 mosou = MODE sou 'THERMIQUE' 'CONDUCTION' ;
@@ -62,13 +62,13 @@ mahsu = MATE mohsu 'H' 17.26 'TC' 25. ;
 mohso = MODE sur4 'THERMIQUE' 'CONVECTION' ;
 mahso = MATE mohso 'H' 27.3 'TC' 25. ;
 
-** Chargement (source uniforme et constante)
+** Chargement / Load (source = 1W)
 q0    = 1. / (MESU sou) ;
 chq0  = MANU 'CHPO' sou 'Q' q0 ;
 qsou  = SOUR mosou chq0 ;
 chsou = CHAR 'Q' qsou ;
 
-** Resolution avec PASAPAS
+** Resolution
 tab1                      = TABL ;
 tab1 . 'MODELE'           = mosub ET mosou ET mohsu ET mohso ;
 tab1 . 'CARACTERISTIQUES' = masub ET masou ET mahsu ET mahso ;
@@ -76,9 +76,8 @@ tab1 . 'CHARGEMENT'       = chsou ;
 tab1 . 'TEMPS_CALCULES'   = PROG 0. 'PAS' 10. 600. ;
 PASAPAS tab1 ;
 
-** Post-traitement
-tmax  = MAXI (PECHE tab1 'TEMPERATURES' 600.) ;
-liso  = PROG 25. 'PAS' ((tmax - 25.) / 20.) tmax ;
+** Post-traitement / Post-processing
+liso  = PROG 25. 'PAS' 2.5 60. ;
 SI ipsc ;
   OPTI 'FTRA' 'exo_3_temperature.ps' ;
 FINSI ;
@@ -100,3 +99,4 @@ SI itrac ;
 FINSI ;
 
 FIN ;
+
