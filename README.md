@@ -14,10 +14,10 @@ Marche à suivre pour la formation débutants
 Lancez les calculs Cast3M de tous les fichiers .dgibi :
 ```bash
 cd dgibi/
-castem24 formation_debutant_1_maillage.dgibi
-castem24 formation_debutant_2_thermique.dgibi
-castem24 formation_debutant_3_mecanique.dgibi
-castem24 plaque.dgibi
+castem25 formation_debutant_1_maillage.dgibi
+castem25 formation_debutant_2_thermique.dgibi
+castem25 formation_debutant_3_mecanique.dgibi
+castem25 plaque.dgibi
 ...
 ```
 Ce qui créera plein de fichiers .ps
@@ -55,7 +55,7 @@ Pour chaque formation (par exemple debutant) :
 - debutant.tex : fichier principal, à compiler avec pdflatex
 - debutant_presentation.tex : sous partie, incluse dans le document principal
 - ...
-- description_gibiane.tex : description du langage Gibiane (pour le paquet "listings")
+- description_gibiane.tex : description du langage Gibiane (pour la coloration syntaxique réalisée avec le paquet "listings")
 - /dgibi : cas tests Gibiane pour cette formation, ils créent des figures .ps
 - images.sh : traitement des images .ps contenues dans /dgibi (suppression de titres, éclatement en plusieurs fichiers, convertion en .pdf ...)
 - /images : images .pdf et .png utilisées dans le document final
