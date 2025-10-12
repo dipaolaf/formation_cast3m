@@ -105,6 +105,30 @@
 
 
 \fe{\subsection{Entrées/Sorties}}{\subsection{Inputs/Outputs}}
+\begin{frame}{Échanges avec les outils extérieurs}
+  \begin{center}
+    \scriptsize
+    \begin{tikzpicture}
+      \node[anchor=center,inner sep=0] (image) at (0,0)
+      {\includegraphics[width=2cm]{images/logo_cast3m}};
+      \begin{scope}
+        \coordinate(O)at(0.5,0.5);
+        \draw[align=left,very thick,Green,<->] ({1*cos(0)},{1*sin(0)}) -- ({2*cos(0)},{2*sin(0)}) node[right] {\includegraphics[width=2.2cm]{images/stl} \\ *.stl (maillages)};
+        \draw[align=left,very thick,blue,<-] ({1*cos(30)},{1*sin(30)}) -- ({2*cos(30)},{2*sin(30)}) node[anchor=south west] {\includegraphics[width=4.5cm]{images/hypermesh} \\ *.fem (maillages)};
+        \draw[align=left,very thick,red,->] ({1*cos(60)},{1*sin(60)}) -- ({2.5*cos(60)},{2.5*sin(60)}) node[anchor=south west] {\includegraphics[width=3cm]{images/paraview} \\ *.vtk (maillages, champs)};
+        \draw[align=center,very thick,red,->] ({1*cos(90)},{1*sin(90)}) -- ({2.5*cos(90)},{2.5*sin(90)}) node[anchor=south] {\includegraphics[width=1.5cm]{images/matlab} \\ \g{Matlab} *.sauv};
+        \draw[align=right,very thick,Green,<->] ({1*cos(120)},{1*sin(120)}) -- ({2.5*cos(120)},{2.5*sin(120)}) node[anchor=south east] {\includegraphics[width=3cm]{images/simulia} \\ *.inp (maillages, champs)};
+        \draw[align=right,very thick,Green,<->] ({1*cos(150)},{1*sin(150)}) -- ({2.5*cos(150)},{2.5*sin(150)}) node[left] {\includegraphics[width=2.5cm]{images/nastran} \\ *.nas (maillages)};
+        \draw[align=right,very thick,Green,<->] ({1*cos(180)},{1*sin(180)}) -- ({2.5*cos(180)},{2.5*sin(180)}) node[left] {\includegraphics[width=2.5cm]{images/salome} \\ *.med (maillages, champs)};
+        \draw[align=right,very thick,blue,<-] ({1*cos(210)},{1*sin(210)}) -- ({2.6*cos(210)},{2.6*sin(210)}) node[left] {\includegraphics[width=2cm]{images/gmsh} \\ *.unv (maillages)};
+        \draw[align=right,very thick,Green,<->] ({1*cos(240)},{1*sin(240)}) -- ({2.7*cos(240)},{2.7*sin(240)}) node[anchor=north east] {\g{Fichiers texte} \\ *.csv (listes) ou quelconque};
+        \draw[align=center,very thick,Green,<->] ({1*cos(270)},{1*sin(270)}) -- ({2.4*cos(270)},{2.4*sin(270)}) node[anchor=north] {Appel commande \\ externe};
+        \draw[align=center,very thick,Green,<->] ({1*cos(315)},{1*sin(315)}) -- ({2*cos(325)},{2*sin(325)}) node[anchor=north west] {\includegraphics[height=1cm]{images/uranie} Uranie (incertitudes, I.A.) \\ Lois matériau externes \\ (User MATerial subroutines, MFront)};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+
 \begin{frame}{\fe{Lire / Sortir des données}{Reading / Writing data}}
   \begin{itemize}
     \item \fe{\kwr{SAUV}egarder au format binaire et \kwr{REST}ituer}
@@ -209,7 +233,7 @@
       \item \kw{./procedur}
     \end{itemize}
     \item \fe{Lancer Cast3M comme d'habitude}{Launch Cast3M as usual}\\
-    \kwr{castem24  } \kw{toto.dgibi}
+    \kwr{castem25  } \kw{toto.dgibi}
     \item \fe{Idem pour les notices (fichiers ".notice")}
              {Idem for notices (manual pages) (".notice" files)}
   \end{itemize}
@@ -220,30 +244,23 @@
     \item \fe{L'utilisateur peut modifier/corriger/ajouter le code source des opérateurs et directives}
              {The user can modify/correct/add the source code of operators and directives}
     \item \fe{Compilation des fichiers source Esope}{Compilation of Esope source files}\\
-    \kwr{compilcast24  } \kw{toto.eso titi.eso ...}
+    \kwr{compilcast25  } \kw{toto.eso titi.eso ...}
     \item \fe{Édition des liens}{Linking}\\
-    \kwr{essaicast24}\\
-    \fe{$\Rightarrow$ création d'un fichier exécutable binaire : \g{\kwg{cast\_24}}}
-       {$\Rightarrow$ creation of a binary executable file: \g{\kwg{cast\_24}}}\\
+    \kwr{essaicast25}\\
+    \fe{$\Rightarrow$ création d'un fichier exécutable binaire : \g{\kwg{cast\_25}}}
+       {$\Rightarrow$ creation of a binary executable file: \g{\kwg{cast\_25}}}\\
        \fe{$\Rightarrow$ version locale de Cast3M}
           {$\Rightarrow$ local version of Cast3M}
     \item \fe{Lancer Cast3M comme d'habitude}{Launch Cast3M as usual}\\
-    \kwr{castem24  } \kw{toto.dgibi}
+    \kwr{castem25  } \kw{toto.dgibi}
   \end{itemize}
 \end{frame}
 
-\begin{frame}{\fe{Et pour finir}{And to complete}}
+\begin{frame}{\fe{Communauté}{Community}}
   \begin{itemize}
-    \item \fe{Consulter la \g{\blue{documentation}} régulièrement}
-             {Peruse \g{\blue{documentation}} regularly}\\
-    \footnotesize
-    \fe{$\sim$ 70 instructions découvertes durant cette formation\\
-        près de 1400 instructions existantes !}
-       {$\sim$ 70 instructions reviewed during this course\\
-        around 1400 available instructions!}\\~
-    \normalsize
-    \item \fe{Inscription à la \g{\blue{liste de diffusion Cast3M}} (voir le site web Cast3M)}
-             {Subscription to the \g{\blue{Cast3M mailing list}} (see the Cast3M web site)}\\
+    \item \fe{Support utilisateurs :}{Users support:} support-cast3m@cea.fr\\
+    \item \fe{Inscription à la liste de diffusion Cast3M (voir le site web Cast3M)}
+             {Subscription to the Cast3M mailing list (see the Cast3M web site)}\\
     \footnotesize
     \fe{Envoyer un e-mail vide à \href{mailto:sympa@umontpellier.fr}{\kw{sympa@umontpellier.fr}}\\
         avec comme objet du message :}
@@ -255,14 +272,12 @@
     \fe{et rien d'autre ! (pas de message, pas de signature, …)}
        {and nothing more! (no object, no signature, …)}\\~
     \normalsize
-    \item \fe{\g{\blue{Club Cast3M}} : séminaire annuel des utilisateurs}
-             {\g{\blue{Club Cast3M}}: annual users seminar}\\
-    \footnotesize
-    \fe{Chaque année en novembre dans le sud de Paris\\
-        Présentation de travaux réalisés avec Cast3M, nouveautés de la prochaine version\\
-        Inscription gratuite !}
-       {Each year in November in the south of Paris\\
-        Presentation of studies performed with Cast3M, developments in the next release\\
-        Free registration!}
+    \item \fe{Club Cast3M : séminaire annuel des utilisateurs (Paris, novembre)}
+             {Club Cast3M: annual users seminar (Paris, november)}\\
   \end{itemize}
+  \begin{center}
+    \includegraphics[height=2cm]{images/club_pres_1}
+    \includegraphics[height=2cm]{images/club_paris}
+    \includegraphics[height=2cm]{images/club_pres_2}
+  \end{center}
 \end{frame}

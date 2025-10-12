@@ -65,7 +65,7 @@ mass1  = 2500. ;
 *              linear, quasi static, homogeneous material              *
 *----------------------------------------------------------------------*
 
-** Modele mecanique elastique / Elastic mechanichal model
+** Modele mecanique elastique / Elastic mechanical model
 mom1 = MODE vol1 'MECANIQUE' 'ELASTIQUE' ;
 mam1 = MATE mom1 'YOUN' you 'NU' nu
                  'ALPH' alpha 'TREF' t0 'TALP' t0 ;
@@ -100,7 +100,7 @@ FINSI ;
 zsint  = COOR 3 sint ;
 ptmass = zsint POIN 'EGINFE' (h / 2.) ;
 elmass = sint ELEM 'APPU' 'STRI' ptmass ;
-pres1  = mass1 * 9.81 / (MESU elmass) ;
+pres1  = mass1 * 9.81 / (pi * r * e) ;
 fmass2 = PRES 'MASS' mom1 pres1 elmass ;
 vecf2  = VECT fmass2 'FORC' 'VERT' 3.E-5 ;
 SI itrac ;
@@ -342,7 +342,9 @@ FINSI ;
 
 ** Nouveau modele mecanique / New mechanical model
 mom2     = MODE vol1 'MECANIQUE' 'ELASTIQUE' 'PLASTIQUE' 'PARFAIT' ;
-chealpha = CHAN 'CHAM' chpalpha mom2 ;
+x        = COOR 1 mom2 ;
+chealpha = alpha * (1. + (3. *
+           (EXP (-1. * (((x - xmoy) / xsig) ** 2))))) ;
 mam2     = MATE mom2 'YOUN' you 'NU' nu 'SIGY' sigy
                      'ALPH' chealpha 'TREF' t0 'TALP' t0 ;
 

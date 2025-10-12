@@ -98,6 +98,10 @@ SI ipsc ;
 OPTI 'FTRA' '2.1_cl_temperature.ps' ;
 FINSI ;
 TRAC 'FACE' (sint COUL 'BLEU') are1 ;
+SI ipsc ;
+OPTI 'FTRA' '2.1_cl_flux_temperature.ps' ;
+FINSI ;
+TRAC 'FACE' ((sut1 COUL 'ROUG') ET (sint COUL 'BLEU')) are1 ;
 FINSI ;
 
 ** Matrice de blocage / Boundary condition matrix
