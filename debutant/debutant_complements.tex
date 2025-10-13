@@ -101,32 +101,50 @@
   \vspace{1cm}
 \end{frame}
 
-
-
-
 \fe{\subsection{Entrées/Sorties}}{\subsection{Inputs/Outputs}}
-\begin{frame}{Échanges avec les outils extérieurs}
-  \begin{center}
+\begin{frame}{\fe{Échanges avec les outils extérieurs}{Exchanges with external softwares}}
+  \fe{\begin{center}
     \scriptsize
     \begin{tikzpicture}
       \node[anchor=center,inner sep=0] (image) at (0,0)
       {\includegraphics[width=2cm]{images/logo_cast3m}};
       \begin{scope}
         \coordinate(O)at(0.5,0.5);
-        \draw[align=left,very thick,Green,<->] ({1*cos(0)},{1*sin(0)}) -- ({2*cos(0)},{2*sin(0)}) node[right] {\includegraphics[width=2.2cm]{images/stl} \\ *.stl (maillages)};
-        \draw[align=left,very thick,blue,<-] ({1*cos(30)},{1*sin(30)}) -- ({2*cos(30)},{2*sin(30)}) node[anchor=south west] {\includegraphics[width=4.5cm]{images/hypermesh} \\ *.fem (maillages)};
-        \draw[align=left,very thick,red,->] ({1*cos(60)},{1*sin(60)}) -- ({2.5*cos(60)},{2.5*sin(60)}) node[anchor=south west] {\includegraphics[width=3cm]{images/paraview} \\ *.vtk (maillages, champs)};
-        \draw[align=center,very thick,red,->] ({1*cos(90)},{1*sin(90)}) -- ({2.5*cos(90)},{2.5*sin(90)}) node[anchor=south] {\includegraphics[width=1.5cm]{images/matlab} \\ \g{Matlab} *.sauv};
-        \draw[align=right,very thick,Green,<->] ({1*cos(120)},{1*sin(120)}) -- ({2.5*cos(120)},{2.5*sin(120)}) node[anchor=south east] {\includegraphics[width=3cm]{images/simulia} \\ *.inp (maillages, champs)};
-        \draw[align=right,very thick,Green,<->] ({1*cos(150)},{1*sin(150)}) -- ({2.5*cos(150)},{2.5*sin(150)}) node[left] {\includegraphics[width=2.5cm]{images/nastran} \\ *.nas (maillages)};
-        \draw[align=right,very thick,Green,<->] ({1*cos(180)},{1*sin(180)}) -- ({2.5*cos(180)},{2.5*sin(180)}) node[left] {\includegraphics[width=2.5cm]{images/salome} \\ *.med (maillages, champs)};
-        \draw[align=right,very thick,blue,<-] ({1*cos(210)},{1*sin(210)}) -- ({2.6*cos(210)},{2.6*sin(210)}) node[left] {\includegraphics[width=2cm]{images/gmsh} \\ *.unv (maillages)};
-        \draw[align=right,very thick,Green,<->] ({1*cos(240)},{1*sin(240)}) -- ({2.7*cos(240)},{2.7*sin(240)}) node[anchor=north east] {\g{Fichiers texte} \\ *.csv (listes) ou quelconque};
-        \draw[align=center,very thick,Green,<->] ({1*cos(270)},{1*sin(270)}) -- ({2.4*cos(270)},{2.4*sin(270)}) node[anchor=north] {Appel commande \\ externe};
-        \draw[align=center,very thick,Green,<->] ({1*cos(315)},{1*sin(315)}) -- ({2*cos(325)},{2*sin(325)}) node[anchor=north west] {\includegraphics[height=1cm]{images/uranie} Uranie (incertitudes, I.A.) \\ Lois matériau externes \\ (User MATerial subroutines, MFront)};
+        \draw[align=left,very thick,Green,<->] ({1*cos(0)},{1*sin(0)}) -- ({2*cos(0)},{2*sin(0)}) node[right]{\includegraphics[height=1cm]{images/stl} *.stl (maillages)};
+        \draw[align=left,very thick,blue,<-] ({1*cos(30)},{1*sin(30)}) -- ({2.5*cos(30)},{2.5*sin(30)}) node[right]{\includegraphics[width=2.3cm]{images/hypermesh} \\ *.fem (maillages)};
+        \draw[align=left,very thick,red,->] ({1*cos(60)},{1*sin(60)}) -- ({2.6*cos(60)},{2.6*sin(60)}) node[anchor=south west]{\includegraphics[width=3cm]{images/paraview} \\ *.vtk (maillages, champs)};
+        \draw[align=center,very thick,red,->] ({1*cos(90)},{1*sin(90)}) -- ({2.5*cos(90)},{2.5*sin(90)}) node[anchor=south]{\includegraphics[width=1.5cm]{images/matlab} \\ \g{Matlab} *.sauv};
+        \draw[align=right,very thick,Green,<->] ({1*cos(120)},{1*sin(120)}) -- ({2.5*cos(120)},{2.5*sin(120)}) node[anchor=south east]{\includegraphics[width=3cm]{images/simulia} \\ *.inp (maillages, champs)};
+        \draw[align=right,very thick,Green,<->] ({1*cos(150)},{1*sin(150)}) -- ({2.5*cos(150)},{2.5*sin(150)}) node[left]{\includegraphics[width=2.5cm]{images/nastran} \\ *.nas (maillages)};
+        \draw[align=right,very thick,Green,<->] ({1*cos(180)},{1*sin(180)}) -- ({2.5*cos(180)},{2.5*sin(180)}) node[left]{\includegraphics[width=2.5cm]{images/salome} \\ *.med (maillages, champs)};
+        \draw[align=right,very thick,blue,<-] ({1*cos(210)},{1*sin(210)}) -- ({2.6*cos(210)},{2.6*sin(210)}) node[left]{\includegraphics[width=2cm]{images/gmsh} \\ *.unv (maillages)};
+        \draw[align=right,very thick,Green,<->] ({1*cos(240)},{1*sin(240)}) -- ({2.7*cos(240)},{2.7*sin(240)}) node[anchor=north east]{\g{Fichiers texte} \\ *.csv (listes)};
+        \draw[align=center,very thick,Green,<->] ({1*cos(270)},{1*sin(270)}) -- ({2.4*cos(270)},{2.4*sin(270)}) node[anchor=north]{Appel commande \\ externe};
+        \draw[align=center,very thick,Green,<->] ({1*cos(315)},{1*sin(315)}) -- ({2*cos(315)},{2*sin(315)}) node[anchor=north west]{\includegraphics[height=1cm]{images/uranie} Uranie (incertitudes, I.A.) \\ Lois matériau (UMAT, MFront)};
       \end{scope}
     \end{tikzpicture}
-  \end{center}
+  \end{center}}
+  {\begin{center}
+    \scriptsize
+    \begin{tikzpicture}
+      \node[anchor=center,inner sep=0] (image) at (0,0)
+      {\includegraphics[width=2cm]{images/logo_cast3m}};
+      \begin{scope}
+        \coordinate(O)at(0.5,0.5);
+        \draw[align=left,very thick,Green,<->] ({1*cos(0)},{1*sin(0)}) -- ({2*cos(0)},{2*sin(0)}) node[right]{\includegraphics[height=1cm]{images/stl} \\ *.stl (meshes)};
+        \draw[align=left,very thick,blue,<-] ({1*cos(30)},{1*sin(30)}) -- ({2.7*cos(30)},{2.7*sin(30)}) node[right]{\includegraphics[width=2.3cm]{images/hypermesh} \\ *.fem (meshes)};
+        \draw[align=left,very thick,red,->] ({1*cos(60)},{1*sin(60)}) -- ({2.6*cos(60)},{2.6*sin(60)}) node[anchor=south west]{\includegraphics[width=3cm]{images/paraview} \\*.vtk (meshes, fields)};
+        \draw[align=center,very thick,red,->] ({1*cos(90)},{1*sin(90)}) -- ({2.5*cos(90)},{2.5*sin(90)}) node[anchor=south]{\includegraphics[width=1.5cm]{images/matlab} \\ \g{Matlab} *.sauv};
+        \draw[align=right,very thick,Green,<->] ({1*cos(120)},{1*sin(120)}) -- ({2.5*cos(120)},{2.5*sin(120)}) node[anchor=south east]{\includegraphics[width=3cm]{images/simulia} \\ *.inp (meshes, fields)};
+        \draw[align=right,very thick,Green,<->] ({1*cos(150)},{1*sin(150)}) -- ({2.5*cos(150)},{2.5*sin(150)}) node[left]{\includegraphics[width=2.5cm]{images/nastran} \\ *.nas (meshes)};
+        \draw[align=right,very thick,Green,<->] ({1*cos(180)},{1*sin(180)}) -- ({2.5*cos(180)},{2.5*sin(180)}) node[left]{\includegraphics[width=2.5cm]{images/salome} \\ *.med (meshes, fields)};
+        \draw[align=right,very thick,blue,<-] ({1*cos(210)},{1*sin(210)}) -- ({2.6*cos(210)},{2.6*sin(210)}) node[left]{\includegraphics[width=2cm]{images/gmsh} \\ *.unv (meshes)};
+        \draw[align=right,very thick,Green,<->] ({1*cos(240)},{1*sin(240)}) -- ({2.7*cos(240)},{2.7*sin(240)}) node[anchor=north east]{\g{Text files} \\ *.csv (lists)};
+        \draw[align=center,very thick,Green,<->] ({1*cos(270)},{1*sin(270)}) -- ({2.4*cos(270)},{2.4*sin(270)}) node[anchor=north]{Call an \\ external command};
+        \draw[align=center,very thick,Green,<->] ({1*cos(315)},{1*sin(315)}) -- ({2*cos(325)},{2*sin(325)}) node[anchor=north west]{\includegraphics[height=1cm]{images/uranie} Uranie (uncertainty, A.I.) \\ Behavior laws (UMAT, MFront)};
+      \end{scope}
+    \end{tikzpicture}
+  \end{center}}
 \end{frame}
 
 \begin{frame}{\fe{Lire / Sortir des données}{Reading / Writing data}}
@@ -280,4 +298,18 @@
     \includegraphics[height=2cm]{images/club_paris}
     \includegraphics[height=2cm]{images/club_pres_2}
   \end{center}
+\end{frame}
+
+\begin{frame}{\fe{Quelques références utilisées pour cette formation}
+                 {Some references used for this training course}}
+  \begin{itemize}
+    \item \g{K.-J. Bathe}\\
+          Finite Element Procedures, second edition, Prentice Hall, 2014
+    \item \g{Y. Debard}\\
+          Méthode des éléments finis : thermique, Université du Mans, 2011
+    \item \g{Y. Debard}\\
+          Méthode des éléments finis : élasticité plane, Université du Mans, 2011
+    \item \g{G. Dhatt, G. Touzot}\\
+          Une présentation de la méthode des éléments finis, Maloine, 1984
+  \end{itemize}
 \end{frame}
