@@ -54,8 +54,13 @@ FINP ;
 
 ** Procedure CHARMECA
 DEBP CHARMECA t1*'TABLE' tps1*'FLOTTANT' ;
-  u1   = t1 . 'ESTIMATION' . 'DEPLACEMENTS' ;
-  rs   = (EXTR u1 'RZ' p2) * 180. / pi ;
+  SI (EGA (TYPE zdept) 'CHPOINT') ;
+    drs  = EXTR zdept 'RZ' p2 ;
+  SINON ;
+    drs  = 0. ;
+  FINSI ;
+  u1   = t1 . 'CONTINUATION' . 'DEPLACEMENTS' ;
+  rs   = ((EXTR u1 'RZ' p2) + drs) * 180. / pi ;
   val1 = IPOL tps1 ev1 ;
   f1   = FORC (val1 * ((COS rs) (SIN rs))) p2 ;
   t2   = TABLE ;
@@ -105,3 +110,7 @@ FINSI ;
 
 FIN ;
 
+
+**tab1 . 'CHARGEMENT'         = cha1 ;
+tab1 . 'PROCEDURE_CHARMECA' = VRAI ;
+PASAPAS tab1 ;

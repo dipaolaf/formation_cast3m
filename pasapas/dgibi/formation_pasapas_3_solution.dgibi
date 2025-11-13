@@ -3,7 +3,7 @@
 *----------------------------------------------------------------------*
 *              FORMATION AVANCEE SUR LA PROCEDURE PASAPAS              *
 *                                                                      *
-* Chauffage d'une plaque par une source de chaleur                     *
+* Chauffage d'un substrat par une source de chaleur                    *
 * dependante de la temperature                                         *
 *                                                                      *
 * Ce fichier constitue la mise donnee solution du probleme et realise  *
@@ -133,4 +133,3 @@ SI itrac ;
 FINSI ;
 
 FIN ;
-
