@@ -834,7 +834,6 @@
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=462, lastline=468]{dgibi/formation_debutant_3_mecanique.dgibi}
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=470, lastline=470]{dgibi/formation_debutant_3_mecanique.dgibi}
     \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=472, lastline=472]{dgibi/formation_debutant_3_mecanique.dgibi}
-    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=476, lastline=476]{dgibi/formation_debutant_3_mecanique.dgibi}
   \end{itemize}
   \begin{textblock*}{5cm}(7cm,-1.4cm)
     \if \animation 1
@@ -844,4 +843,126 @@
     \fi
   \end{textblock*}
   \vspace{3cm}
+\end{frame}
+
+\begin{frame}{\fe{10 Problème étudié}{10 Problem description}}
+  \begin{itemize}
+    \item \fe{Élasticité linéaire}{Linear elasticity}
+    \begin{center}
+    \footnotesize
+    \begin{tikzpicture}
+      \node[anchor=south west,inner sep=0] (image) at (0,0)
+      {\includegraphics[width=4cm]{images/exo/1.2_geometrie}};
+      \begin{scope}[x={(image.south east)},y={(image.north west)}]
+        \draw (1,0.9) node[anchor=west] {$E$~=~200~GPa};
+        \draw (1,0.7) node[anchor=west] {$\nu$~=~0.3};
+        \draw (1,0.5) node[anchor=west] {$\alpha$~=~10$^{-5}$~K$^{-1}$};
+      \end{scope}
+    \end{tikzpicture}
+    \normalsize
+    \end{center}
+    \begin{columns}
+      \begin{column}{.4\textwidth}
+        \item \fe{Déplacements imposés}{Imposed displacements}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/6_cl_deplacement}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=violet]
+            \draw (0.06,0.7) node[anchor=north west] {$u_x=u_y=u_z$~=~0~m};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+      \begin{column}{.4\textwidth}
+        \item \fe{Forces imposées}{Imposed forces}
+        \footnotesize
+        \begin{tikzpicture}
+          \node[anchor=south west,inner sep=0] (image) at (0,0)
+          {\includegraphics[width=3.5cm]{images/exo/10_contact.1}};
+          \begin{scope}[x={(image.south east)},y={(image.north west)},color=red]
+            \draw (0.8,0.95) node[anchor=north west] {\fe{masse suspendue}{hanging mass}};
+            \draw (0.9,0.8) node[anchor=north west]  {$m$~=~2500~kg};
+            \draw (0.8,0.65) node[anchor=north west] {\fe{+contact}{+contact}};
+          \end{scope}
+        \end{tikzpicture}
+        \normalsize
+      \end{column}
+    \end{columns}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{\fe{10 Mécanique non linéaire}{10. Non linear mechanics}}
+             {\fe{Élasticité, contact}{Elasticity, contact}}
+  \begin{itemize}
+    \item \fe{Maillage d'un appuis}{Mesh of a support}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=490, lastline=499]{dgibi/formation_debutant_3_mecanique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=505, lastline=505]{dgibi/formation_debutant_3_mecanique.dgibi}
+    \item<2-> \fe{Modèle et caractéristiques matériau de l'appuis}{Model and material parameters of the support}
+    \onslide<2->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=508, lastline=510]{dgibi/formation_debutant_3_mecanique.dgibi}}
+  \end{itemize}
+  \begin{textblock*}{5cm}(7.5cm,-4.5cm)
+    \includegraphics[width=4.5cm]{images/exo/10_contact.2}
+  \end{textblock*}
+\end{frame}
+
+\begin{frame}{\fe{10 Mécanique non linéaire}{10. Non linear mechanics}}
+             {\fe{Élasticité, contact}{Elasticity, contact}}
+  \begin{itemize}
+    \item \fe{Conditions aux limites et chargement}{Boundary conditions and load}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=512, lastline=520]{dgibi/formation_debutant_3_mecanique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=521, lastline=521]{dgibi/formation_debutant_3_mecanique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=523, lastline=523]{dgibi/formation_debutant_3_mecanique.dgibi}
+  \end{itemize}
+  \begin{textblock*}{5cm}(7.5cm,-3.cm)
+    \includegraphics[width=4.5cm]{images/exo/10_contact.3}
+  \end{textblock*}
+\end{frame}
+
+\begin{frame}{\fe{10 Mécanique non linéaire}{10. Non linear mechanics}}
+             {\fe{Élasticité, contact}{Elasticity, contact}}
+  \begin{itemize}
+    \item \fe{Maillage de contact (éléments TRI3)}{Contact mesh (TRI3 elements)}\\
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=526, lastline=531]{dgibi/formation_debutant_3_mecanique.dgibi}
+    \onslide<2->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=533, lastline=536]{dgibi/formation_debutant_3_mecanique.dgibi}
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=538, lastline=539]{dgibi/formation_debutant_3_mecanique.dgibi}}
+    \onslide<3->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=541, lastline=542]{dgibi/formation_debutant_3_mecanique.dgibi}
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=544, lastline=544]{dgibi/formation_debutant_3_mecanique.dgibi}}
+    \item<4-> \fe{Modèle de contact entre surfaces}{Contact model between surfaces}\\
+    \onslide<4->{
+      \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=547, lastline=548]{dgibi/formation_debutant_3_mecanique.dgibi}}
+  \end{itemize}
+  \onslide<2>{
+    \begin{textblock*}{5cm}(7.5cm,-5.cm)
+      \includegraphics[height=2cm]{images/exo/10_contact.4}
+      \includegraphics[height=2cm]{images/exo/10_contact.5}
+    \end{textblock*}}
+  \onslide<3->{
+    \begin{textblock*}{5cm}(7.5cm,-5.cm)
+      \includegraphics[height=1.95cm]{images/exo/10_contact.6}
+      \includegraphics[height=2cm]{images/exo/10_contact.5}
+    \end{textblock*}}
+\end{frame}
+
+\begin{frame}{\fe{10 Mécanique non linéaire}{10. Non linear mechanics}}
+             {\fe{Élasticité, contact}{Elasticity, contact}}
+  \begin{itemize}
+    \item \fe{Résolution avec la procédure \kwo{PASAPAS}}{Solving with the \kwo{PASAPAS} procedure}\\
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=550, lastline=558]{dgibi/formation_debutant_3_mecanique.dgibi}
+    \item \fe{Post traitement : boucle de tracés}{Post processing: loop for plot}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=560, lastline=561]{dgibi/formation_debutant_3_mecanique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=565, lastline=568]{dgibi/formation_debutant_3_mecanique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=570, lastline=570]{dgibi/formation_debutant_3_mecanique.dgibi}
+    \lstinputlisting[basicstyle=\ttfamily\tiny, language=gibiane, firstline=572, lastline=572]{dgibi/formation_debutant_3_mecanique.dgibi}
+  \end{itemize}
+  \begin{textblock*}{5cm}(7cm,-3.5cm)
+    \if \animation 1
+      \animategraphics[controls,loop,poster=last,width=5cm]{10}{images/exo/10_deformee.}{01}{21}
+    \else
+      \includegraphics[width=5cm]{images/exo/10_deformee.21}
+    \fi
+  \end{textblock*}
 \end{frame}

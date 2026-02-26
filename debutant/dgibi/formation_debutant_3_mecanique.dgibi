@@ -341,12 +341,12 @@ FINSI ;
 *----------------------------------------------------------------------*
 
 ** Nouveau modele mecanique / New mechanical model
-mom2     = MODE vol1 'MECANIQUE' 'ELASTIQUE' 'PLASTIQUE' 'PARFAIT' ;
-x        = COOR 1 mom2 ;
+mom1p    = MODE vol1 'MECANIQUE' 'ELASTIQUE' 'PLASTIQUE' 'PARFAIT' ;
+x        = COOR 1 mom1p ;
 chealpha = alpha * (1. + (3. *
            (EXP (-1. * (((x - xmoy) / xsig) ** 2))))) ;
-mam2     = MATE mom2 'YOUN' you 'NU' nu 'SIGY' sigy
-                     'ALPH' chealpha 'TREF' t0 'TALP' t0 ;
+mam1p    = MATE mom1p 'YOUN' you 'NU' nu 'SIGY' sigy
+                      'ALPH' chealpha 'TREF' t0 'TALP' t0 ;
 
 ** Descriptions temporelles des chargements /
 *  Time descriptions of the loads
@@ -365,8 +365,8 @@ chatemp    = CHAR 'T' ttemps ttimp ;
 ** Resolution avec la procedure PASAPAS /
 *  Solving with the PASAPAS procedure
 tab2                         = TABL ;
-tab2 . 'MODELE'              = mom2 ;
-tab2 . 'CARACTERISTIQUES'    = mam2 ;
+tab2 . 'MODELE'              = mom1p ;
+tab2 . 'CARACTERISTIQUES'    = mam1p ;
 tab2 . 'BLOCAGES_MECANIQUES' = blm ;
 tab2 . 'CHARGEMENT'          = chamass ET chatemp ;
 tab2 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 5. 100. ;
@@ -382,11 +382,11 @@ n2    = DIME (tab2 . 'DEPLACEMENTS') ;
 liso2 = PROG 0. 'PAS' (sigy / 20.) sigy ;
 REPE b2 n2 ;
   ui    = tab2 . 'DEPLACEMENTS' . (&b2 - 1) ;
-  defi  = DEFO vol1 ui 50 ;
+  defi  = DEFO vol1 ui 50. ;
   sigi  = tab2 . 'CONTRAINTES' . (&b2 - 1) ;
   titi  = CHAI '[9.1] Contraintes au pas' ' ' (&b2 - 1) ' /' ' ' (n2 - 1) ;
   SI itrac ;
-  TRAC sigi mom2 defi are1 liso2 'TITR' titi ;
+  TRAC sigi mom1p defi are1 liso2 'TITR' titi ;
   FINSI ;
 FIN b2 ;
 
@@ -399,11 +399,11 @@ emax  = MAXI (EXCO 'EPSE' (tab2 . 'VARIABLES_INTERNES' . (n2 - 1))) ;
 liso3 = PROG 0. 'PAS' (emax / 20.) emax ;
 REPE b2 n2 ;
   ui    = tab2 . 'DEPLACEMENTS' . (&b2 - 1) ;
-  defi  = DEFO vol1 ui 50 ;
+  defi  = DEFO vol1 ui 50. ;
   epi   = tab2 . 'VARIABLES_INTERNES' . (&b2 - 1) ;
   titi  = CHAI '[9.1] Variables internes au pas' ' ' (&b2 - 1) ' /' ' ' (n2 - 1) ;
   SI itrac ;
-  TRAC epi mom2 defi are1 liso3 'TITR' titi ;
+  TRAC epi mom1p defi are1 liso3 'TITR' titi ;
   FINSI ;
 FIN b2 ;
 
@@ -439,14 +439,14 @@ FINSI ;
 
 * Mise a jour des parmetres materiau /
 * Updating the material parameters
-mam2 = MATE mom2 'YOUN' you 'NU' nu 'SIGY' evsigy
-                 'ALPH' chealpha 'TREF' t0 'TALP' t0 ;
+mam1p = MATE mom1p 'YOUN' you 'NU' nu 'SIGY' evsigy
+                   'ALPH' chealpha 'TREF' t0 'TALP' t0 ;
 
 ** Resolution avec la procedure PASAPAS /
 *  Solving with the PASAPAS procedure
 tab2                         = TABL ;
-tab2 . 'MODELE'              = mom2 ;
-tab2 . 'CARACTERISTIQUES'    = mam2 ;
+tab2 . 'MODELE'              = mom1p ;
+tab2 . 'CARACTERISTIQUES'    = mam1p ;
 tab2 . 'BLOCAGES_MECANIQUES' = blm ;
 tab2 . 'CHARGEMENT'          = chamass ET chatemp ;
 tab2 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 5. 100. ;
@@ -463,14 +463,112 @@ emax = MAXI (EXCO 'EPSE' (tab2 . 'VARIABLES_INTERNES' . (n2 - 1))) ;
 liso3 = PROG 0. 'PAS' (emax / 20.) emax ;
 REPE b2 n2 ;
   ui    = tab2 . 'DEPLACEMENTS' . (&b2 - 1) ;
-  defi  = DEFO vol1 ui 50 ;
+  defi  = DEFO vol1 ui 50. ;
   epi   = tab2 . 'VARIABLES_INTERNES' . (&b2 - 1) ;
   titi  = CHAI '[9.2] Variables internes au pas' ' ' (&b2 - 1) ' /' ' ' (n2 - 1) ;
   SI itrac ;
-  TRAC epi mom2 defi are1 liso3 'TITR' titi ;
+  TRAC epi mom1p defi are1 liso3 'TITR' titi ;
   FINSI ;
 FIN b2 ;
 
 
+
+*----------------------------------------------------------------------*
+* Chapitre / Chapter    10.                                            *
+*----------------------------------------------------------------------*
+*                   C A L C U L   M E C A N I Q U E                    *
+*                              elasticite                              *
+*                    deplacements + forces imposes                     *
+*              contact, quasi statique, materiau homogene              *
+*                                                                      *
+*               M E C H A N I C H A L   A N A L Y S I S                *
+*                              elasticity                              *
+*                   imposed displacements +  forces                    *
+*              contact, quasi static, homogeneous material             *
+*----------------------------------------------------------------------*
+
+** Maillage d'un appuis / Meshing of a support
+OPTI 'ELEM' 'CUB8' ;
+p14    = p10 TOUR -45. p6 p11 ;
+lsup   = DROI 2 p6 p14 ;
+ssup   = lsup ROTA 7 90. p6 p11 ;
+ELIM ssup 1.E-9 ;
+ssup   = REGE ssup ;
+vol2   = ssup VOLU 2 'TRAN' (0. e 0.) ;
+env2   = ENVE vol2 ;
+are2   = ARET env2 ;
+SI ipsc ;
+  OPTI 'FTRA' '10_contact.ps' ;
+FINSI ;
+SI itrac ;
+TRAC 'FACE' ((elmass COUL 'ORAN') ET (vol2 COUL 'ROUG')) (are1 ET are2) ;
+TRAC 'CACH' (are1 ET vol2) ;
+FINSI ;
+
+** Modele mecanique elastique / Elastic mechanical model
+mom2   = MODE vol2 'MECANIQUE' 'ELASTIQUE' ;
+mam2   = MATE mom2 'YOUN' (you * 1000.) 'NU' nu ;
+
+** Matrice de blocage / Boundary condition matrix
+blm2   = BLOQ 'UX' 'UY' vol2 ;
+
+** Chargement en force sur l'appuis /
+*  Force load on the support
+ptf2   = are2 POIN 'DROITE' p6 p11 ;
+fmass2 = FORC (0. 0. (mass1 * -9.81)) ptf2 ;
+evm2   = EVOL 'MANU' (PROG 0. 1.) (PROG 0. 1.) ;
+cham2  = CHAR 'MECA' fmass2 evm2 ;
+vecf2  = VECT fmass2 'FORC' 'ROUG' 3.E-6 ;
+SI itrac ;
+TRAC vecf2 (are2 ET are1) ;
+FINSI ;
+
+** Les maillages de contact doivent etre en TRI3 /
+*  Contact meshes must be made of TRI3 elements
+pcon2  = env2 POIN 'CYLI' p6 p11 p14 ;
+scon2  = env2 ELEM 'APPUYE' 'STRICTEMENT' pcon2 ;
+scon2  = CHAN 'TRI3' scon2 ;
+scon1  = CHAN 'TRI3' elmass ;
+
+** et orientes l'un vers l'autre
+*  and must be oriented toward each other
+dir1   = @VISOR scon1 1.3 'ORAN' ;
+dir2   = @VISOR scon2     'ROUG' ;
+SI itrac ;
+TRAC dir1 (cin ET scon1) ;
+TRAC dir2 (cin ET scon2) ;
+FINSI ;
+scon1  = INVE scon1 ;
+dir1   = @VISOR scon1 1.3 'ORAN' ;
+SI itrac ;
+TRAC dir1 (cin ET scon1) ;
+FINSI ;
+
+** Modele de contact / Contact model
+mocon  = MODE scon1 scon2 'CONTACT' ;
+
+** Resolution avec la procedure PASAPAS /
+*  Solving with the PASAPAS procedure
+tab3                         = TABL ;
+tab3 . 'MODELE'              = mom1 ET mom2 ET mocon ;
+tab3 . 'CARACTERISTIQUES'    = mam1 ET mam2 ;
+tab3 . 'BLOCAGES_MECANIQUES' = blm  ET blm2 ;
+tab3 . 'CHARGEMENT'          = cham2 ;
+tab3 . 'TEMPS_CALCULES'      = PROG 0. 'PAS' 0.05 1. ;
+PASAPAS tab3 ;
+
+** Post traitement / Post processing
+n3     = DIME (tab3 . 'DEPLACEMENTS') ;
+SI ipsc ;
+  OPTI 'FTRA' '10_deformee.ps' ;
+FINSI ;
+REPE b3 n3 ;
+  ui     = tab3 . 'DEPLACEMENTS' . (&b3 - 1) ;
+  def1   = DEFO vol1 ui 50. ;
+  def2   = DEFO vol2 ui 50. ;
+  SI itrac ;
+  TRAC 'CACH' (def1 ET def2) ;
+  FINSI ;
+FIN b3 ;
 
 FIN ;

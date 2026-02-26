@@ -33,7 +33,9 @@ do
     cast-post.sh -o    -c 1 -s 15 ${i}
 # pour les fichiers ci-dessous : retrait titre et legende, changement taille fonte
   elif [ "${i}" = "coque_2d_axi.ps" ] ||
-       [ "${i}" = "coque_3d.ps" ]
+       [ "${i}" = "coque_3d.ps" ] ||
+       [ "${i}" = "10_contact.ps" ] ||
+       [ "${i}" = "10_deformee.ps" ]
   then
     cast-post.sh -o -t -c 2 -s 15 ${i}
 # pour les fichiers ci-dessous : retrait du titre et legende, déplacement isovaleurs, changement taille fonte et epaisseur trait
