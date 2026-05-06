@@ -14,10 +14,10 @@ Marche à suivre pour la formation débutants
 Lancez les calculs Cast3M de tous les fichiers .dgibi :
 ```bash
 cd dgibi/
-castem25 formation_debutant_1_maillage.dgibi
-castem25 formation_debutant_2_thermique.dgibi
-castem25 formation_debutant_3_mecanique.dgibi
-castem25 plaque.dgibi
+castem26 formation_debutant_1_maillage.dgibi
+castem26 formation_debutant_2_thermique.dgibi
+castem26 formation_debutant_3_mecanique.dgibi
+castem26 plaque.dgibi
 ...
 ```
 Ce qui créera plein de fichiers .ps
